@@ -339,7 +339,7 @@
                 </div>
 
                 <div class="explanation" id="infoText">
-                    <strong>Sagtann:</strong> Inneholder <em>alle</em> overtoner. Gir en skarp, fyldig klang.
+                    <strong>Sagtann (Sawtooth):</strong> Inneholder <em>alle</em> overtoner i en jevn, synkende rekke. Dette gir en rik, skarp og fyldig klang som ofte brukes for å etterligne strykere, blåsere eller fete synth-leads.
                 </div>
 
                 <div class="slider-group" id="autoHarmonicsGroup">
@@ -714,9 +714,89 @@
         });
 
         const modalContent = {
-            general: { title: "Synthesizeren", body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>" },
-            overtones: { title: "Overtoner", body: "<p>Se eget oppsett for overtoner i fullversjonen.</p>" },
-            mystery: { title: "Mysteriet om tonen E", body: "<p>Dette handler om likesvevende stemming og Pythagoras.</p>" }
+            general: {
+                title: "Synthesizeren",
+                body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>"
+            },
+            overtones: {
+                title: "Overtoner og Additiv Syntese",
+                body: `
+                <p>Når du spiller en tone (for eksempel en C på et piano), hører du egentlig ikke bare én lyd. Du hører en <strong>grunntone</strong> pluss en hel stige av lysere toner som klinger svakt i bakgrunnen. Det er denne stigen vi kaller <strong>overtoner</strong>.</p>
+                <h4>Naturens egen gangetabell</h4>
+                <p>Hvis grunntonen vibrerer med 100 Hz, vil den neste tonen i stigen være nøyaktig <strong>100 Hz &times; 2</strong> (200 Hz). Den neste er <strong>&times; 3</strong> (300 Hz), deretter <strong>&times; 4</strong> (400 Hz), og så videre.</p>
+                <h4>Additiv syntese (Bygg med Lego)</h4>
+                <p>Se for deg at en ren tone (en Sinusbølge) er en legokloss. Ved å stable slike klosser oppå hverandre i ulike mønstre (addere dem), kan vi bygge helt nye lyder! Bytt til "Orgel" og bruk spakene (drawbars) for å blande overtoner selv.</p>
+                `
+            },
+            mixer: {
+                title: "Lydkilder (Oscillator og Mikser)",
+                body: `
+                <p>I en synthesizer er <strong>Oscillatoren</strong> stemmebåndet. Den lager selve tonen.</p>
+                <h4>Hvit støy (White Noise)</h4>
+                <p>Noen ganger trenger vi lyder som ikke er klare toner, for eksempel lyden av vind, havet, eller et trommeslag. Da bruker vi <strong>Støy</strong>. Hvit støy inneholder <em>alle frekvenser spilt på likt</em> – akkurat som at hvitt lys er alle farger blandet sammen.</p>
+                `
+            },
+            filter: {
+                title: "Filter (Subtraktiv syntese)",
+                body: `
+                <p>Hvis Oscillatoren er legoklossene dine, er Filteret saksen din. Å bruke et filter kalles <strong>Subtraktiv Syntese</strong>, fordi vi <em>trekker fra</em> lyd.</p>
+                <p>Et <strong>Lowpass-filter</strong> lar de dype lydene passere, men kutter de lyse, skarpe overtonene. Det er som å holde en pute foran en høyttaler.</p>
+                <p>Et <strong>Highpass-filter</strong> gjør motsatt: kutter bassen og lar bare de lyse lydene (diskant) passere.</p>
+                <p><strong>Test:</strong> Form munnen din for å si "AAAA". Mens du sier det, bytt til "OOOO" uten å endre tonehøyde. Du brukte nettopp munnen din som et lowpass-filter for å fjerne de skarpeste overtonene i stemmen din!</p>
+                `
+            },
+            adsr: {
+                title: "Volum-konvolutt (ADSR)",
+                body: `
+                <p>En tone lever i <em>tid</em>. En skarptromme smeller og forsvinner, mens en fiolin smyger seg inn. Vi styrer dette med ADSR:</p>
+                <ul>
+                    <li><strong>A for Attack (Angrep):</strong> Tiden det tar fra du trykker på tangenten til lyden når maks volum.</li>
+                    <li><strong>D for Decay (Fall):</strong> Tiden lyden bruker ned til hvilepulsen (Sustain) etter det første slaget.</li>
+                    <li><strong>S for Sustain (Hvilepuls):</strong> Hvor <em>høyt</em> volumet skal være så lenge du holder knappen nede.</li>
+                    <li><strong>R for Release (Slipp):</strong> Hva skjer når du slipper? Forsvinner lyden brått (orgel), eller klinger den videre i rommet (piano med pedal)?</li>
+                </ul>
+                `
+            },
+            lfo: {
+                title: "Modulasjon (LFO og FM)",
+                body: `
+                <p><strong>LFO</strong> står for <em>Low Frequency Oscillator</em>. Det er som en usynlig robothånd som skrur på knappene for deg!</p>
+                <ul>
+                    <li><strong>Vibrato (Pitch):</strong> Roboten skrur tonehøyden opp og ned. Slik gjør fiolinister og sangere!</li>
+                    <li><strong>Tremolo (Volum):</strong> Roboten skrur volumet opp og ned.</li>
+                    <li><strong>Filter:</strong> Roboten åpner og lukker filteret for en "wah-wah"-effekt.</li>
+                </ul>
+                <h4>Lyd i spill (FM-syntese)</h4>
+                <p>Hvis roboten rister på pitch-knappen ekstremt fort (over 100 ganger i sekundet), blir det metalliske lyder i stedet for vibrato. Dette kalles <strong>Audio Rate Modulasjon (FM)</strong>, og ble brukt for å lage musikk i gamle TV-spill som Sega og Nintendo!</p>
+                `
+            },
+            delay: {
+                title: "Delay (Ekko)",
+                body: `
+                <p><strong>Delay</strong> er en ekko-effekt. Den tar opp lyden du spiller og sender den tilbake til deg med en forsinkelse (Tid).</p>
+                <p><strong>Feedback</strong> bestemmer hvor mange ganger ekkoet skal gjentas før det dør ut. Med høy feedback kan lyden rulle videre i evigheter!</p>
+                `
+            },
+            reverb: {
+                title: "Reverb (Romklang)",
+                body: `
+                <p>Når du klapper i en stor kirke, hører du ikke et tydelig ekko, men en myk, stor klang som fyller rommet og henger igjen i luften. Dette er <strong>Reverb</strong>.</p>
+                <p>Ved å justere "Størrelse", kan du plassere lyden din i alt fra et lite bad til en gigantisk katedral.</p>
+                `
+            },
+            mystery: {
+                title: "Mysteriet om tonen E og pianoets 'Juks'",
+                body: `
+                <p>Har du lagt merke til at frekvensen på A er nøyaktig 440 Hz, men at tonen E er rare desimaltall (f.eks 329.6 Hz eller 659.25 Hz)?</p>
+                <h4>Pythagoras og brøken 1,5</h4>
+                <p>Naturen bygger på perfekte matematiske brøker. Pythagoras fant ut at den viktigste overtonen (kvinten) svinger nøyaktig 1,5 ganger raskere enn grunntonen. Hvis A er 440 Hz, skal E ifølge naturen være nøyaktig: 440 &times; 1,5 = <strong>660 Hz</strong>.</p>
+                <h4>Matematikk-krasjet</h4>
+                <p>Problemet er at hvis man bygger et piano basert <em>kun</em> på 1,5-regelen, går ikke mattestykket opp når man kommer rundt skalaen og tilbake til start. Et slikt piano låt vakkert i én toneart, men grusomt surt i andre ("ulvehyl").</p>
+                <h4>Likesvevende stemming</h4>
+                <p>For å løse dette inngikk man et kompromiss. Man forlot naturens perfekte brøk, og delte heller oktaven i 12 <em>nøyaktig like store biter</em> (12-roten av 2). Resultatet er at tonen E på pianoet ditt ikke er naturens 660,0 Hz, men er flyttet bittelitt ned til <strong>659,25 Hz</strong>.</p>
+                <p>Hver eneste tone på et piano (unntatt oktavene) er faktisk <em>litt falsk med vilje</em> for at musikken skal gå opp!</p>
+                `
+            }
         };
 
         function openModal(section) {
@@ -1089,12 +1169,13 @@
         let activeNotes = [];
         let activeVoices = {};
 
+        // Fyldige beskrivelser for Montessori-elever:
         const explanations = {
-            sawtooth: "<strong>Sagtann:</strong> Inneholder <em>alle</em> overtoner. Gir en skarp, fyldig klang.",
-            square: "<strong>Firkant:</strong> Kun <em>oddetalls-overtoner</em>. Gir en hul, treaktig klang.",
-            triangle: "<strong>Triangel:</strong> Oddetalls-overtoner, men svakere. Rund og fløyte-aktig.",
-            sine: "<strong>Sinus:</strong> Kun grunntonen! Rund, ren og dyp.",
-            manual: "<strong>Orgel:</strong> Bygg lyden selv overtone for overtone med spakene."
+            sawtooth: "<strong>Sagtann (Sawtooth):</strong> Inneholder <em>alle</em> overtoner i en jevn, synkende rekke. Dette gir en rik, skarp og fyldig klang som ofte brukes for å etterligne strykere, blåsere eller fete synth-leads.",
+            square: "<strong>Firkant (Square):</strong> Inneholder kun <em>oddetalls-overtoner</em> (1, 3, 5, 7...). Dette gir en hul, litt 'treaktig' klang som kan minne om en klarinett, eller musikken fra gamle 8-bit TV-spill (som Nintendo).",
+            triangle: "<strong>Triangel (Triangle):</strong> Har også bare oddetalls-overtoner, men de avtar <em>mye raskere</em> i styrke enn i firkantbølgen. Resultatet er en veldig myk, rund og fløyte-aktig lyd.",
+            sine: "<strong>Sinus (Sine):</strong> Lyden i sin reneste form! Den består kun av selve grunntonen, og har <em>ingen overtoner</em> i det hele tatt. Høres ut som en stemmegaffel eller når du blåser over en tomflaske.",
+            manual: "<strong>Orgel (Additiv Syntese):</strong> Bygg lyden fra bunnen av! Bruk spakene (trekkrieglene) under for å manuelt blande inn akkurat de overtonene du vil ha, akkurat som på et ekte Hammond-orgel."
         };
 
         const drawbarsContainer = document.getElementById('drawbarsContainer');
