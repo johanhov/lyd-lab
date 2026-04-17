@@ -600,6 +600,25 @@
                 app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
+                
+                // NY PLASSERING: Vi setter opp lytteren så snart vi har 'auth'
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user && storageMode === 'cloud') {
+                        document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
+                        document.getElementById('cloudIndicator').classList.add("connected");
+                        document.getElementById('cloudIndicator').classList.remove("local-storage");
+                        document.getElementById('savePresetBtn').disabled = false;
+                        document.getElementById('expertToggleBtn').disabled = false;
+                        
+                        fetchSettings();
+                        setupPresetsListener();
+                    } else {
+                        if (unsubscribePresets) unsubscribePresets();
+                        if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
+                    }
+                });
+
                 initAuth();
             } else if (isLocalStorageAvailable()) {
                 storageMode = 'local';
@@ -636,25 +655,6 @@
                     setOfflineMode();
                 }
             }
-        }
-
-        if (auth) {
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-                if (user && storageMode === 'cloud') {
-                    document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
-                    document.getElementById('cloudIndicator').classList.add("connected");
-                    document.getElementById('cloudIndicator').classList.remove("local-storage");
-                    document.getElementById('savePresetBtn').disabled = false;
-                    document.getElementById('expertToggleBtn').disabled = false;
-                    
-                    fetchSettings();
-                    setupPresetsListener();
-                } else {
-                    if (unsubscribePresets) unsubscribePresets();
-                    if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
-                }
-            });
         }
 
         function setLocalStorageMode() {
