@@ -64,6 +64,9 @@
         .cloud-indicator.connected {
             background-color: #2ecc71; box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
         }
+        .cloud-indicator.local-storage {
+            background-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
 
         .preset-toolbar {
             display: flex; align-items: center; gap: 12px;
@@ -130,8 +133,8 @@
         .explanation {
             background: rgba(255, 123, 0, 0.1); border-left: 3px solid var(--accent);
             padding: 8px 12px; font-size: 12px; line-height: 1.4; border-radius: 0 4px 4px 0;
-            height: 60px; /* LÅST HØYDE: Hindrer at boksen vokser/krymper med ulik tekstlengde */
-            overflow-y: auto; /* Tillater scrolling hvis teksten er veldig lang */
+            height: 60px; 
+            overflow-y: auto; 
         }
 
         .slider-group {
@@ -140,7 +143,7 @@
         }
         
         #autoHarmonicsGroup, #manualHarmonicsGroup {
-            height: 135px; /* LÅST HØYDE: Tvinger begge menyene til å ta nøyaktig samme plass */
+            height: 135px; 
         }
         
         .slider-group.filter-group { border-color: var(--filter-color); background: rgba(231, 76, 60, 0.05); }
@@ -299,10 +302,9 @@
         <div class="preset-toolbar">
             <span style="font-size: 13px; font-weight: bold; color: var(--accent);">☁️ Presets:</span>
             <select id="presetSelect" class="preset-select">
-                <!-- Blank rad er nå fjernet for å bytte rett til første preset -->
                 <optgroup label="Eksterne presets (via lenke)" id="externalPresetsGroup" style="display: none;"></optgroup>
                 <optgroup label="Fabrikk-presets" id="factoryPresetsGroup"></optgroup>
-                <optgroup label="Dine lagrede (Sky)" id="userPresetsGroup"></optgroup>
+                <optgroup label="Dine lagrede (Sky/Lokalt)" id="userPresetsGroup"></optgroup>
             </select>
             <button id="savePresetBtn" class="preset-btn" disabled>Lagre ny</button>
             <button id="deletePresetBtn" class="preset-btn" style="display: none; background-color: #c0392b; border: 1px solid #c0392b;">Slett</button>
@@ -577,14 +579,32 @@
         let currentUser = null;
         let unsubscribePresets = null;
         let pendingPresetSelection = null; 
+        let storageMode = 'none'; // 'cloud', 'local', 'none'
         
-        // Hvis koden ligger i testmiljøet med database, koble til. Hvis ikke, kjør "Lokal modus".
+        function isLocalStorageAvailable() {
+            try {
+                const test = '__storage_test__';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Hvis koden ligger i testmiljøet med database, koble til skyen.
+        // Hvis ikke sjekker vi om nettleseren tillater lagring.
         if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
+            storageMode = 'cloud';
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
             initAuth();
+        } else if (isLocalStorageAvailable()) {
+            storageMode = 'local';
+            setLocalStorageMode();
         } else {
+            storageMode = 'none';
             setOfflineMode();
         }
 
@@ -597,16 +617,23 @@
                 }
             } catch (error) {
                 console.error("Autentiseringsfeil mot skyen:", error);
-                setOfflineMode();
+                if (isLocalStorageAvailable()) {
+                    storageMode = 'local';
+                    setLocalStorageMode();
+                } else {
+                    storageMode = 'none';
+                    setOfflineMode();
+                }
             }
         }
 
         if (auth) {
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
-                if (user) {
+                if (user && storageMode === 'cloud') {
                     document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
                     document.getElementById('cloudIndicator').classList.add("connected");
+                    document.getElementById('cloudIndicator').classList.remove("local-storage");
                     document.getElementById('savePresetBtn').disabled = false;
                     document.getElementById('expertToggleBtn').disabled = false;
                     
@@ -614,26 +641,62 @@
                     setupPresetsListener();
                 } else {
                     if (unsubscribePresets) unsubscribePresets();
-                    document.getElementById('savePresetBtn').disabled = true;
+                    if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
                 }
             });
         }
 
-        function setOfflineMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal modus (Ingen sky)";
-            document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
+        function setLocalStorageMode() {
+            document.getElementById('cloudStatusText').textContent = "Lokal lagring (Nettleser)";
+            const ind = document.getElementById('cloudIndicator');
+            ind.classList.remove("connected");
+            ind.classList.add("local-storage");
             
-            // Knapp for å lagre til skyen gir en alert
+            document.getElementById('savePresetBtn').disabled = false;
+            document.getElementById('expertToggleBtn').disabled = false;
+            
+            // Hent innstillinger fra localStorage
+            try {
+                const savedExpertMode = localStorage.getItem('lydlab_expertMode');
+                if (savedExpertMode !== null) {
+                    setExpertMode(savedExpertMode === 'true', true);
+                }
+            } catch(e) {}
+            
+            // Hent presets fra localStorage
+            loadLocalPresets();
+        }
+
+        function loadLocalPresets() {
+            try {
+                const saved = localStorage.getItem('lydlab_presets');
+                if (saved) {
+                    userPresets = JSON.parse(saved);
+                } else {
+                    userPresets = {};
+                }
+                updatePresetDropdown();
+            } catch (e) {
+                console.warn("Klarte ikke å lese fra localStorage");
+                userPresets = {};
+            }
+        }
+
+        function setOfflineMode() {
+            document.getElementById('cloudStatusText').textContent = "Lokal modus (Ingen lagring)";
+            document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
+            document.getElementById('cloudIndicator').classList.remove("connected");
+            document.getElementById('cloudIndicator').classList.remove("local-storage");
+            
             const saveBtn = document.getElementById('savePresetBtn');
             saveBtn.disabled = false;
-            saveBtn.onclick = () => alert("Lagring til skyen krever at appen kjører i testmiljøet. Bruk 'Del / Importer' for å hente koden din i stedet!");
             
             // Ekspert-knappen skal alltid fungere
             document.getElementById('expertToggleBtn').disabled = false;
         }
 
         async function fetchSettings() {
-            if (!currentUser) return;
+            if (!currentUser || storageMode !== 'cloud') return;
             try {
                 const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
                 const docSnap = await getDoc(settingsRef);
@@ -647,7 +710,7 @@
         }
 
         function setupPresetsListener() {
-            if (!currentUser || !db) return;
+            if (!currentUser || !db || storageMode !== 'cloud') return;
             const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
             
             unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
@@ -706,11 +769,17 @@
                 }
             }
             
-            if (!skipStorage && currentUser && db) {
-                try {
-                    const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                    await setDoc(settingsRef, { isExpertMode: isExpert });
-                } catch (e) {}
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        await setDoc(settingsRef, { isExpertMode: isExpert });
+                    } catch (e) {}
+                } else if (storageMode === 'local') {
+                    try {
+                        localStorage.setItem('lydlab_expertMode', isExpert);
+                    } catch(e) {}
+                }
             }
             setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
         }
@@ -1043,11 +1112,11 @@
 
         // Modaler for lagring slettes ikke, men oppfører seg safe i Lokal modus
         function openSavePresetModal() {
-            if(!currentUser || !db) {
-                alert("For å lagre direkte til skyen må du kjøre laben i testmiljøet. Hvis du er på GitHub, bruk 'Del / Importer' for å ta kopi av teksten!");
+            if(storageMode === 'none') {
+                alert("For å lagre må du kjøre laben i et miljø som støtter lagring. Bruk 'Del / Importer' for å ta kopi av teksten!");
                 return;
             }
-            document.getElementById('presetModalTitle').innerText = "Lagre Preset i Skyen";
+            document.getElementById('presetModalTitle').innerText = storageMode === 'cloud' ? "Lagre Preset i Skyen" : "Lagre Preset Lokalt";
             document.getElementById('presetModalBody').innerHTML = `
                 <p style="margin-top: 0;">Skriv inn et navn på den nye lyden din:</p>
                 <input type="text" id="presetNameInput" placeholder="Min fete synthlyd..." style="width: 100%; padding: 10px; margin-bottom: 20px; background: #111; color: white; border: 1px solid #444; border-radius: 4px; font-family: inherit; font-size: 14px; outline: none;">
@@ -1062,8 +1131,8 @@
         }
 
         function openDeletePresetModal(name) {
-            if (!currentUser || !db) return;
-            document.getElementById('presetModalTitle').innerText = "Slett Preset fra Skyen";
+            if (storageMode === 'none') return;
+            document.getElementById('presetModalTitle').innerText = storageMode === 'cloud' ? "Slett Preset fra Skyen" : "Slett Lokal Preset";
             document.getElementById('presetModalBody').innerHTML = `
                 <p style="margin-top: 0;">Er du helt sikker på at du vil slette preset <strong>${name}</strong> permanent?</p>
                 <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px;">
@@ -1078,23 +1147,45 @@
 
         async function confirmSavePreset() {
             const name = document.getElementById('presetNameInput').value;
-            if (!name || name.trim() === "" || !currentUser || !db) return;
+            if (!name || name.trim() === "") return;
+            if (storageMode === 'cloud' && (!currentUser || !db)) return;
+            
             const presetName = name.trim();
             const state = getPresetState();
             pendingPresetSelection = "user|" + presetName;
-            try {
-                const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName);
-                await setDoc(presetRef, state);
-            } catch(e) {}
+            
+            if (storageMode === 'cloud') {
+                try {
+                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName);
+                    await setDoc(presetRef, state);
+                } catch(e) {}
+            } else if (storageMode === 'local') {
+                userPresets[presetName] = state;
+                try {
+                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
+                    updatePresetDropdown(pendingPresetSelection);
+                    pendingPresetSelection = null;
+                } catch (e) {
+                    alert("Klarte ikke å lagre i nettleseren. Kanskje lagringen er full?");
+                }
+            }
             closePresetModal();
         }
 
         async function confirmDeletePreset(name) {
-            if (!currentUser || !db) return;
-            try {
-                const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name);
-                await deleteDoc(presetRef);
-            } catch(e) {}
+            if (storageMode === 'cloud') {
+                if (!currentUser || !db) return;
+                try {
+                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name);
+                    await deleteDoc(presetRef);
+                } catch(e) {}
+            } else if (storageMode === 'local') {
+                delete userPresets[name];
+                try {
+                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
+                    updatePresetDropdown();
+                } catch(e) {}
+            }
             closePresetModal();
         }
 
