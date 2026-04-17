@@ -594,18 +594,29 @@
 
         // Hvis koden ligger i testmiljøet med database, koble til skyen.
         // Hvis ikke sjekker vi om nettleseren tillater lagring.
-        if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
-            storageMode = 'cloud';
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            initAuth();
-        } else if (isLocalStorageAvailable()) {
-            storageMode = 'local';
-            setLocalStorageMode();
-        } else {
-            storageMode = 'none';
-            setOfflineMode();
+        function startApp() {
+            if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
+                storageMode = 'cloud';
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                initAuth();
+            } else if (isLocalStorageAvailable()) {
+                storageMode = 'local';
+                setLocalStorageMode();
+            } else {
+                storageMode = 'none';
+                setOfflineMode();
+            }
+
+            // Hent presets og oppdater grafikken ETTER at lagringsmodus er satt
+            Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
+                drawVisualsStatic(); drawADSR();
+                const selectEl = document.getElementById('presetSelect');
+                if(selectEl.options.length > 0) {
+                    selectEl.dispatchEvent(new Event('change'));
+                }
+            });
         }
 
         async function initAuth() {
@@ -1981,14 +1992,10 @@
 
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         
-        Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
-            drawVisualsStatic(); drawADSR();
-            // NY KODE: Fyrer av valget automatisk slik at grafikken og lydene oppdaterer seg til første i lista
-            const selectEl = document.getElementById('presetSelect');
-            if(selectEl.options.length > 0) {
-                selectEl.dispatchEvent(new Event('change'));
-            }
-        });
+        // --- START APPLIKASJONEN ---
+        // Vi kaller oppstarten helt til slutt, slik at vi er sikre på at alle variabler 
+        // og DOM-elementer i filen er ferdig innlest i minnet først!
+        startApp();
         
         window.focus(); if (document.activeElement !== document.body) { document.body.focus(); }
 
