@@ -292,7 +292,7 @@
         <div class="preset-toolbar">
             <span style="font-size: 13px; font-weight: bold; color: var(--accent);">☁️ Presets:</span>
             <select id="presetSelect" class="preset-select">
-                <option value="">-- Velg eller lagre preset --</option>
+                <!-- Blank rad er nå fjernet for å bytte rett til første preset -->
                 <optgroup label="Eksterne presets (via lenke)" id="externalPresetsGroup" style="display: none;"></optgroup>
                 <optgroup label="Fabrikk-presets" id="factoryPresetsGroup"></optgroup>
                 <optgroup label="Dine lagrede (Sky)" id="userPresetsGroup"></optgroup>
@@ -823,6 +823,7 @@
             const factoryGroup = document.getElementById('factoryPresetsGroup');
             const userGroup = document.getElementById('userPresetsGroup');
             const externalGroup = document.getElementById('externalPresetsGroup');
+            const selectEl = document.getElementById('presetSelect');
             
             factoryGroup.innerHTML = '';
             userGroup.innerHTML = '';
@@ -854,11 +855,25 @@
                 userGroup.appendChild(opt);
             }
             
+            // Hvis det ble bedt om en spesifikk preset, sjekk om den finnes.
+            // Hvis ikke, fall tilbake til den aller første preseten i listen!
+            let found = false;
+            if (selectValue) {
+                for (let i = 0; i < selectEl.options.length; i++) {
+                    if (selectEl.options[i].value === selectValue) {
+                        found = true; break;
+                    }
+                }
+            }
+            
+            if (!found && selectEl.options.length > 0) {
+                selectValue = selectEl.options[0].value;
+            }
+            
             if(selectValue) {
-                document.getElementById('presetSelect').value = selectValue;
+                selectEl.value = selectValue;
                 document.getElementById('deletePresetBtn').style.display = selectValue.startsWith('user|') ? 'inline-block' : 'none';
             } else {
-                document.getElementById('presetSelect').value = "";
                 document.getElementById('deletePresetBtn').style.display = 'none';
             }
         }
@@ -870,16 +885,53 @@
             setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
 
+        // --- DIN NETTADRESSE FOR FABRIKK-PRESETS ---
+        // Appen vil alltid laste ned lydene fra denne lenken når den starter.
+        const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
+
         async function loadFactoryPresets() {
+            // Vi legger inn en standard-lyd som alltid er tilgjengelig, for sikkerhets skyld
+            factoryPresets = {
+                "Initiell Patch": {
+                    "wave": "sawtooth",
+                    "sliderValues": {
+                        "harmonicsSlider": "30", "oscMix": "100", "noiseMix": "0",
+                        "cutoff": "20000", "hpCutoff": "40",
+                        "envA": "0.1", "envD": "0.3", "envS": "0.5", "envR": "0.8",
+                        "lfoRate": "39.5", "lfoVibrato": "0", "lfoTremolo": "0", "lfoFilter": "0",
+                        "delayTime": "0.4", "delayFeedback": "40", "delayMix": "0",
+                        "reverbTime": "3.0", "reverbMix": "0"
+                    }
+                }
+            };
+            
             try {
-                // Laster automatisk filen "factory_presets.json" fra GitHub
-                const response = await fetch('factory_presets.json');
-                if (response.ok) {
-                    factoryPresets = await response.json();
-                    console.log("Suksess: Fabrikk-presets lastet inn fra lokal fil.");
+                if (FACTORY_PRESETS_URL) {
+                    let fetchUrl = FACTORY_PRESETS_URL;
+                    
+                    // Auto-fiks Dropbox-lenker i bakgrunnen (gjør om til direkte nedlasting)
+                    if (fetchUrl.includes('dropbox.com')) {
+                        try {
+                            let urlObj = new URL(fetchUrl);
+                            urlObj.hostname = 'dl.dropboxusercontent.com';
+                            urlObj.searchParams.delete('dl');
+                            fetchUrl = urlObj.toString();
+                        } catch(e) {
+                            fetchUrl = fetchUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+                        }
+                    }
+
+                    // Henter filen direkte fra Dropbox
+                    const response = await fetch(fetchUrl);
+                    if (response.ok) {
+                        const loadedPresets = await response.json();
+                        // Slår sammen den innebygde lyden med dine Dropbox-lyder
+                        factoryPresets = { ...factoryPresets, ...loadedPresets };
+                        console.log("Suksess: Fabrikk-presets lastet automatisk inn fra Dropbox!");
+                    }
                 }
             } catch (error) {
-                console.warn("Merk: Fant ikke factory_presets.json. Kjører uten fabrikklyder.");
+                console.warn("Merk: Klarte ikke hente presets fra lenken. Bruker kun innebygd lyd.", error);
             }
             updatePresetDropdown();
         }
@@ -1333,6 +1385,26 @@
             
             if (e.key === 'ArrowLeft') { document.getElementById('octDownBtn').click(); return; }
             if (e.key === 'ArrowRight') { document.getElementById('octUpBtn').click(); return; }
+            
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault(); 
+                const select = document.getElementById('presetSelect');
+                if (select.options.length <= 0) return; 
+                
+                let idx = select.selectedIndex;
+                if (e.key === 'ArrowUp') {
+                    if (idx > 0) idx--;
+                } else if (e.key === 'ArrowDown') {
+                    if (idx < select.options.length - 1) idx++;
+                    else if (idx === -1) idx = 0; 
+                }
+                
+                if (idx !== select.selectedIndex) {
+                    select.selectedIndex = idx;
+                    select.dispatchEvent(new Event('change'));
+                }
+                return;
+            }
             
             const key = e.key.toLowerCase();
             if (keyMap[key]) {
@@ -1813,9 +1885,10 @@
         
         Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
             drawVisualsStatic(); drawADSR();
-            if (factoryPresets["Initiell Patch"]) {
-                applyPresetState(factoryPresets["Initiell Patch"]);
-                document.getElementById('presetSelect').value = "factory|Initiell Patch";
+            // NY KODE: Fyrer av valget automatisk slik at grafikken og lydene oppdaterer seg til første i lista
+            const selectEl = document.getElementById('presetSelect');
+            if(selectEl.options.length > 0) {
+                selectEl.dispatchEvent(new Event('change'));
             }
         });
         
