@@ -130,12 +130,19 @@
         .explanation {
             background: rgba(255, 123, 0, 0.1); border-left: 3px solid var(--accent);
             padding: 8px 12px; font-size: 12px; line-height: 1.4; border-radius: 0 4px 4px 0;
+            height: 60px; /* LÅST HØYDE: Hindrer at boksen vokser/krymper med ulik tekstlengde */
+            overflow-y: auto; /* Tillater scrolling hvis teksten er veldig lang */
         }
 
         .slider-group {
             display: flex; flex-direction: column; gap: 4px; background: #222;
             padding: 10px 12px; border-radius: 6px; border: 1px solid #333;
         }
+        
+        #autoHarmonicsGroup, #manualHarmonicsGroup {
+            height: 135px; /* LÅST HØYDE: Tvinger begge menyene til å ta nøyaktig samme plass */
+        }
+        
         .slider-group.filter-group { border-color: var(--filter-color); background: rgba(231, 76, 60, 0.05); }
         .slider-group.env-group { border-color: var(--env-color); background: rgba(155, 89, 182, 0.05); }
         .slider-group.lfo-group { border-color: var(--lfo-color); background: rgba(241, 196, 15, 0.05); }
