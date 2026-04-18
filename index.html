@@ -212,6 +212,7 @@
         .midi-status-container { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; font-weight: normal; margin-left: 10px; }
         .midi-light { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: all 0.3s ease; }
         .midi-light.active { background-color: #2ecc71; box-shadow: 0 0 6px rgba(46, 204, 113, 0.6); }
+        .pedal-indicator { display: none; font-size: 10px; font-weight: bold; color: var(--delay-color); border: 1px solid var(--delay-color); padding: 1px 4px; border-radius: 3px; }
 
         .piano-actions { display: flex; gap: 15px; align-items: center; }
         .octave-controls { display: flex; gap: 8px; align-items: center; }
@@ -497,7 +498,10 @@
 
         <div class="piano-toolbar">
             <span class="piano-title">🎹 Tangentbord 
-                <span class="midi-status-container">MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span></span>
+                <span class="midi-status-container">
+                    MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span>
+                    <span id="sustainIndicator" class="pedal-indicator">PEDAL</span>
+                </span>
                 <span id="toolbarFreqVal" style="color: var(--sine-color); font-family: monospace; font-size: 13px; font-weight: normal; background: #222; padding: 2px 6px; border-radius: 4px; margin-left: 10px; border: 1px solid #444;">261.6 Hz</span>
             </span>
             <div class="piano-actions">
@@ -566,7 +570,7 @@
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- SKUDDSIKKER CLOUD-SJEKK (Hindrer krasj på GitHub) ---
+        // --- SKUDDSIKKER CLOUD-SJEKK ---
         let firebaseConfig = null;
         try {
             if (typeof __firebase_config !== 'undefined') {
@@ -592,8 +596,6 @@
             }
         }
 
-        // Hvis koden ligger i testmiljøet med database, koble til skyen.
-        // Hvis ikke sjekker vi om nettleseren tillater lagring.
         function startApp() {
             if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
                 storageMode = 'cloud';
@@ -601,7 +603,6 @@
                 auth = getAuth(app);
                 db = getFirestore(app);
                 
-                // NY PLASSERING: Vi setter opp lytteren så snart vi har 'auth'
                 onAuthStateChanged(auth, (user) => {
                     currentUser = user;
                     if (user && storageMode === 'cloud') {
@@ -628,7 +629,6 @@
                 setOfflineMode();
             }
 
-            // Hent presets og oppdater grafikken ETTER at lagringsmodus er satt
             Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
                 drawVisualsStatic(); drawADSR();
                 const selectEl = document.getElementById('presetSelect');
@@ -666,7 +666,6 @@
             document.getElementById('savePresetBtn').disabled = false;
             document.getElementById('expertToggleBtn').disabled = false;
             
-            // Hent innstillinger fra localStorage
             try {
                 const savedExpertMode = localStorage.getItem('lydlab_expertMode');
                 if (savedExpertMode !== null) {
@@ -674,7 +673,6 @@
                 }
             } catch(e) {}
             
-            // Hent presets fra localStorage
             loadLocalPresets();
         }
 
@@ -702,7 +700,6 @@
             const saveBtn = document.getElementById('savePresetBtn');
             saveBtn.disabled = false;
             
-            // Ekspert-knappen skal alltid fungere
             document.getElementById('expertToggleBtn').disabled = false;
         }
 
@@ -942,8 +939,6 @@
                 userGroup.appendChild(opt);
             }
             
-            // Hvis det ble bedt om en spesifikk preset, sjekk om den finnes.
-            // Hvis ikke, fall tilbake til den aller første preseten i listen!
             let found = false;
             if (selectValue) {
                 for (let i = 0; i < selectEl.options.length; i++) {
@@ -972,12 +967,9 @@
             setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
 
-        // --- DIN NETTADRESSE FOR FABRIKK-PRESETS ---
-        // Appen vil alltid laste ned lydene fra denne lenken når den starter.
         const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
 
         async function loadFactoryPresets() {
-            // Vi legger inn en standard-lyd som alltid er tilgjengelig, for sikkerhets skyld
             factoryPresets = {
                 "Initiell Patch": {
                     "wave": "sawtooth",
@@ -995,8 +987,6 @@
             try {
                 if (FACTORY_PRESETS_URL) {
                     let fetchUrl = FACTORY_PRESETS_URL;
-                    
-                    // Auto-fiks Dropbox-lenker i bakgrunnen (gjør om til direkte nedlasting)
                     if (fetchUrl.includes('dropbox.com')) {
                         try {
                             let urlObj = new URL(fetchUrl);
@@ -1008,13 +998,10 @@
                         }
                     }
 
-                    // Henter filen direkte fra Dropbox
                     const response = await fetch(fetchUrl);
                     if (response.ok) {
                         const loadedPresets = await response.json();
-                        // Slår sammen den innebygde lyden med dine Dropbox-lyder
                         factoryPresets = { ...factoryPresets, ...loadedPresets };
-                        console.log("Suksess: Fabrikk-presets lastet automatisk inn fra Dropbox!");
                     }
                 }
             } catch (error) {
@@ -1055,7 +1042,6 @@
             if (presetsUrl) {
                 try {
                     await fetchExternalUrl(presetsUrl);
-                    console.log(`Suksess: Lastet inn presets fra URL.`);
                 } catch (error) {
                     showErrorBanner("Klarte ikke å hente inn presets fra URL-en. Sjekk at lenken peker til en gyldig fil.");
                 }
@@ -1121,7 +1107,6 @@
             e.target.blur(); 
         });
 
-        // Modaler for lagring slettes ikke, men oppfører seg safe i Lokal modus
         function openSavePresetModal() {
             if(storageMode === 'none') {
                 alert("For å lagre må du kjøre laben i et miljø som støtter lagring. Bruk 'Del / Importer' for å ta kopi av teksten!");
@@ -1177,7 +1162,7 @@
                     updatePresetDropdown(pendingPresetSelection);
                     pendingPresetSelection = null;
                 } catch (e) {
-                    alert("Klarte ikke å lagre i nettleseren. Kanskje lagringen er full?");
+                    alert("Klarte ikke å lagre i nettleseren.");
                 }
             }
             closePresetModal();
@@ -1311,6 +1296,7 @@
         let pcOctaveShift = 0;
         let displayMode = 'pc';
         let isPolyphonic = true;
+        let isSustainPedalDown = false; // SUSTAIN PEDAL STATUS
 
         let adsr = { a: 0.1, d: 0.3, s: 0.5, r: 0.8 };
         let lfo = { rate: 5.0, vibrato: 0, tremolo: 0, filterMod: 0 };
@@ -1330,7 +1316,6 @@
         let activeNotes = [];
         let activeVoices = {};
 
-        // Fyldige beskrivelser for Montessori-elever:
         const explanations = {
             sawtooth: "<strong>Sagtann (Sawtooth):</strong> Inneholder <em>alle</em> overtoner i en jevn, synkende rekke. Dette gir en rik, skarp og fyldig klang som ofte brukes for å etterligne strykere, blåsere eller fete synth-leads.",
             square: "<strong>Firkant (Square):</strong> Inneholder kun <em>oddetalls-overtoner</em> (1, 3, 5, 7...). Dette gir en hul, litt 'treaktig' klang som kan minne om en klarinett, eller musikken fra gamle 8-bit TV-spill (som Nintendo).",
@@ -1486,6 +1471,23 @@
             pcOctaveShift = Math.min(1, pcOctaveShift + 1); document.getElementById('octaveDisplay').textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift; renderPianoLabels();
         });
 
+        // AUTOPLAY FIX: Åpner AudioContext ved første klikk/tastaturtrykk
+        function unlockAudioContext() {
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            } else if (!audioCtx) {
+                initAudio();
+                if(audioCtx.state === 'suspended') audioCtx.resume();
+            }
+            window.removeEventListener('mousedown', unlockAudioContext);
+            window.removeEventListener('keydown', unlockAudioContext);
+            window.removeEventListener('touchstart', unlockAudioContext);
+        }
+        
+        window.addEventListener('mousedown', unlockAudioContext);
+        window.addEventListener('keydown', unlockAudioContext);
+        window.addEventListener('touchstart', unlockAudioContext);
+
         window.addEventListener('keydown', (e) => {
             if (e.repeat) return;
             const targetTag = e.target.tagName.toLowerCase();
@@ -1571,30 +1573,49 @@
         }
 
         function onMIDIMessage(event) {
-            const [command, note, velocity] = event.data;
-            const isNoteOn = command >= 144 && command <= 159;
-            const isNoteOff = command >= 128 && command <= 143 || (isNoteOn && velocity === 0);
+            const [command, data1, data2] = event.data;
+            const statusNibble = command & 0xf0;
 
-            if (isNoteOn && velocity > 0) {
-                const freq = 440 * Math.pow(2, (note - 69) / 12);
-                const noteId = 'M' + note;
-                activeMidiNotes[note] = noteId;
+            const isNoteOn = statusNibble === 144 && data2 > 0;
+            const isNoteOff = statusNibble === 128 || (statusNibble === 144 && data2 === 0);
+            const isControlChange = statusNibble === 176;
+
+            if (isNoteOn) {
+                const freq = 440 * Math.pow(2, (data1 - 69) / 12);
+                const noteId = 'M' + data1;
+                activeMidiNotes[data1] = noteId;
                 let visualNoteStr = null;
-                if (note >= 48 && note <= 84) {
+                if (data1 >= 48 && data1 <= 84) {
                     const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-                    visualNoteStr = noteNames[note % 12] + (Math.floor(note / 12) - 1);
+                    visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
                 }
                 triggerNotePress(freq, visualNoteStr || noteId);
             } else if (isNoteOff) {
-                const noteId = activeMidiNotes[note];
+                const noteId = activeMidiNotes[data1];
                 if (noteId) {
                     let visualNoteStr = null;
-                    if (note >= 48 && note <= 84) {
+                    if (data1 >= 48 && data1 <= 84) {
                         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-                        visualNoteStr = noteNames[note % 12] + (Math.floor(note / 12) - 1);
+                        visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
                     }
                     triggerNoteRelease(visualNoteStr || noteId);
-                    delete activeMidiNotes[note];
+                    delete activeMidiNotes[data1];
+                }
+            } else if (isControlChange && data1 === 64) {
+                // Sustain / Damper Pedal
+                isSustainPedalDown = (data2 >= 64);
+                const sustainInd = document.getElementById('sustainIndicator');
+                if (isSustainPedalDown) {
+                    sustainInd.style.display = 'inline-block';
+                } else {
+                    sustainInd.style.display = 'none';
+                    // Sjekk hvilke toner som kan slippes (som ikke lenger holdes nede manuelt)
+                    for (let vid in activeVoices) {
+                        if (!activeVoices[vid].isKeyHeld) stopVoice(vid);
+                    }
+                    if (!isPolyphonic && activeVoices['mono'] && !activeVoices['mono'].isKeyHeld) {
+                        if (activeNotes.length === 0) stopVoice('mono');
+                    }
                 }
             }
         }
@@ -1609,13 +1630,19 @@
             if (keyEl) keyEl.classList.add('active');
 
             if (isPolyphonic) {
+                if(activeVoices[noteId]) stopVoice(noteId, true); // Avbryt brutalt hvis tonen allerede spilles og ligger på sustain
                 startVoice(freq, noteId);
+                if (activeVoices[noteId]) activeVoices[noteId].isKeyHeld = true;
             } else {
                 if (activeNotes.length === 1) {
                     startVoice(freq, 'mono');
+                    if (activeVoices['mono']) activeVoices['mono'].isKeyHeld = true;
                 } else {
                     let monoVoice = activeVoices['mono'];
-                    if (monoVoice && monoVoice.osc) monoVoice.osc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.02);
+                    if (monoVoice && monoVoice.osc) {
+                        monoVoice.osc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.02);
+                        monoVoice.isKeyHeld = true;
+                    }
                 }
             }
         }
@@ -1626,16 +1653,25 @@
             if (keyEl) keyEl.classList.remove('active');
 
             if (isPolyphonic) {
-                stopVoice(noteId);
+                if (activeVoices[noteId]) activeVoices[noteId].isKeyHeld = false;
+                if (!isSustainPedalDown) {
+                    stopVoice(noteId);
+                }
             } else {
+                if (activeVoices['mono']) activeVoices['mono'].isKeyHeld = false;
                 if (activeNotes.length > 0) {
                     let lastNote = activeNotes[activeNotes.length - 1];
                     fundamentalFreq = lastNote.freq;
                     document.getElementById('toolbarFreqVal').textContent = fundamentalFreq.toFixed(1) + " Hz";
                     let monoVoice = activeVoices['mono'];
-                    if (monoVoice && monoVoice.osc) monoVoice.osc.frequency.setTargetAtTime(fundamentalFreq, audioCtx.currentTime, 0.02);
+                    if (monoVoice && monoVoice.osc) {
+                        monoVoice.osc.frequency.setTargetAtTime(fundamentalFreq, audioCtx.currentTime, 0.02);
+                        monoVoice.isKeyHeld = true; 
+                    }
                 } else {
-                    stopVoice('mono');
+                    if (!isSustainPedalDown) {
+                        stopVoice('mono');
+                    }
                 }
             }
         }
@@ -1811,13 +1847,13 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 masterOutput = audioCtx.createGain(); 
-                masterOutput.gain.value = 0.55; // Redusert fra 1.0 for mye bedre headroom for polyfoni
+                masterOutput.gain.value = 0.55; 
                 
                 let limiter = audioCtx.createDynamicsCompressor();
-                limiter.threshold.value = -14; // Fanger toppene tidlig
+                limiter.threshold.value = -14; 
                 limiter.knee.value = 8; 
-                limiter.ratio.value = 20; // Høy ratio for å fungere som en limiter
-                limiter.attack.value = 0.002; // Lynrask attack
+                limiter.ratio.value = 20; 
+                limiter.attack.value = 0.002; 
                 limiter.release.value = 0.1;
                 
                 masterOutput.connect(limiter);
@@ -1875,7 +1911,19 @@
         }
 
         function startVoice(freq, voiceId) {
-            initAudio(); audioCtx.resume();
+            initAudio(); 
+            
+            // Fiks for browserens Autoplay-Policy:
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().then(() => {
+                    if (audioCtx.state === 'suspended') {
+                        showErrorBanner("Lydmotoren er blokkert av nettleseren. Klikk hvor som helst på siden for å aktivere lyden fra MIDI-keyboardet ditt.");
+                    }
+                }).catch(e => {
+                    showErrorBanner("Lydmotoren er blokkert av nettleseren. Klikk hvor som helst på siden for å aktivere lyden fra MIDI-keyboardet ditt.");
+                });
+            }
+
             if (activeVoices[voiceId]) stopVoice(voiceId, true);
 
             let osc = audioCtx.createOscillator();
@@ -1897,12 +1945,12 @@
             osc.start(); nSource.start();
 
             const now = audioCtx.currentTime; 
-            const envPeak = 0.35; // Senket fra 0.5 for tryggere gain-staging
+            const envPeak = 0.35; 
             vEnvGain.gain.cancelScheduledValues(now); vEnvGain.gain.setValueAtTime(0, now);
             vEnvGain.gain.linearRampToValueAtTime(envPeak, now + adsr.a); 
             vEnvGain.gain.exponentialRampToValueAtTime(Math.max(envPeak * adsr.s, 0.0001), now + adsr.a + adsr.d);
 
-            activeVoices[voiceId] = { osc, oscGain, nSource, nGain, vEnvGain, timeout: null };
+            activeVoices[voiceId] = { osc, oscGain, nSource, nGain, vEnvGain, timeout: null, isKeyHeld: true };
             isPlaying = isSounding = true;
             if (!animationFrameId) drawVisualsDynamic();
         }
@@ -1998,9 +2046,6 @@
 
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         
-        // --- START APPLIKASJONEN ---
-        // Vi kaller oppstarten helt til slutt, slik at vi er sikre på at alle variabler 
-        // og DOM-elementer i filen er ferdig innlest i minnet først!
         startApp();
         
         window.focus(); if (document.activeElement !== document.body) { document.body.focus(); }
