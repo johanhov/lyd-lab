@@ -22,7 +22,7 @@
             "reverbMix": "0"
         }
     },
-    "Svevende Pad (Cinematic)": {
+    "Svevende Pad": {
         "wave": "triangle",
         "sliderValues": {
             "harmonicsSlider": "6",
@@ -41,8 +41,8 @@
             "delayTime": "0.6",
             "delayFeedback": "55",
             "delayMix": "35",
-            "reverbTime": "6.0",
-            "reverbMix": "45"
+            "reverbTime": "1.7",
+            "reverbMix": "13"
         }
     },
     "Dataspill": {
