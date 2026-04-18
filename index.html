@@ -1810,13 +1810,18 @@
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                masterOutput = audioCtx.createGain(); masterOutput.gain.value = 1.0; 
+                masterOutput = audioCtx.createGain(); 
+                masterOutput.gain.value = 0.55; // Redusert fra 1.0 for mye bedre headroom for polyfoni
                 
-                let compressor = audioCtx.createDynamicsCompressor();
-                compressor.threshold.value = -12; compressor.knee.value = 30; compressor.ratio.value = 12;
-                compressor.attack.value = 0.005; compressor.release.value = 0.1;
-                compressor.connect(audioCtx.destination);
-                masterOutput.connect(compressor);
+                let limiter = audioCtx.createDynamicsCompressor();
+                limiter.threshold.value = -14; // Fanger toppene tidlig
+                limiter.knee.value = 8; 
+                limiter.ratio.value = 20; // Høy ratio for å fungere som en limiter
+                limiter.attack.value = 0.002; // Lynrask attack
+                limiter.release.value = 0.1;
+                
+                masterOutput.connect(limiter);
+                limiter.connect(audioCtx.destination);
                 
                 delayNode = audioCtx.createDelay(3.0); delayNode.delayTime.value = delayConfig.time;
                 delayFeedbackGain = audioCtx.createGain(); delayFeedbackGain.gain.value = delayConfig.feedback;
@@ -1892,9 +1897,10 @@
             osc.start(); nSource.start();
 
             const now = audioCtx.currentTime; 
+            const envPeak = 0.35; // Senket fra 0.5 for tryggere gain-staging
             vEnvGain.gain.cancelScheduledValues(now); vEnvGain.gain.setValueAtTime(0, now);
-            vEnvGain.gain.linearRampToValueAtTime(0.5, now + adsr.a); 
-            vEnvGain.gain.exponentialRampToValueAtTime(Math.max(0.5 * adsr.s, 0.0001), now + adsr.a + adsr.d);
+            vEnvGain.gain.linearRampToValueAtTime(envPeak, now + adsr.a); 
+            vEnvGain.gain.exponentialRampToValueAtTime(Math.max(envPeak * adsr.s, 0.0001), now + adsr.a + adsr.d);
 
             activeVoices[voiceId] = { osc, oscGain, nSource, nGain, vEnvGain, timeout: null };
             isPlaying = isSounding = true;
