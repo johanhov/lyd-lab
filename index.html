@@ -568,7 +568,6 @@
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- SKUDDSIKKER CLOUD-SJEKK ---
         let firebaseConfig = null;
         try {
             if (typeof __firebase_config !== 'undefined') {
@@ -581,7 +580,7 @@
         let currentUser = null;
         let unsubscribePresets = null;
         let pendingPresetSelection = null; 
-        let storageMode = 'none'; // 'cloud', 'local', 'none'
+        let storageMode = 'none';
         
         function isLocalStorageAvailable() {
             try {
@@ -644,7 +643,7 @@
                     await signInAnonymously(auth);
                 }
             } catch (error) {
-                console.error("Autentiseringsfeil mot skyen:", error);
+                console.error("Autentiseringsfeil:", error);
                 if (isLocalStorageAvailable()) {
                     storageMode = 'local';
                     setLocalStorageMode();
@@ -684,7 +683,6 @@
                 }
                 updatePresetDropdown();
             } catch (e) {
-                console.warn("Klarte ikke å lese fra localStorage");
                 userPresets = {};
             }
         }
@@ -1384,10 +1382,11 @@
 
             if (group.white.key) keyMap[group.white.key] = { note: group.white.note, freq: group.white.freq };
 
-            whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
+            // Legger på default velocity (100) ved museklikk
+            whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note, 100); });
             whiteEl.addEventListener('mouseup', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
             whiteEl.addEventListener('mouseleave', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
-            whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
+            whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note, 100); });
             whiteEl.addEventListener('touchend', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
 
             groupEl.appendChild(whiteEl);
@@ -1400,10 +1399,10 @@
 
                 if (group.black.key) keyMap[group.black.key] = { note: group.black.note, freq: group.black.freq };
 
-                blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
+                blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note, 100); });
                 blackEl.addEventListener('mouseup', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
                 blackEl.addEventListener('mouseleave', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
-                blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
+                blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note, 100); });
                 blackEl.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
 
                 groupEl.appendChild(blackEl);
@@ -1471,7 +1470,6 @@
             pcOctaveShift = Math.min(1, pcOctaveShift + 1); document.getElementById('octaveDisplay').textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift; renderPianoLabels();
         });
 
-        // AUTOPLAY FIX: Åpner AudioContext ved første klikk/tastaturtrykk
         let hasUnlockedAudio = false;
         function unlockAudioContext() {
             if (hasUnlockedAudio) return;
@@ -1526,7 +1524,7 @@
                 let targetNote = getShiftedNoteName(keyMap[key].note, pcOctaveShift);
                 let targetFreq = keyMap[key].freq * Math.pow(2, pcOctaveShift);
                 activePcKeys[key] = { note: targetNote, freq: targetFreq };
-                triggerNotePress(targetFreq, targetNote);
+                triggerNotePress(targetFreq, targetNote, 100); // Standard PC velocity
             }
         });
 
@@ -1580,12 +1578,12 @@
             const [command, data1, data2] = event.data;
             const statusNibble = command & 0xf0;
 
-            const isNoteOn = statusNibble === 144 && data2 > 0;
-            const isNoteOff = statusNibble === 128 || (statusNibble === 144 && data2 === 0);
+            const velocity = data2;
+            const isNoteOn = statusNibble === 144 && velocity > 0;
+            const isNoteOff = statusNibble === 128 || (statusNibble === 144 && velocity === 0);
             const isControlChange = statusNibble === 176;
 
             if (isNoteOn) {
-                // Sjekk om nettleseren har blokkert lyden *før* vi prøver å spille
                 if (!hasUnlockedAudio || !audioCtx || audioCtx.state === 'suspended') {
                     showErrorBanner("🔇 Lydmotoren sover (sikkerhetsfunksjon i nettleseren). Klikk hvor som helst på siden med musen for å vekke den!");
                 }
@@ -1598,7 +1596,10 @@
                     const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
                     visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
                 }
-                triggerNotePress(freq, visualNoteStr || noteId);
+                
+                // Sender inn velocity fra MIDI-keyboardet
+                triggerNotePress(freq, visualNoteStr || noteId, velocity);
+                
             } else if (isNoteOff) {
                 const noteId = activeMidiNotes[data1];
                 if (noteId) {
@@ -1611,10 +1612,8 @@
                     delete activeMidiNotes[data1];
                 }
             } else if (isControlChange && data1 === 64) {
-                // Sustain / Damper Pedal
                 isSustainPedalDown = (data2 >= 64);
                 if (!isSustainPedalDown) {
-                    // Sjekk hvilke toner som kan slippes (som ikke lenger holdes nede manuelt)
                     for (let vid in activeVoices) {
                         if (!activeVoices[vid].isKeyHeld) stopVoice(vid);
                     }
@@ -1625,9 +1624,10 @@
             }
         }
 
-        function triggerNotePress(freq, noteId) {
+        // Oppdatert for å ta imot velocity parameter (standard er 100 hvis den mangler)
+        function triggerNotePress(freq, noteId, velocity = 100) {
             activeNotes = activeNotes.filter(n => n.id !== noteId);
-            activeNotes.push({ id: noteId, freq: freq });
+            activeNotes.push({ id: noteId, freq: freq, velocity: velocity });
             fundamentalFreq = freq;
             document.getElementById('toolbarFreqVal').textContent = freq.toFixed(1) + " Hz";
 
@@ -1635,12 +1635,12 @@
             if (keyEl) keyEl.classList.add('active');
 
             if (isPolyphonic) {
-                if(activeVoices[noteId]) stopVoice(noteId, true); // Avbryt brutalt hvis tonen allerede spilles og ligger på sustain
-                startVoice(freq, noteId);
+                if(activeVoices[noteId]) stopVoice(noteId, true); 
+                startVoice(freq, noteId, velocity); // Sender velocity videre
                 if (activeVoices[noteId]) activeVoices[noteId].isKeyHeld = true;
             } else {
                 if (activeNotes.length === 1) {
-                    startVoice(freq, 'mono');
+                    startVoice(freq, 'mono', velocity);
                     if (activeVoices['mono']) activeVoices['mono'].isKeyHeld = true;
                 } else {
                     let monoVoice = activeVoices['mono'];
@@ -1915,7 +1915,8 @@
             if (lfoFilterGain) lfoFilterGain.gain.setTargetAtTime(lfo.filterMod, audioCtx.currentTime, 0.01);
         }
 
-        function startVoice(freq, voiceId) {
+        // --- VELOCITY IMPLEMENTERING ---
+        function startVoice(freq, voiceId, velocity = 100) {
             initAudio(); 
             
             if (activeVoices[voiceId]) stopVoice(voiceId, true);
@@ -1939,7 +1940,14 @@
             osc.start(); nSource.start();
 
             const now = audioCtx.currentTime; 
-            const envPeak = 0.35; 
+            
+            // Mapper velocity (0-127) til envelope peak med en eksponentiell kurve (gir ekte piano/synth-feel)
+            const normalizedVelocity = velocity / 127;
+            const velocityCurve = Math.pow(normalizedVelocity, 1.5); 
+            
+            // Grunnvolumet er 0.35 på fullt anslag. Minste volum settes til ca. 1.5% så det aldri er helt tyst.
+            const envPeak = 0.35 * Math.max(0.015, velocityCurve); 
+
             vEnvGain.gain.cancelScheduledValues(now); vEnvGain.gain.setValueAtTime(0, now);
             vEnvGain.gain.linearRampToValueAtTime(envPeak, now + adsr.a); 
             vEnvGain.gain.exponentialRampToValueAtTime(Math.max(envPeak * adsr.s, 0.0001), now + adsr.a + adsr.d);
