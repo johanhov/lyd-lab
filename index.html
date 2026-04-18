@@ -260,7 +260,7 @@
         .modal-title { color: var(--accent); margin-top: 0; font-size: 20px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px; }
         .error-banner {
             background-color: rgba(231, 76, 60, 0.1); border: 1px solid #e74c3c; color: #e74c3c;
-            padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; display: none;
+            padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; display: none; font-weight: 500;
         }
 
         @media (max-width: 900px) {
@@ -958,11 +958,13 @@
             }
         }
 
+        let errorBannerTimeout = null;
         function showErrorBanner(message) {
             const banner = document.getElementById('urlErrorBanner');
             banner.textContent = message;
             banner.style.display = 'block';
-            setTimeout(() => { banner.style.display = 'none'; }, 8000);
+            if(errorBannerTimeout) clearTimeout(errorBannerTimeout);
+            errorBannerTimeout = setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
 
         const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
@@ -1470,13 +1472,17 @@
         });
 
         // AUTOPLAY FIX: Åpner AudioContext ved første klikk/tastaturtrykk
+        let hasUnlockedAudio = false;
         function unlockAudioContext() {
+            if (hasUnlockedAudio) return;
             if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
             } else if (!audioCtx) {
                 initAudio();
                 if(audioCtx.state === 'suspended') audioCtx.resume();
             }
+            hasUnlockedAudio = true;
+            document.getElementById('urlErrorBanner').style.display = 'none';
             window.removeEventListener('mousedown', unlockAudioContext);
             window.removeEventListener('keydown', unlockAudioContext);
             window.removeEventListener('touchstart', unlockAudioContext);
@@ -1579,6 +1585,11 @@
             const isControlChange = statusNibble === 176;
 
             if (isNoteOn) {
+                // Sjekk om nettleseren har blokkert lyden *før* vi prøver å spille
+                if (!hasUnlockedAudio || !audioCtx || audioCtx.state === 'suspended') {
+                    showErrorBanner("🔇 Lydmotoren sover (sikkerhetsfunksjon i nettleseren). Klikk hvor som helst på siden med musen for å vekke den!");
+                }
+
                 const freq = 440 * Math.pow(2, (data1 - 69) / 12);
                 const noteId = 'M' + data1;
                 activeMidiNotes[data1] = noteId;
@@ -1907,17 +1918,6 @@
         function startVoice(freq, voiceId) {
             initAudio(); 
             
-            // Fiks for browserens Autoplay-Policy:
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume().then(() => {
-                    if (audioCtx.state === 'suspended') {
-                        showErrorBanner("Lydmotoren er blokkert av nettleseren. Klikk hvor som helst på siden for å aktivere lyden fra MIDI-keyboardet ditt.");
-                    }
-                }).catch(e => {
-                    showErrorBanner("Lydmotoren er blokkert av nettleseren. Klikk hvor som helst på siden for å aktivere lyden fra MIDI-keyboardet ditt.");
-                });
-            }
-
             if (activeVoices[voiceId]) stopVoice(voiceId, true);
 
             let osc = audioCtx.createOscillator();
