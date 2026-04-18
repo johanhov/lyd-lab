@@ -212,7 +212,6 @@
         .midi-status-container { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; font-weight: normal; margin-left: 10px; }
         .midi-light { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: all 0.3s ease; }
         .midi-light.active { background-color: #2ecc71; box-shadow: 0 0 6px rgba(46, 204, 113, 0.6); }
-        .pedal-indicator { display: none; font-size: 10px; font-weight: bold; color: var(--delay-color); border: 1px solid var(--delay-color); padding: 1px 4px; border-radius: 3px; }
 
         .piano-actions { display: flex; gap: 15px; align-items: center; }
         .octave-controls { display: flex; gap: 8px; align-items: center; }
@@ -500,7 +499,6 @@
             <span class="piano-title">🎹 Tangentbord 
                 <span class="midi-status-container">
                     MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span>
-                    <span id="sustainIndicator" class="pedal-indicator">PEDAL</span>
                 </span>
                 <span id="toolbarFreqVal" style="color: var(--sine-color); font-family: monospace; font-size: 13px; font-weight: normal; background: #222; padding: 2px 6px; border-radius: 4px; margin-left: 10px; border: 1px solid #444;">261.6 Hz</span>
             </span>
@@ -1604,11 +1602,7 @@
             } else if (isControlChange && data1 === 64) {
                 // Sustain / Damper Pedal
                 isSustainPedalDown = (data2 >= 64);
-                const sustainInd = document.getElementById('sustainIndicator');
-                if (isSustainPedalDown) {
-                    sustainInd.style.display = 'inline-block';
-                } else {
-                    sustainInd.style.display = 'none';
+                if (!isSustainPedalDown) {
                     // Sjekk hvilke toner som kan slippes (som ikke lenger holdes nede manuelt)
                     for (let vid in activeVoices) {
                         if (!activeVoices[vid].isKeyHeld) stopVoice(vid);
