@@ -23,7 +23,9 @@
             --master-color: #2ecc71;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,7 +39,9 @@
             outline: none;
         }
 
-        body:not(.expert-mode) .expert-only { display: none !important; }
+        body:not(.expert-mode) .expert-only {
+            display: none !important;
+        }
 
         .container {
             max-width: 1200px;
@@ -47,10 +51,25 @@
             gap: 12px;
         }
 
-        .header { display: flex; flex-direction: column; gap: 4px; }
-        h1 { margin: 0; color: var(--accent); font-weight: 600; font-size: 24px; }
-        p.intro { margin: 0; color: var(--text-muted); font-size: 13px; }
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
 
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        p.intro {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        
         .cloud-status {
             font-size: 11px;
             color: #888;
@@ -59,96 +78,194 @@
             gap: 5px;
             margin-top: -2px;
         }
-
+        
         .cloud-indicator {
-            width: 8px; height: 8px; border-radius: 50%; background-color: #f39c12;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #f39c12; 
         }
-
+        
         .cloud-indicator.connected {
-            background-color: #2ecc71; box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+            background-color: #2ecc71;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
         }
-
+        
         .cloud-indicator.local-storage {
-            background-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+            background-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
         }
 
         .preset-toolbar {
-            display: flex; align-items: center; gap: 12px;
-            background-color: var(--panel-bg); padding: 10px 15px;
-            border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border: 1px solid #333; flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--panel-bg);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+            flex-wrap: wrap;
         }
 
         .preset-select {
-            flex: 1; min-width: 180px; max-width: 250px;
-            background: #111; color: var(--text-main); border: 1px solid #444;
-            padding: 6px 10px; border-radius: 4px; font-family: inherit;
-            font-size: 13px; outline: none; cursor: pointer;
+            flex: 1;
+            min-width: 180px;
+            max-width: 250px;
+            background: #111;
+            color: var(--text-main);
+            border: 1px solid #444;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
         }
-
-        .preset-select:focus { border-color: var(--accent); }
+        
+        .preset-select:focus {
+            border-color: var(--accent);
+        }
 
         .preset-btn {
-            background-color: #3a3a3a; color: var(--text-main); border: none;
-            padding: 6px 15px; border-radius: 4px; font-size: 12px;
-            font-weight: 600; cursor: pointer; transition: all 0.2s ease; flex: none;
+            background-color: #3a3a3a;
+            color: var(--text-main);
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: none;
         }
 
-        .preset-btn:hover { background-color: var(--accent); color: #111; }
-        .preset-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .preset-btn:hover {
+            background-color: var(--accent);
+            color: #111;
+        }
+        
+        .preset-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
-        .share-btn { background-color: rgba(52, 152, 219, 0.15); border: 1px solid #3498db; color: #3498db; }
-        .share-btn:hover { background-color: #3498db; color: #111; }
+        .share-btn {
+            background-color: rgba(52, 152, 219, 0.15);
+            border: 1px solid #3498db;
+            color: #3498db;
+        }
+        
+        .share-btn:hover {
+            background-color: #3498db;
+            color: #111;
+        }
 
         .expert-toggle-btn {
-            background-color: rgba(142, 68, 173, 0.2); border: 1px solid var(--reverb-color);
-            color: #d2b4de; margin-left: auto;
+            background-color: rgba(142, 68, 173, 0.2);
+            border: 1px solid var(--reverb-color);
+            color: #d2b4de;
+            margin-left: auto;
         }
 
-        .expert-toggle-btn:hover { background-color: var(--reverb-color); color: white; }
+        .expert-toggle-btn:hover {
+            background-color: var(--reverb-color);
+            color: white;
+        }
 
         .synth-dashboard {
-            display: grid; grid-template-columns: 1fr 1.1fr 1fr;
-            gap: 15px; align-items: stretch; transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr 1fr;
+            gap: 15px;
+            align-items: stretch;
+            transition: all 0.3s ease;
             min-height: 580px;
         }
 
         .synth-col {
-            background-color: var(--panel-bg); border-radius: 10px; padding: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; gap: 10px;
+            background-color: var(--panel-bg);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .canvas-container {
-            position: relative; width: 100%; height: 135px;
-            background-color: #111; border-radius: 6px; overflow: hidden; border: 1px solid #333;
+            position: relative;
+            width: 100%;
+            height: 135px;
+            background-color: #111;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #333;
         }
 
-        canvas { display: block; width: 100%; height: 100%; }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
 
         .canvas-label {
-            position: absolute; top: 6px; left: 8px; font-size: 10px;
-            text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.5); pointer-events: none;
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
         }
 
-        .button-group { display: flex; gap: 5px; flex-wrap: wrap; }
+        .button-group {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
 
         button.wave-btn {
-            background-color: #3a3a3a; color: var(--text-main); border: 2px solid transparent;
-            padding: 8px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;
+            background-color: #3a3a3a;
+            color: var(--text-main);
+            border: 2px solid transparent;
+            padding: 8px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
         }
 
-        button.wave-btn:hover { background-color: #4a4a4a; }
-        button.wave-btn.active { background-color: var(--accent); color: #111; }
+        button.wave-btn:hover {
+            background-color: #4a4a4a;
+        }
+
+        button.wave-btn.active {
+            background-color: var(--accent);
+            color: #111;
+        }
 
         .explanation {
-            background: rgba(255, 123, 0, 0.1); border-left: 3px solid var(--accent);
-            padding: 8px 12px; font-size: 12px; line-height: 1.4; border-radius: 0 4px 4px 0;
-            height: 60px; overflow-y: auto;
+            background: rgba(255, 123, 0, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 8px 12px;
+            font-size: 12px;
+            line-height: 1.4;
+            border-radius: 0 4px 4px 0;
+            height: 60px;
+            overflow-y: auto;
         }
 
         .slider-group {
-            display: flex; flex-direction: column; gap: 4px; background: #222;
-            padding: 10px 12px; border-radius: 6px; border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #222;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #333;
         }
 
         #autoHarmonicsGroup, #manualHarmonicsGroup { height: 135px; }
@@ -160,8 +277,20 @@
         .slider-group.reverb-group { border-color: var(--reverb-color); background: rgba(142, 68, 173, 0.05); }
         .slider-group.mix-group { border-color: #555; background: #1f1f1f; }
 
-        .slider-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; align-items: center; }
-        .slider-header span { display: flex; align-items: center; gap: 6px; }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: bold;
+            align-items: center;
+        }
+
+        .slider-header span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .slider-value { color: var(--accent); }
         .filter-group .lp-val { color: var(--filter-color); }
         .filter-group .hp-val { color: var(--hp-filter-color); }
@@ -171,26 +300,66 @@
         .reverb-group .slider-value { color: var(--reverb-color); }
 
         .info-btn {
-            background: transparent; color: inherit; border: 1px solid currentColor;
-            border-radius: 50%; width: 16px; height: 16px; font-size: 10px; font-weight: bold;
-            display: inline-flex; justify-content: center; align-items: center; cursor: pointer; opacity: 0.7; flex: none;
+            background: transparent;
+            color: inherit;
+            border: 1px solid currentColor;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            font-weight: bold;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding: 0;
+            opacity: 0.7;
+            flex: none;
+            transition: all 0.2s ease;
         }
 
-        .info-btn:hover { opacity: 1; transform: scale(1.1); }
+        .info-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
 
         .mystery-btn {
-            background: rgba(255, 123, 0, 0.15); border: 1px solid var(--accent); color: var(--accent);
-            padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; width: 100%;
-            margin-top: 8px; transition: all 0.2s ease; cursor: pointer; text-align: left;
+            background: rgba(255, 123, 0, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: left;
         }
 
-        .mystery-btn:hover { background: var(--accent); color: #111; }
+        .mystery-btn:hover {
+            background: var(--accent);
+            color: #111;
+        }
 
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 4px 0; }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            margin: 4px 0;
+        }
+
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: var(--accent); cursor: pointer; margin-top: -6px;
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            margin-top: -6px;
         }
+
         #cutoff::-webkit-slider-thumb { background: var(--filter-color); }
         #hpCutoff::-webkit-slider-thumb { background: var(--hp-filter-color); }
         .env-group input[type=range]::-webkit-slider-thumb { background: var(--env-color); }
@@ -198,79 +367,279 @@
         .delay-group input[type=range]::-webkit-slider-thumb { background: var(--delay-color); }
         .reverb-group input[type=range]::-webkit-slider-thumb { background: var(--reverb-color); }
         #noiseMix::-webkit-slider-thumb { background: var(--noise-color); }
-        #globalMasterVol::-webkit-slider-thumb { background: var(--master-color); }
+        #globalMasterVol::-webkit-slider-thumb { background: #2ecc71; }
 
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #444; border-radius: 2px; }
-        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #444;
+            border-radius: 2px;
+        }
 
-        #adsrCanvas { width: 100%; height: 60px; background: #111; border-radius: 4px; border: 1px solid #333; margin-bottom: 5px; }
+        input[type=range]:focus {
+            outline: none;
+        }
 
-        .drawbars-container { display: flex; gap: 2px; height: 80px; align-items: flex-end; justify-content: space-between; margin-top: 5px; }
-        .drawbar-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
-        .drawbar-wrapper input[type=range] { -webkit-appearance: slider-vertical; appearance: slider-vertical; width: 100%; height: 60px; cursor: pointer; margin: 0; }
-        .drawbar-label { font-size: 9px; color: var(--text-muted); font-weight: bold; }
+        #adsrCanvas {
+            width: 100%;
+            height: 60px;
+            background: #111;
+            border-radius: 4px;
+            border: 1px solid #333;
+            margin-bottom: 5px;
+        }
+
+        .drawbars-container {
+            display: flex;
+            gap: 2px;
+            height: 80px;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .drawbar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .drawbar-wrapper input[type=range] {
+            -webkit-appearance: slider-vertical;
+            appearance: slider-vertical;
+            width: 100%;
+            height: 60px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .drawbar-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
 
         .concept-box {
-            background: #2a3b4c; border-left: 4px solid var(--sine-color); padding: 12px;
-            border-radius: 0 6px 6px 0; font-size: 12.5px; line-height: 1.4; margin-top: auto;
+            background: #2a3b4c;
+            border-left: 4px solid var(--sine-color);
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+            font-size: 12.5px;
+            line-height: 1.4;
+            margin-top: auto;
         }
+
         .concept-box p { margin: 0 0 6px 0; }
         .concept-box p:last-child { margin: 0; }
 
-        .piano-toolbar { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 5px; }
-        .piano-title { font-size: 12px; color: var(--accent); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-        .midi-status-container { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; font-weight: normal; margin-left: 10px; text-transform: none;}
-        .midi-light { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: all 0.3s ease; }
-        .midi-light.active { background-color: #2ecc71; box-shadow: 0 0 6px rgba(46, 204, 113, 0.6); }
-
-        .piano-actions { display: flex; gap: 15px; align-items: center; }
-        .octave-controls { display: flex; gap: 8px; align-items: center; }
-        .octave-btn {
-            background: #222; border: 1px solid #444; padding: 4px 10px; font-size: 11px;
-            border-radius: 4px; color: var(--text-main); flex: none; cursor: pointer;
+        .piano-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 0 5px;
         }
+
+        .piano-title {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .midi-status-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            color: #888;
+            text-transform: none;
+            font-weight: normal;
+            margin-left: 10px;
+        }
+
+        .midi-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #444;
+            transition: all 0.3s ease;
+        }
+
+        .midi-light.active {
+            background-color: #2ecc71;
+            box-shadow: 0 0 6px rgba(46, 204, 113, 0.6);
+        }
+
+        .piano-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .octave-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .octave-btn {
+            background: #222;
+            border: 1px solid #444;
+            padding: 4px 10px;
+            font-size: 11px;
+            border-radius: 4px;
+            color: var(--text-main);
+            flex: none;
+            min-width: auto;
+            cursor: pointer;
+        }
+
         .octave-btn:hover { background: #333; }
         .octave-btn:active { background: var(--accent); color: #111; border-color: var(--accent); }
 
         .piano-container {
-            width: 100%; height: 120px; border: 2px solid #222; border-radius: 6px; overflow-x: auto;
-            overflow-y: hidden; margin-top: 5px; background: #111; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+            width: 100%;
+            height: 120px;
+            border: 2px solid #222;
+            border-radius: 6px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            margin-top: 5px;
+            background: #111;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
-        .piano-scroll-wrapper { display: flex; width: 100%; min-width: 800px; height: 100%; position: relative; }
+
+        .piano-scroll-wrapper {
+            display: flex;
+            width: 100%;
+            min-width: 800px;
+            height: 100%;
+            position: relative;
+        }
+
         .key-group { position: relative; flex: 1; }
+
         .white-key {
-            width: 100%; height: 100%; background: #fdfdfd; border-right: 1px solid #ccc; border-bottom: 2px solid #ccc;
-            display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #555;
-            font-weight: bold; font-size: 11px; cursor: pointer; user-select: none; transition: background 0.05s;
+            width: 100%;
+            height: 100%;
+            background: #fdfdfd;
+            border-right: 1px solid #ccc;
+            border-bottom: 2px solid #ccc;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.05s;
         }
+
         .key-group:last-child .white-key { border-right: none; }
+
         .black-key {
-            position: absolute; right: -30%; top: 0; width: 60%; height: 65%; background: #222; border: 1px solid #000;
-            border-radius: 0 0 4px 4px; z-index: 2; display: flex; align-items: flex-end; justify-content: center;
-            padding-bottom: 8px; color: #888; font-weight: bold; font-size: 10px; cursor: pointer; user-select: none;
-            box-shadow: inset 0 -3px 5px rgba(255, 255, 255, 0.1); transition: background 0.05s;
+            position: absolute;
+            right: -30%;
+            top: 0;
+            width: 60%;
+            height: 65%;
+            background: #222;
+            border: 1px solid #000;
+            border-radius: 0 0 4px 4px;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            color: #888;
+            font-weight: bold;
+            font-size: 10px;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: inset 0 -3px 5px rgba(255, 255, 255, 0.1);
+            transition: background 0.05s;
         }
+
         .white-key.active { background: #e74c3c; color: white; }
         .black-key.active { background: #c0392b; color: white; }
 
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);
-            display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            padding: 20px;
         }
+
         .modal-content {
-            background: var(--panel-bg); max-width: 600px; width: 100%; border-radius: 12px; padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); position: relative; max-height: 85vh; overflow-y: auto; line-height: 1.6;
+            background: var(--panel-bg);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            line-height: 1.6;
         }
+
         .modal-close {
-            position: absolute; top: 15px; right: 15px; background: transparent; color: var(--text-muted);
-            border: none; font-size: 24px; cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
         }
+
         .modal-close:hover { color: white; }
-        .modal-title { color: var(--accent); margin-top: 0; font-size: 20px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+
+        .modal-title {
+            color: var(--accent);
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .modal-body h4 { color: #fff; margin-top: 20px; margin-bottom: 5px; }
+        .modal-body ul { margin-top: 5px; padding-left: 20px; }
+        
         .error-banner {
-            background-color: rgba(231, 76, 60, 0.1); border: 1px solid #e74c3c; color: #e74c3c;
-            padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; display: none; font-weight: 500;
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 15px;
+            display: none;
         }
 
         @media (max-width: 900px) {
@@ -296,20 +665,18 @@
 </head>
 
 <body tabindex="-1">
-
     <div class="container">
+        <!-- HEADER -->
         <div class="header">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                     <h1>Lydbølge-Lab 🎛️</h1>
                     <div style="display: flex; align-items: center; gap: 8px; background: #222; padding: 4px 12px; border-radius: 6px; border: 1px solid #333; min-width: 170px; min-height: 28px;">
                         <span style="font-size: 10px; font-weight: bold; color: #888; letter-spacing: 0.5px;">MASTER</span>
-                        <!-- Laster-tekst som vises inntil vi vet eksakt hva volumet fra skyen er -->
                         <div id="masterVolLoader" style="font-size: 10px; color: #888; font-style: italic; width: 100%; text-align: center;">Synkroniserer...</div>
-                        <!-- Kontrollene er skjult inntil dataen er ferdig hentet -->
                         <div id="masterVolControls" style="display: none; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
                             <span id="globalMasterVal" style="font-size: 11px; font-weight: bold; color: #2ecc71; min-width: 30px; text-align: right;"></span>
-                            <input type="range" id="globalMasterVol" data-exclude-preset="true" min="0" max="100" style="width: 80px; margin: 0;">
+                            <input type="range" id="globalMasterVol" data-exclude-preset="true" min="0" max="100" value="80" style="width: 80px; margin: 0;">
                         </div>
                     </div>
                 </div>
@@ -321,23 +688,25 @@
             <p class="intro">En interaktiv synthesizer. Form lyden visuelt, og spill på tastaturet ditt!</p>
         </div>
 
+        <!-- PRESET TOOLBAR -->
         <div class="preset-toolbar">
             <span style="font-size: 13px; font-weight: bold; color: var(--accent);">☁️ Presets:</span>
             <select id="presetSelect" class="preset-select">
                 <optgroup label="Eksterne presets (via lenke)" id="externalPresetsGroup" style="display: none;"></optgroup>
                 <optgroup label="Fabrikk-presets" id="factoryPresetsGroup"></optgroup>
-                <optgroup label="Dine lagrede (Sky/Lokalt)" id="userPresetsGroup"></optgroup>
+                <optgroup label="Dine lagrede (Sky)" id="userPresetsGroup"></optgroup>
             </select>
             <button id="savePresetBtn" class="preset-btn" disabled>Lagre ny</button>
             <button id="deletePresetBtn" class="preset-btn" style="display: none; background-color: #c0392b; border: 1px solid #c0392b;">Slett</button>
             <button id="sharePresetBtn" class="preset-btn share-btn">🔗 Del / Importer</button>
-            
             <button id="expertToggleBtn" class="preset-btn expert-toggle-btn" disabled>Vis avansert (LFO, Ekko) 🚀</button>
         </div>
         
         <div id="urlErrorBanner" class="error-banner"></div>
 
+        <!-- SYNTH DASHBOARD -->
         <div class="synth-dashboard">
+            <!-- Første kolonne -->
             <div class="synth-col">
                 <div class="canvas-container">
                     <div class="canvas-label">Oscilloskop (Tid / Form)</div>
@@ -347,19 +716,14 @@
                     <div class="canvas-label">Spektrum (Frekvens / Overtoner)</div>
                     <canvas id="spectrumCanvas"></canvas>
                 </div>
-
                 <div class="concept-box">
-                    <p>Denne appen viser deg hvordan ekte synthesizere lager lyd! Klikk på spørsmålstegnene <span
-                            class="info-btn" data-info="general"
-                            style="position:static; margin: 0 4px; border-color:var(--text-main)">?</span> for å lære
-                        hvordan hver del av maskinen fungerer.</p>
-                    <p style="color: var(--accent); font-weight: bold; margin-top:10px;">Spill på tangentene under med
-                        musen, touch, PC-tastaturet ditt, eller koble til et USB MIDI-keyboard!</p>
-
+                    <p>Denne appen viser deg hvordan ekte synthesizere lager lyd! Klikk på spørsmålstegnene <span class="info-btn" data-info="general" style="position:static; margin: 0 4px; border-color:var(--text-main)">?</span> for å lære hvordan hver del av maskinen fungerer.</p>
+                    <p style="color: var(--accent); font-weight: bold; margin-top:10px;">Spill på tangentene under med musen, touch, PC-tastaturet ditt, eller koble til et USB MIDI-keyboard!</p>
                     <button class="mystery-btn" data-info="mystery">🔍 Mysteriet om tonen E</button>
                 </div>
             </div>
 
+            <!-- Andre kolonne -->
             <div class="synth-col">
                 <div class="button-group">
                     <button class="wave-btn active" data-wave="sawtooth">Sagtann</button>
@@ -368,84 +732,62 @@
                     <button class="wave-btn" data-wave="sine">Sinus</button>
                     <button class="wave-btn expert-only" data-wave="manual">Orgel</button>
                 </div>
-
                 <div class="explanation" id="infoText">
                     <strong>Sagtann:</strong> Inneholder <em>alle</em> overtoner. Gir en skarp, fyldig klang.
                 </div>
-
                 <div class="slider-group" id="autoHarmonicsGroup">
-                    <div class="slider-header"><span>Overtoner (Additiv) <button class="info-btn"
-                                data-info="overtones"
-                                style="color: var(--sine-color); border-color: var(--sine-color);">?</button></span><span
-                            class="slider-value" id="harmonicsVal">30</span></div>
+                    <div class="slider-header"><span>Overtoner (Additiv) <button class="info-btn" data-info="overtones" style="color: var(--sine-color); border-color: var(--sine-color);">?</button></span><span class="slider-value" id="harmonicsVal">30</span></div>
                     <input type="range" id="harmonicsSlider" min="1" max="30" value="30" step="1">
                 </div>
-
                 <div class="slider-group" id="manualHarmonicsGroup" style="display: none;">
-                    <div class="slider-header"><span>Trekkspaker / Drawbars <button class="info-btn"
-                                data-info="overtones"
-                                style="color: var(--sine-color); border-color: var(--sine-color);">?</button></span>
-                    </div>
+                    <div class="slider-header"><span>Trekkspaker / Drawbars <button class="info-btn" data-info="overtones" style="color: var(--sine-color); border-color: var(--sine-color);">?</button></span></div>
                     <div class="drawbars-container" id="drawbarsContainer"></div>
                 </div>
-
                 <div class="slider-group mix-group">
-                    <div class="slider-header" style="margin-bottom: 8px;"><span>Lydkilder (Mixer) <button
-                                class="info-btn" data-info="mixer">?</button></span></div>
+                    <div class="slider-header" style="margin-bottom: 8px;"><span>Lydkilder (Mixer) <button class="info-btn" data-info="mixer">?</button></span></div>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <div>
-                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Oscillator
-                                    (Tone)</span><span id="oscVolVal" class="slider-value">100 %</span></div>
+                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Oscillator (Tone)</span><span id="oscVolVal" class="slider-value">100 %</span></div>
                             <input type="range" id="oscMix" min="0" max="100" value="100" step="1">
                         </div>
                         <div>
-                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Hvit støy
-                                    (Vind/Støy)</span><span id="noiseVal" class="slider-value"
-                                    style="color: var(--noise-color)">0 %</span></div>
+                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Hvit støy (Vind/Støy)</span><span id="noiseVal" class="slider-value" style="color: var(--noise-color)">0 %</span></div>
                             <input type="range" id="noiseMix" min="0" max="100" value="0" step="1">
                         </div>
                     </div>
                 </div>
-
                 <div class="slider-group filter-group" style="margin-top: auto;">
-                    <div class="slider-header"><span>Filter (EQ) <button class="info-btn"
-                                data-info="filter">?</button></span></div>
-                    
+                    <div class="slider-header"><span>Filter (EQ) <button class="info-btn" data-info="filter">?</button></span></div>
                     <div style="font-size: 10px; margin-bottom: 4px; margin-top: 5px;">Lowpass (Kutter lyse toner): <span class="slider-value lp-val" id="cutoffVal">20.0 kHz</span></div>
                     <input type="range" id="cutoff" min="40" max="20000" step="1" value="20000">
-                    
                     <div style="font-size: 10px; margin-top: 10px; margin-bottom: 4px;">Highpass (Kutter mørke toner): <span class="slider-value hp-val" id="hpCutoffVal">40 Hz</span></div>
                     <input type="range" id="hpCutoff" min="40" max="10000" step="1" value="40">
                 </div>
             </div>
 
+            <!-- Tredje kolonne -->
             <div class="synth-col">
                 <div class="slider-group env-group" style="margin-bottom: auto;">
-                    <div class="slider-header" style="margin-bottom: 8px;"><span>Volum-konvolutt (ADSR) <button
-                                class="info-btn" data-info="adsr">?</button></span></div>
+                    <div class="slider-header" style="margin-bottom: 8px;"><span>Volum-konvolutt (ADSR) <button class="info-btn" data-info="adsr">?</button></span></div>
                     <canvas id="adsrCanvas"></canvas>
                     <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 5px;">
                         <div style="display: flex; gap: 10px;">
                             <div style="flex: 1;">
-                                <div class="slider-header" style="font-weight: normal; font-size: 11px;">
-                                    <span>Attack</span><span id="valA" class="slider-value" style="color: var(--env-color)">0.1 s</span></div>
+                                <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Attack</span><span id="valA" class="slider-value" style="color: var(--env-color)">0.1 s</span></div>
                                 <input type="range" id="envA" min="0.01" max="3" value="0.1" step="0.01">
                             </div>
                             <div style="flex: 1;">
-                                <div class="slider-header" style="font-weight: normal; font-size: 11px;">
-                                    <span>Decay</span><span id="valD" class="slider-value" style="color: var(--env-color)">0.3 s</span></div>
+                                <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Decay</span><span id="valD" class="slider-value" style="color: var(--env-color)">0.3 s</span></div>
                                 <input type="range" id="envD" min="0.01" max="3" value="0.3" step="0.01">
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px;">
                             <div style="flex: 1;">
-                                <div class="slider-header" style="font-weight: normal; font-size: 11px;">
-                                    <span>Sustain</span><span id="valS" class="slider-value" style="color: var(--env-color)">50 %</span></div>
+                                <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Sustain</span><span id="valS" class="slider-value" style="color: var(--env-color)">50 %</span></div>
                                 <input type="range" id="envS" min="0" max="1" value="0.5" step="0.01">
                             </div>
                             <div style="flex: 1;">
-                                <div class="slider-header" style="font-weight: normal; font-size: 11px;">
-                                    <span>Release</span><span id="valR" class="slider-value" style="color: var(--env-color)">0.8 s</span></div>
+                                <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Release</span><span id="valR" class="slider-value" style="color: var(--env-color)">0.8 s</span></div>
                                 <input type="range" id="envR" min="0.01" max="5" value="0.8" step="0.01">
                             </div>
                         </div>
@@ -453,13 +795,10 @@
                 </div>
 
                 <div class="slider-group lfo-group expert-only">
-                    <div class="slider-header" style="margin-bottom: 8px;"><span>Modulasjon (LFO / FM) <button
-                                class="info-btn" data-info="lfo">?</button></span></div>
+                    <div class="slider-header" style="margin-bottom: 8px;"><span>Modulasjon (LFO / FM) <button class="info-btn" data-info="lfo">?</button></span></div>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <div>
-                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Hastighet
-                                    (LFO ➔ FM)</span><span id="valLfoRate" class="slider-value"
-                                    style="color: var(--lfo-color)">5.0 Hz</span></div>
+                            <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Hastighet (LFO ➔ FM)</span><span id="valLfoRate" class="slider-value" style="color: var(--lfo-color)">5.0 Hz</span></div>
                             <input type="range" id="lfoRate" min="0" max="100" value="39.5" step="0.1">
                         </div>
                         <div style="display: flex; gap: 5px;">
@@ -481,8 +820,7 @@
                 
                 <div class="expert-only" style="display: flex; gap: 10px; margin-top: auto;">
                     <div class="slider-group delay-group" style="flex: 1; margin: 0;">
-                        <div class="slider-header" style="margin-bottom: 8px;"><span>Delay <button
-                                    class="info-btn" data-info="delay">?</button></span></div>
+                        <div class="slider-header" style="margin-bottom: 8px;"><span>Delay <button class="info-btn" data-info="delay">?</button></span></div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div>
                                 <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Tid</span><span id="valDelayTime" class="slider-value" style="color: var(--delay-color)">0.40 s</span></div>
@@ -500,8 +838,7 @@
                     </div>
 
                     <div class="slider-group reverb-group" style="flex: 1; margin: 0;">
-                        <div class="slider-header" style="margin-bottom: 8px;"><span>Reverb <button
-                                    class="info-btn" data-info="reverb">?</button></span></div>
+                        <div class="slider-header" style="margin-bottom: 8px;"><span>Reverb <button class="info-btn" data-info="reverb">?</button></span></div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                             <div>
                                 <div class="slider-header" style="font-weight: normal; font-size: 11px;"><span>Størrelse</span><span id="valReverbTime" class="slider-value" style="color: var(--reverb-color)">3.0 s</span></div>
@@ -517,6 +854,7 @@
             </div>
         </div>
 
+        <!-- PIANO TOOLBAR & CONTAINER -->
         <div class="piano-toolbar">
             <span class="piano-title">🎹 Tangentbord 
                 <span class="midi-status-container">MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span></span>
@@ -526,9 +864,7 @@
                 <button id="polyToggleBtn" class="octave-btn" style="padding: 4px 15px; background-color: var(--accent); color: #111; border-color: var(--accent);">Polyfoni: PÅ</button>
                 <button id="toggleLabelsBtn" class="octave-btn" style="padding: 4px 15px;">Vis Notenavn</button>
                 <div class="octave-controls">
-                    <span
-                        style="font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">PC-Oktav:
-                        <span id="octaveDisplay" style="color: white;">0</span></span>
+                    <span style="font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">PC-Oktav: <span id="octaveDisplay" style="color: white;">0</span></span>
                     <button id="octDownBtn" class="octave-btn">- 1</button>
                     <button id="octUpBtn" class="octave-btn">+ 1</button>
                 </div>
@@ -540,7 +876,7 @@
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- MODALS -->
     <div id="infoModal" class="modal-overlay">
         <div class="modal-content" id="infoModalContent">
             <button class="modal-close" id="infoModalClose">&times;</button>
@@ -583,10 +919,16 @@
         </div>
     </div>
 
-    <!-- MAIN SCRIPT -->
     <script type="module">
         // ==========================================
-        // 1. GLOBALE VARIABLER OG OPPLYSNINGER
+        // 1. IMPORTS OG FIREBASE SETUP
+        // ==========================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ==========================================
+        // 2. GLOBALE VARIABLER
         // ==========================================
         const MAX_HARMONICS = 30; 
         const MANUAL_HARMONICS_COUNT = 16;
@@ -597,7 +939,7 @@
         let hpFilterCutoff = 40;
         let oscAmount = 1.0;
         let noiseAmount = 0;
-        let globalVolumeAmount = 0.6; // Master volum state
+        let globalVolumeAmount = 0.8;
         let pcOctaveShift = 0;
         let displayMode = 'pc';
         let isPolyphonic = true;
@@ -628,13 +970,31 @@
         let activeNotes = [];
         let activeVoices = {};
 
+        // Firebase & Lagring state
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let app, auth, db;
+        let currentUser = null;
+        let unsubscribePresets = null;
+        let pendingPresetSelection = null; 
+        let storageMode = 'none';
+        let authInitialized = false;
+        let isAuthenticating = true;
+
+        let factoryPresets = {}; 
+        let userPresets = {}; 
+        let externalPresets = {}; 
+        const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
+
         // ==========================================
-        // 2. HJELPEFUNKSJONER (LYD / VISUALISERING)
+        // 3. HJELPEFUNKSJONER FOR LYD & VISUALISERING
         // ==========================================
         const waveCanvas = document.getElementById('waveCanvas');
         const waveCtx = waveCanvas ? waveCanvas.getContext('2d') : null;
         const spectrumCanvas = document.getElementById('spectrumCanvas');
         const spectrumCtx = spectrumCanvas ? spectrumCanvas.getContext('2d') : null;
+        const adsrCanvas = document.getElementById('adsrCanvas');
+        const adsrCtx = adsrCanvas ? adsrCanvas.getContext('2d') : null;
 
         function getHarmonicAmplitude(type, n) {
             if (type === 'manual') return n <= MANUAL_HARMONICS_COUNT ? manualHarmonics[n] : 0;
@@ -676,60 +1036,46 @@
         }
 
         function drawADSR() {
-            const adsrCanvas = document.getElementById('adsrCanvas');
-            const adsrCtx = adsrCanvas ? adsrCanvas.getContext('2d') : null;
             if (!adsrCanvas || !adsrCtx) return;
-            
             const dim = resizeCanvas(adsrCanvas, adsrCtx);
             adsrCtx.clearRect(0, 0, dim.width, dim.height);
             
-            const pxPerSec = dim.width / 13; // Antar at 13 sekunder er maks synlig bredde
+            const pxPerSec = dim.width / 13;
             const xA = adsr.a * pxPerSec;
             const xD = xA + (adsr.d * pxPerSec);
-            const xS = xD + (2 * pxPerSec); // Viser 2 sekunder med sustain
+            const xS = xD + (2 * pxPerSec);
             const xR = xS + (adsr.r * pxPerSec);
             
-            const yB = dim.height - 5; // Bunn
-            const yT = 5; // Topp (Maks volum)
-            const yS = yB - (adsr.s * (yB - yT)); // Sustain-nivå
+            const yB = dim.height - 5;
+            const yT = 5;
+            const yS = yB - (adsr.s * (yB - yT));
             
-            // Tegn rammen/bakgrunnen
             adsrCtx.strokeStyle = '#333'; adsrCtx.lineWidth = 1; adsrCtx.beginPath();
             adsrCtx.moveTo(0, yT); adsrCtx.lineTo(dim.width, yT); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(dim.width, yB); adsrCtx.stroke();
             
-            // Hjelpefunksjon for å tegne selve den eksponentielle veien
             function traceEnvelopePath() {
                 adsrCtx.beginPath();
                 adsrCtx.moveTo(0, yB);
-                
-                // 1. Attack (Lineær)
                 adsrCtx.lineTo(xA, yT);
-                
-                // 2. Decay (Eksponentiell fra topp til sustain)
                 if (xD > xA) {
                     const v0 = 1.0;
-                    const v1 = Math.max(adsr.s, 0.0001); // Kan ikke gå helt i null matematisk i pow
+                    const v1 = Math.max(adsr.s, 0.0001);
                     for (let x = xA; x <= xD; x++) {
-                        let t = (x - xA) / (xD - xA); // Prosent av decay-fasen (0 til 1)
-                        let v_t = v0 * Math.pow(v1/v0, t); // Beregn eksponentielt fall
-                        let y = yB - (v_t) * (yB - yT); // Oversett verdien til piksler
+                        let t = (x - xA) / (xD - xA);
+                        let v_t = v0 * Math.pow(v1/v0, t);
+                        let y = yB - (v_t) * (yB - yT);
                         adsrCtx.lineTo(x, y);
                     }
                 } else {
                     adsrCtx.lineTo(xD, yS);
                 }
-                
-                // 3. Sustain (Flat)
                 adsrCtx.lineTo(xS, yS);
-                
-                // 4. Release (Eksponentiell fra sustain til null)
                 if (xR > xS) {
                     const v0 = Math.max(adsr.s, 0.0001);
                     const v1 = 0.0001;
                     for (let x = xS; x <= xR; x++) {
-                        let t = (x - xS) / (xR - xS); // Prosent av release-fasen
+                        let t = (x - xS) / (xR - xS);
                         let v_t = v0 * Math.pow(v1/v0, t);
-                        // Skalerer mot den totale max-høyden (yB - yT) for at grafen skal stemme
                         let y = yB - (v_t) * (yB - yT); 
                         adsrCtx.lineTo(x, y);
                     }
@@ -738,14 +1084,12 @@
                 }
             }
 
-            // Fyll fargen inni konvolutten
             traceEnvelopePath();
             adsrCtx.lineTo(xR, yB);
             adsrCtx.lineTo(0, yB);
             adsrCtx.fillStyle = 'rgba(155, 89, 182, 0.3)';
             adsrCtx.fill();
 
-            // Tegn selve linjen på toppen
             traceEnvelopePath();
             adsrCtx.strokeStyle = '#9b59b6'; adsrCtx.lineWidth = 2.5; adsrCtx.lineJoin = 'round'; adsrCtx.stroke();
         }
@@ -836,680 +1180,6 @@
             isSounding = false; 
         }
 
-
-        // ==========================================
-        // 3. FIREBASE OG LAGRING
-        // ==========================================
-        let initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged;
-        let getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc;
-        
-        try {
-            const firebaseApp = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
-            initializeApp = firebaseApp.initializeApp;
-            
-            const firebaseAuth = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
-            getAuth = firebaseAuth.getAuth;
-            signInWithCustomToken = firebaseAuth.signInWithCustomToken;
-            signInAnonymously = firebaseAuth.signInAnonymously;
-            onAuthStateChanged = firebaseAuth.onAuthStateChanged;
-            
-            const firebaseDb = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
-            getFirestore = firebaseDb.getFirestore;
-            doc = firebaseDb.doc;
-            setDoc = firebaseDb.setDoc;
-            getDoc = firebaseDb.getDoc;
-            collection = firebaseDb.collection;
-            onSnapshot = firebaseDb.onSnapshot;
-            deleteDoc = firebaseDb.deleteDoc;
-        } catch(e) {
-            console.warn("Kunne ikke laste Firebase-moduler. Vi er trolig offline.");
-        }
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let app, auth, db;
-        let currentUser = null;
-        let unsubscribePresets = null;
-        let pendingPresetSelection = null; 
-        let storageMode = 'none';
-        let authInitialized = false;
-        
-        function isLocalStorageAvailable() {
-            try { const test = '__storage_test__'; localStorage.setItem(test, test); localStorage.removeItem(test); return true; } catch (e) { return false; }
-        }
-
-        // PERFEKSJONERT VOLUM-LASTER
-        function updateGlobalVolumeUI(val, skipStorage = false) {
-            globalVolumeAmount = val;
-            const percent = Math.round(val * 100);
-            
-            const slider = document.getElementById('globalMasterVol');
-            if (slider) slider.value = percent;
-            
-            const valDisp = document.getElementById('globalMasterVal');
-            if (valDisp) valDisp.textContent = percent + ' %';
-            
-            // Først nå skjuler vi lasteren og viser volumslideren!
-            const loader = document.getElementById('masterVolLoader');
-            const controls = document.getElementById('masterVolControls');
-            if (loader) loader.style.display = 'none';
-            if (controls) controls.style.display = 'flex';
-
-            if (audioCtx && globalVolumeNode) {
-                globalVolumeNode.gain.setTargetAtTime(globalVolumeAmount, audioCtx.currentTime, 0.05);
-            }
-
-            if (!skipStorage) {
-                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
-                    try {
-                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                        setDoc(settingsRef, { masterVolume: globalVolumeAmount }, { merge: true });
-                    } catch(e) {}
-                } else if (storageMode === 'local') {
-                    try {
-                        localStorage.setItem('lydlab_masterVolume', globalVolumeAmount);
-                    } catch(e) {}
-                }
-            }
-        }
-
-        const masterVolSlider = document.getElementById('globalMasterVol');
-        if (masterVolSlider) {
-            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
-            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
-        }
-
-        // Hovedoppstart
-        function startApp() {
-            if (typeof __firebase_config !== 'undefined' && initializeApp) {
-                storageMode = 'cloud';
-                try {
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    app = initializeApp(firebaseConfig);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
-                    
-                    onAuthStateChanged(auth, async (user) => {
-                        currentUser = user;
-                        if (user && storageMode === 'cloud') {
-                            document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
-                            document.getElementById('cloudIndicator').classList.add("connected");
-                            document.getElementById('cloudIndicator').classList.remove("local-storage");
-                            document.getElementById('savePresetBtn').disabled = false;
-                            document.getElementById('expertToggleBtn').disabled = false;
-                            
-                            await fetchSettings(); // Dette vil trigge updateGlobalVolumeUI når det er ferdig
-                            setupPresetsListener();
-                            authInitialized = true;
-                        } else {
-                            if (unsubscribePresets) unsubscribePresets();
-                            if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
-                            if (authInitialized) updateGlobalVolumeUI(0.6, true);
-                        }
-                    });
-
-                    initAuth();
-                } catch(error) {
-                    fallbackToLocal();
-                }
-            } else {
-                fallbackToLocal();
-            }
-
-            Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
-                drawVisualsStatic(); drawADSR();
-                const selectEl = document.getElementById('presetSelect');
-                if(selectEl.options.length > 0) { selectEl.dispatchEvent(new Event('change')); }
-            });
-            
-            // Sikkerhetsnett: Hvis Firebase eller nettet henger i mer enn 3 sekunder, 
-            // tving fram volumslideren slik at appen kan brukes.
-            setTimeout(() => {
-                const controls = document.getElementById('masterVolControls');
-                if (controls && controls.style.display === 'none') {
-                    updateGlobalVolumeUI(0.6, true);
-                }
-            }, 3000);
-        }
-        
-        function fallbackToLocal() {
-            if (isLocalStorageAvailable()) {
-                storageMode = 'local';
-                setLocalStorageMode();
-            } else {
-                storageMode = 'none';
-                setOfflineMode();
-            }
-        }
-
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                fallbackToLocal();
-            }
-        }
-
-        function setLocalStorageMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal lagring";
-            const ind = document.getElementById('cloudIndicator');
-            ind.classList.remove("connected");
-            ind.classList.add("local-storage");
-            
-            document.getElementById('savePresetBtn').disabled = false;
-            document.getElementById('expertToggleBtn').disabled = false;
-            
-            try {
-                const savedExpertMode = localStorage.getItem('lydlab_expertMode');
-                if (savedExpertMode !== null) setExpertMode(savedExpertMode === 'true', true);
-                
-                const savedVol = localStorage.getItem('lydlab_masterVolume');
-                if (savedVol !== null) updateGlobalVolumeUI(parseFloat(savedVol), true);
-                else updateGlobalVolumeUI(0.6, true);
-            } catch(e) {}
-            
-            loadLocalPresets();
-        }
-
-        function loadLocalPresets() {
-            try {
-                const saved = localStorage.getItem('lydlab_presets');
-                if (saved) userPresets = JSON.parse(saved); else userPresets = {};
-                updatePresetDropdown();
-            } catch (e) { userPresets = {}; }
-        }
-
-        function setOfflineMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal modus (Frakoblet)";
-            document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
-            document.getElementById('cloudIndicator').classList.remove("connected");
-            document.getElementById('cloudIndicator').classList.remove("local-storage");
-            document.getElementById('savePresetBtn').disabled = false;
-            document.getElementById('expertToggleBtn').disabled = false;
-            updateGlobalVolumeUI(0.6, true);
-        }
-
-        async function fetchSettings() {
-            if (!currentUser || storageMode !== 'cloud') return;
-            let loadedVolume = 0.6;
-            try {
-                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'));
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.isExpertMode !== undefined) setExpertMode(data.isExpertMode, true); 
-                    if (data.masterVolume !== undefined) loadedVolume = data.masterVolume;
-                }
-            } catch (e) {}
-            
-            // Dette erstatter "Synkroniserer" med slideren
-            updateGlobalVolumeUI(loadedVolume, true); 
-        }
-
-        function setupPresetsListener() {
-            if (!currentUser || !db || storageMode !== 'cloud') return;
-            const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
-            unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
-                const newPresets = {};
-                snapshot.forEach((doc) => { newPresets[doc.id] = doc.data(); });
-                userPresets = newPresets;
-                let valToSelect = document.getElementById('presetSelect').value;
-                if (pendingPresetSelection) { valToSelect = pendingPresetSelection; pendingPresetSelection = null; }
-                updatePresetDropdown(valToSelect);
-            }, (error) => {});
-        }
-
-
-        // ==========================================
-        // 4. PRESETS OG MODALER
-        // ==========================================
-        const modalContent = {
-            general: {
-                title: "Synthesizeren",
-                body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>"
-            },
-            overtones: {
-                title: "Overtoner og Additiv Syntese",
-                body: `
-                <p>Når du spiller en tone (for eksempel en C på et piano), hører du egentlig ikke bare én lyd. Du hører en <strong>grunntone</strong> pluss en hel stige av lysere toner som klinger svakt i bakgrunnen. Det er denne stigen vi kaller <strong>overtoner</strong>.</p>
-                <h4>Naturens egen gangetabell</h4>
-                <p>Hvis grunntonen vibrerer med 100 Hz, vil den neste tonen i stigen være nøyaktig <strong>100 Hz &times; 2</strong> (200 Hz). Den neste er <strong>&times; 3</strong> (300 Hz), deretter <strong>&times; 4</strong> (400 Hz), og så videre.</p>
-                <h4>Additiv syntese (Bygg med Lego)</h4>
-                <p>Se for deg at en ren tone (en Sinusbølge) er en legokloss. Ved å stable slike klosser oppå hverandre i ulike mønstre (addere dem), kan vi bygge helt nye lyder! Bytt til "Orgel" og bruk spakene (drawbars) for å blande overtoner selv.</p>
-                `
-            },
-            mixer: {
-                title: "Lydkilder (Oscillator og Mikser)",
-                body: `
-                <p>I en synthesizer er <strong>Oscillatoren</strong> stemmebåndet. Den lager selve tonen.</p>
-                <h4>Hvit støy (White Noise)</h4>
-                <p>Noen ganger trenger vi lyder som ikke er klare toner, for eksempel lyden av vind, havet, eller et trommeslag. Da bruker vi <strong>Støy</strong>. Hvit støy inneholder <em>alle frekvenser spilt på likt</em> – akkurat som at hvitt lys er alle farger blandet sammen.</p>
-                `
-            },
-            filter: {
-                title: "Filter (Subtraktiv syntese)",
-                body: `
-                <p>Hvis Oscillatoren er legoklossene dine, er Filteret saksen din. Å bruke et filter kalles <strong>Subtraktiv Syntese</strong>, fordi vi <em>trekker fra</em> lyd.</p>
-                <p>Et <strong>Lowpass-filter</strong> lar de dype lydene passere, men kutter de lyse, skarpe overtonene. Det er som å holde en pute foran en høyttaler.</p>
-                <p>Et <strong>Highpass-filter</strong> gjør motsatt: kutter bassen og lar bare de lyse lydene (diskant) passere.</p>
-                <p><strong>Test:</strong> Form munnen din for å si "AAAA". Mens du sier det, bytt til "OOOO" uten å endre tonehøyde. Du brukte nettopp munnen din som et lowpass-filter for å fjerne de skarpeste overtonene i stemmen din!</p>
-                `
-            },
-            adsr: {
-                title: "Volum-konvolutt (ADSR)",
-                body: `
-                <p>En tone lever i <em>tid</em>. En skarptromme smeller og forsvinner, mens en fiolin smyger seg inn. Vi styrer dette med ADSR:</p>
-                <ul>
-                    <li><strong>A for Attack (Angrep):</strong> Hvor lang tid det tar fra du trykker på tangenten til lyden når maks volum. (0 sekunder = smell, 2 sekunder = myk innfading).</li>
-                    <li><strong>D for Decay (Fall):</strong> Tiden lyden bruker på å falle ned til hvilepulsen (Sustain) etter det første slaget. Denne er logaritmisk, som betyr at den faller raskt først og flater ut mot slutten.</li>
-                    <li><strong>S for Sustain (Hvilepuls):</strong> Hvor <em>høyt</em> volumet skal være så lenge du holder tangenten nede.</li>
-                    <li><strong>R for Release (Slipp):</strong> Hva skjer når du slipper knappen? Også logaritmisk – dør ut naturlig som et ekte rom eller en kondensator i en analog synth.</li>
-                </ul>`
-            },
-            lfo: {
-                title: "Modulasjon (LFO, AM og FM)",
-                body: `<p><strong>LFO</strong> står for <em>Low Frequency Oscillator</em>. Tenk på det som en usynlig robothånd eller en ekstra motor som skrur på knappene for deg mens du spiller!</p>
-                
-                <h4>Lav hastighet (Rytme og bevegelse)</h4>
-                <p>Sett hastigheten (Rate) lavt (f.eks. mellom 1 og 10 Hz):</p>
-                <ul>
-                    <li><strong>AM-volum (Tremolo):</strong> Skrur volumet opp og ned. Gir en pulserende effekt.</li>
-                    <li><strong>FM-Pitch (Vibrato):</strong> Skrur tonehøyden opp og ned. Gir en syngende effekt, akkurat som en fiolinist som vugger på fingeren.</li>
-                    <li><strong>Filter:</strong> Åpner og lukker filteret, noe som skaper en levende "wah-wah"-effekt.</li>
-                </ul>
-
-                <h4>Høy hastighet (Audio Rate Modulasjon)</h4>
-                <p>Magi oppstår når motoren rister på knappen ekstremt fort (over 20 Hz)! Da slutter øret vårt å oppfatte det som en rytmisk "bevegelse", og i stedet forvandles det til <strong>helt nye klanger</strong>:</p>
-                <ul>
-                    <li><strong>Hurtig AM (Ring Modulator):</strong> Hvis du modulerer volumet superraskt, knuses tonen og det oppstår to helt nye overtoner. Du får en statisk, hul klokkeklang – perfekt for sci-fi-effekter (Dette var teknologien bak stemmen til Daleks i Doctor Who!).</li>
-                    <li><strong>Hurtig FM (Frekvensmodulasjon):</strong> Rister du tonehøyden superraskt, skjer det et matematisk kaos! Det skapes en uendelig foss av nye overtoner. En kjedelig sinusbølge forvandles til aggressive basser, gongs eller skrikende metall. (Yamaha DX7 og lydbrikken i Sega Mega Drive brukte denne teknologien).</li>
-                </ul>
-                
-                <p style="background: rgba(255,123,0,0.1); padding: 10px; border-radius: 5px; border-left: 3px solid var(--accent); margin-top: 15px;"><strong>Praktisk test:</strong> Velg "Sinus". Skru opp "Hastighet" på LFO-en til maks. Dra først opp "Tremolo" (AM) og lytt til den hule sci-fi-klangen. Skru den deretter ned igjen, og dra opp "Vibrato" (FM). Hør hvordan lyden eksploderer i et aggressivt metallisk brøl!</p>`
-            },
-            delay: {
-                title: "Delay (Ekko)",
-                body: `
-                <p>En <strong>Delay</strong>-effekt tar opp lyden du nettopp spilte, og sender tilbake til deg etter en liten stund. Det fungerer akkurat som å rope mot en fjellvegg!</p>
-                <p><strong>Feedback</strong> bestemmer hvor mange ganger ekkoet skal gjentas før det dør ut. Med høy feedback kan lyden rulle videre i evigheter!</p>
-                `
-            },
-            reverb: {
-                title: "Reverb (Romklang)",
-                body: `
-                <p>Når du klapper i en stor kirke, hører du ikke et tydelig ekko, men en myk, stor klang som fyller rommet og henger igjen i luften. Dette er <strong>Reverb</strong>.</p>
-                <p>Ved å justere "Størrelse", kan du plassere lyden din i alt fra et lite bad til en gigantisk katedral.</p>
-                `
-            },
-            mystery: {
-                title: "Mysteriet om tonen E og pianoets 'Juks'",
-                body: `
-                <p>Har du lagt merke til at frekvensen på A er nøyaktig 440 Hz, men at tonen E er rare desimaltall (f.eks 329.6 Hz eller 659.25 Hz)?</p>
-                <h4>Pythagoras og brøken 1,5</h4>
-                <p>Naturen bygger på perfekte matematiske brøker. Pythagoras fant ut at den viktigste overtonen (kvinten) svinger nøyaktig 1,5 ganger raskere enn grunntonen. Hvis A er 440 Hz, skal E ifølge naturen være nøyaktig: 440 &times; 1,5 = <strong>660 Hz</strong>.</p>
-                <h4>Matematikk-krasjet</h4>
-                <p>Problemet er at hvis man bygger et piano basert <em>kun</em> på 1,5-regelen, går ikke mattestykket opp når man kommer rundt skalaen og tilbake til start. Et slikt piano låt vakkert i én toneart, men grusomt surt i andre ("ulvehyl").</p>
-                <h4>Likesvevende stemming</h4>
-                <p>For å løse dette inngikk man et kompromiss. Man forlot naturens perfekte brøk, og delte heller oktaven i 12 <em>nøyaktig like store biter</em> (12-roten av 2). Resultatet er at tonen E på pianoet ditt ikke er naturens 660,0 Hz, men er flyttet bittelitt ned til <strong>659,25 Hz</strong>.</p>
-                <p>Hver eneste tone på et piano (unntatt oktavene) er faktisk <em>litt falsk med vilje</em> for at musikken skal gå opp!</p>
-                `
-            }
-        };
-
-        const infoModal = document.getElementById('infoModal');
-        const presetModal = document.getElementById('presetModal');
-        const shareModal = document.getElementById('shareModal');
-
-        function closeModal(e) { if(e) e.stopPropagation(); infoModal.style.display = 'none'; }
-        function closePresetModal(e) { if(e) e.stopPropagation(); presetModal.style.display = 'none'; }
-        function closeShareModal(e) { if(e) e.stopPropagation(); shareModal.style.display = 'none'; }
-
-        infoModal.addEventListener('click', closeModal);
-        document.getElementById('infoModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('infoModalClose').addEventListener('click', closeModal);
-
-        presetModal.addEventListener('click', closePresetModal);
-        document.getElementById('presetModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('presetModalClose').addEventListener('click', closePresetModal);
-
-        shareModal.addEventListener('click', closeShareModal);
-        document.getElementById('shareModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('shareModalClose').addEventListener('click', closeShareModal);
-
-        const expertToggleBtn = document.getElementById('expertToggleBtn');
-        
-        async function setExpertMode(isExpert, skipStorage = false) {
-            if (isExpert) {
-                document.body.classList.add('expert-mode');
-                expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
-                expertToggleBtn.style.backgroundColor = '#333';
-                expertToggleBtn.style.color = '#fff';
-                expertToggleBtn.style.borderColor = '#444';
-            } else {
-                document.body.classList.remove('expert-mode');
-                expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
-                expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
-                expertToggleBtn.style.color = '#d2b4de';
-                expertToggleBtn.style.borderColor = 'var(--reverb-color)';
-                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
-                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
-                    if (sawBtn) sawBtn.click();
-                }
-            }
-            if (!skipStorage) {
-                if (storageMode === 'cloud' && currentUser && db) {
-                    try { await setDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'), { isExpertMode: isExpert }, { merge: true }); } catch (e) {}
-                } else if (storageMode === 'local') {
-                    try { localStorage.setItem('lydlab_expertMode', isExpert); } catch(e) {}
-                }
-            }
-            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
-        }
-
-        expertToggleBtn.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
-
-        function openModal(section) {
-            if(modalContent[section]) {
-                document.getElementById('modalTitle').innerText = modalContent[section].title;
-                document.getElementById('modalBody').innerHTML = modalContent[section].body;
-            }
-            infoModal.style.display = 'flex';
-        }
-
-        document.querySelectorAll('.info-btn, .mystery-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const infoType = btn.getAttribute('data-info');
-                if (infoType && modalContent[infoType]) openModal(infoType);
-            });
-        });
-
-        let factoryPresets = {}; 
-        let userPresets = {}; 
-        let externalPresets = {}; 
-
-        function updatePresetDropdown(selectValue = "") {
-            const factoryGroup = document.getElementById('factoryPresetsGroup');
-            const userGroup = document.getElementById('userPresetsGroup');
-            const externalGroup = document.getElementById('externalPresetsGroup');
-            const selectEl = document.getElementById('presetSelect');
-            
-            factoryGroup.innerHTML = ''; userGroup.innerHTML = ''; externalGroup.innerHTML = '';
-            
-            if (Object.keys(externalPresets).length > 0) {
-                for (let name in externalPresets) {
-                    let opt = document.createElement('option'); opt.value = "external|" + name; opt.text = name; externalGroup.appendChild(opt);
-                }
-                externalGroup.style.display = '';
-            } else { externalGroup.style.display = 'none'; }
-
-            for (let name in factoryPresets) {
-                let opt = document.createElement('option'); opt.value = "factory|" + name; opt.text = name; factoryGroup.appendChild(opt);
-            }
-            
-            for (let name in userPresets) {
-                let opt = document.createElement('option'); opt.value = "user|" + name; opt.text = name; userGroup.appendChild(opt);
-            }
-            
-            let found = false;
-            if (selectValue) {
-                for (let i = 0; i < selectEl.options.length; i++) {
-                    if (selectEl.options[i].value === selectValue) { found = true; break; }
-                }
-            }
-            
-            if (!found && selectEl.options.length > 0) selectValue = selectEl.options[0].value;
-            
-            if(selectValue) {
-                selectEl.value = selectValue;
-                document.getElementById('deletePresetBtn').style.display = selectValue.startsWith('user|') ? 'inline-block' : 'none';
-            } else {
-                document.getElementById('deletePresetBtn').style.display = 'none';
-            }
-        }
-
-        let errorBannerTimeout = null;
-        function showErrorBanner(message) {
-            const banner = document.getElementById('urlErrorBanner');
-            banner.textContent = message; banner.style.display = 'block';
-            if(errorBannerTimeout) clearTimeout(errorBannerTimeout);
-            errorBannerTimeout = setTimeout(() => { banner.style.display = 'none'; }, 8000);
-        }
-
-        const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
-
-        async function loadFactoryPresets() {
-            factoryPresets = {
-                "Initiell Patch": {
-                    "wave": "sawtooth",
-                    "sliderValues": {
-                        "harmonicsSlider": "30", "oscMix": "100", "noiseMix": "0", "cutoff": "20000", "hpCutoff": "40",
-                        "envA": "0.1", "envD": "0.3", "envS": "0.5", "envR": "0.8",
-                        "lfoRate": "39.5", "lfoVibrato": "0", "lfoTremolo": "0", "lfoFilter": "0",
-                        "delayTime": "0.4", "delayFeedback": "40", "delayMix": "0", "reverbTime": "3.0", "reverbMix": "0"
-                    }
-                }
-            };
-            try {
-                if (FACTORY_PRESETS_URL) {
-                    let fetchUrl = FACTORY_PRESETS_URL;
-                    if (fetchUrl.includes('dropbox.com')) {
-                        try {
-                            let urlObj = new URL(fetchUrl);
-                            urlObj.hostname = 'dl.dropboxusercontent.com';
-                            urlObj.searchParams.delete('dl');
-                            fetchUrl = urlObj.toString();
-                        } catch(e) { fetchUrl = fetchUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com'); }
-                    }
-                    const response = await fetch(fetchUrl);
-                    if (response.ok) {
-                        const loadedPresets = await response.json();
-                        factoryPresets = { ...factoryPresets, ...loadedPresets };
-                    }
-                }
-            } catch (error) {}
-            updatePresetDropdown();
-        }
-
-        async function fetchExternalUrl(presetsUrl) {
-            if (presetsUrl.includes('dropbox.com')) {
-                try {
-                    let urlObj = new URL(presetsUrl); urlObj.hostname = 'dl.dropboxusercontent.com'; urlObj.searchParams.delete('dl'); presetsUrl = urlObj.toString();
-                } catch(e) { presetsUrl = presetsUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com'); }
-            }
-            const response = await fetch(presetsUrl);
-            if (!response.ok) throw new Error(`Serveren svarte med status ${response.status}`);
-            const data = await response.json();
-            
-            if (typeof data === 'object' && data !== null) {
-                if (data.wave && data.sliderValues) externalPresets = { "Delt lyd": data };
-                else externalPresets = data;
-                return true;
-            }
-            throw new Error("Ugyldig JSON-format");
-        }
-
-        async function loadExternalPresets() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let presetsUrl = urlParams.get('presets');
-            if (presetsUrl) {
-                try { await fetchExternalUrl(presetsUrl); } catch (error) { showErrorBanner("Klarte ikke å hente inn presets fra URL-en. Sjekk at lenken peker til en gyldig fil."); }
-            }
-            updatePresetDropdown();
-        }
-
-        function getPresetState() {
-            const state = { wave: currentWave, sliderValues: {} };
-            document.querySelectorAll('input[type="range"]').forEach(inp => {
-                if (inp.id && inp.id !== 'freqSlider' && inp.id !== 'globalMasterVol') { state.sliderValues[inp.id] = inp.value; }
-            });
-            return state;
-        }
-
-        function applyPresetState(state) {
-            if (!document.body.classList.contains('expert-mode')) {
-                const usesAdv = (
-                    parseFloat(state.sliderValues.lfoVibrato || 0) > 0 || parseFloat(state.sliderValues.lfoTremolo || 0) > 0 ||
-                    parseFloat(state.sliderValues.lfoFilter || 0) > 0 || parseFloat(state.sliderValues.delayMix || 0) > 0 ||
-                    parseFloat(state.sliderValues.reverbMix || 0) > 0 || state.wave === 'manual'
-                );
-                if (usesAdv) setExpertMode(true, true);
-            }
-
-            const waveBtn = document.querySelector(`.wave-btn[data-wave="${state.wave}"]`);
-            if(waveBtn) waveBtn.click();
-            
-            for (const [id, value] of Object.entries(state.sliderValues)) {
-                if (id === 'globalMasterVol') continue; 
-                const el = document.getElementById(id);
-                if (el) { el.value = value; el.dispatchEvent(new Event('input', { bubbles: true })); }
-            }
-        }
-
-        document.getElementById('presetSelect').addEventListener('change', (e) => {
-            const val = e.target.value; const delBtn = document.getElementById('deletePresetBtn');
-            if (!val) { delBtn.style.display = 'none'; e.target.blur(); return; }
-            
-            const [type, name] = val.split('|');
-            if (type === 'factory' && factoryPresets[name]) { applyPresetState(factoryPresets[name]); delBtn.style.display = 'none'; } 
-            else if (type === 'user' && userPresets[name]) { applyPresetState(userPresets[name]); delBtn.style.display = 'inline-block'; } 
-            else if (type === 'external' && externalPresets[name]) { applyPresetState(externalPresets[name]); delBtn.style.display = 'none'; }
-            e.target.blur(); 
-        });
-
-        function openSavePresetModal() {
-            if(storageMode === 'none') { alert("For å lagre må du kjøre laben i et miljø som støtter lagring. Bruk 'Del / Importer' for å ta kopi av teksten!"); return; }
-            document.getElementById('presetModalTitle').innerText = storageMode === 'cloud' ? "Lagre Preset i Skyen" : "Lagre Preset Lokalt";
-            document.getElementById('presetModalBody').innerHTML = `
-                <p style="margin-top: 0;">Skriv inn et navn på den nye lyden din:</p>
-                <input type="text" id="presetNameInput" placeholder="Min fete synthlyd..." style="width: 100%; padding: 10px; margin-bottom: 20px; background: #111; color: white; border: 1px solid #444; border-radius: 4px; font-family: inherit; font-size: 14px; outline: none;">
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <button class="preset-btn" id="btnCancelPresetSave" style="background: #333;">Avbryt</button>
-                    <button class="preset-btn" id="btnConfirmPresetSave" style="background: var(--accent); color: #111;">Lagre Lyd</button>
-                </div>
-            `;
-            presetModal.style.display = 'flex';
-            document.getElementById('btnCancelPresetSave').addEventListener('click', closePresetModal);
-            document.getElementById('btnConfirmPresetSave').addEventListener('click', confirmSavePreset);
-        }
-
-        function openDeletePresetModal(name) {
-            if (storageMode === 'none') return;
-            document.getElementById('presetModalTitle').innerText = storageMode === 'cloud' ? "Slett Preset fra Skyen" : "Slett Lokal Preset";
-            document.getElementById('presetModalBody').innerHTML = `
-                <p style="margin-top: 0;">Er du helt sikker på at du vil slette preset <strong>${name}</strong> permanent?</p>
-                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px;">
-                    <button class="preset-btn" id="btnCancelPresetDel" style="background: #333;">Behold den</button>
-                    <button class="preset-btn" id="btnConfirmPresetDel" style="background: #c0392b; color: white;">Ja, slett</button>
-                </div>
-            `;
-            presetModal.style.display = 'flex';
-            document.getElementById('btnCancelPresetDel').addEventListener('click', closePresetModal);
-            document.getElementById('btnConfirmPresetDel').addEventListener('click', () => confirmDeletePreset(name));
-        }
-
-        async function confirmSavePreset() {
-            const name = document.getElementById('presetNameInput').value;
-            if (!name || name.trim() === "") return;
-            if (storageMode === 'cloud' && (!currentUser || !db)) return;
-            
-            const presetName = name.trim(); const state = getPresetState(); pendingPresetSelection = "user|" + presetName;
-            
-            if (storageMode === 'cloud') {
-                try { const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName); await setDoc(presetRef, state); } catch(e) {}
-            } else if (storageMode === 'local') {
-                userPresets[presetName] = state;
-                try { localStorage.setItem('lydlab_presets', JSON.stringify(userPresets)); updatePresetDropdown(pendingPresetSelection); pendingPresetSelection = null; } 
-                catch (e) { alert("Klarte ikke å lagre i nettleseren."); }
-            }
-            closePresetModal();
-        }
-
-        async function confirmDeletePreset(name) {
-            if (storageMode === 'cloud') {
-                if (!currentUser || !db) return;
-                try { const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name); await deleteDoc(presetRef); } catch(e) {}
-            } else if (storageMode === 'local') {
-                delete userPresets[name];
-                try { localStorage.setItem('lydlab_presets', JSON.stringify(userPresets)); updatePresetDropdown(); } catch(e) {}
-            }
-            closePresetModal();
-        }
-
-        if(document.getElementById('savePresetBtn')) document.getElementById('savePresetBtn').addEventListener('click', openSavePresetModal);
-        
-        if(document.getElementById('deletePresetBtn')) {
-            document.getElementById('deletePresetBtn').addEventListener('click', () => {
-                const val = document.getElementById('presetSelect').value;
-                if (!val.startsWith('user|')) return;
-                const name = val.split('|')[1];
-                openDeletePresetModal(name);
-            });
-        }
-
-        function openShareModal() {
-            const currentState = getPresetState();
-            const jsonString = JSON.stringify(currentState, null, 2);
-            document.getElementById('shareTextarea').value = jsonString;
-            document.getElementById('shareStatusMsg').style.display = 'none';
-            shareModal.style.display = 'flex';
-        }
-
-        function copyPresetToClipboard() {
-            const textarea = document.getElementById('shareTextarea');
-            textarea.select(); document.execCommand('copy');
-            const msg = document.getElementById('shareStatusMsg');
-            msg.textContent = "✅ Koden er kopiert til utklippstavlen!"; msg.style.color = "#2ecc71"; msg.style.display = "block";
-        }
-
-        function applyPastedPreset() {
-            const text = document.getElementById('shareTextarea').value;
-            const msg = document.getElementById('shareStatusMsg');
-            try {
-                const state = JSON.parse(text); const keys = Object.keys(state); let actualState = state;
-                if (keys.length === 1 && state[keys[0]].wave && state[keys[0]].sliderValues) actualState = state[keys[0]];
-                if (actualState && actualState.wave && actualState.sliderValues) {
-                    applyPresetState(actualState);
-                    document.getElementById('presetSelect').value = ""; document.getElementById('deletePresetBtn').style.display = 'none';
-                    msg.textContent = "✅ Lyden ble lastet inn!"; msg.style.color = "#3498db"; msg.style.display = "block";
-                    setTimeout(() => { closeShareModal(); }, 1500);
-                } else { throw new Error("Feil format"); }
-            } catch (err) {
-                msg.textContent = "❌ Klarte ikke å lese koden."; msg.style.color = "#e74c3c"; msg.style.display = "block";
-            }
-        }
-
-        if(document.getElementById('sharePresetBtn')) document.getElementById('sharePresetBtn').addEventListener('click', openShareModal);
-        if(document.getElementById('btnCopyShareCode')) document.getElementById('btnCopyShareCode').addEventListener('click', copyPresetToClipboard);
-        if(document.getElementById('btnApplyShareCode')) document.getElementById('btnApplyShareCode').addEventListener('click', applyPastedPreset);
-        
-        if(document.getElementById('btnImportFromUrl')) {
-            document.getElementById('btnImportFromUrl').addEventListener('click', async () => {
-                const urlInput = document.getElementById('importUrlInput').value.trim();
-                const msg = document.getElementById('shareStatusMsg'); const btn = document.getElementById('btnImportFromUrl');
-                if(!urlInput) return;
-                
-                msg.style.display = 'none'; btn.textContent = "Henter...";
-                try {
-                    await fetchExternalUrl(urlInput); updatePresetDropdown();
-                    msg.textContent = "✅ Lyder lastet inn fra lenken!"; msg.style.color = "#3498db"; msg.style.display = "block";
-                    document.getElementById('importUrlInput').value = "";
-                    const firstPresetName = Object.keys(externalPresets)[0];
-                    if (firstPresetName) {
-                        document.getElementById('presetSelect').value = "external|" + firstPresetName;
-                        document.getElementById('presetSelect').dispatchEvent(new Event('change'));
-                    }
-                    setTimeout(() => { closeShareModal(); }, 2500);
-                } catch(e) {
-                    msg.textContent = "❌ Klarte ikke å hente filen."; msg.style.color = "#e74c3c"; msg.style.display = "block";
-                } finally { btn.textContent = "Hent lyder"; }
-            });
-        }
-
-        // ==========================================
-        // 5. AUDIO ENGINE (Generering av Lyd)
-        // ==========================================
         function createReverbBuffer(ctx, duration) {
             const sampleRate = ctx.sampleRate;
             const length = sampleRate * duration;
@@ -1665,8 +1335,834 @@
         }
 
         // ==========================================
+        // 4. STORAGE, AUTH & SETTINGS
+        // ==========================================
+        function isLocalStorageAvailable() {
+            try { const test = '__storage_test__'; localStorage.setItem(test, test); localStorage.removeItem(test); return true; } catch (e) { return false; }
+        }
+
+        function updateGlobalVolumeUI(val, skipStorage = false) {
+            globalVolumeAmount = val;
+            const percent = Math.round(val * 100);
+            
+            const slider = document.getElementById('globalMasterVol');
+            if (slider) slider.value = percent;
+            
+            const valDisp = document.getElementById('globalMasterVal');
+            if (valDisp) valDisp.textContent = percent + ' %';
+            
+            const loader = document.getElementById('masterVolLoader');
+            const controls = document.getElementById('masterVolControls');
+            if (loader) loader.style.display = 'none';
+            if (controls) controls.style.display = 'flex';
+
+            if (audioCtx && globalVolumeNode) {
+                globalVolumeNode.gain.setTargetAtTime(globalVolumeAmount, audioCtx.currentTime, 0.05);
+            }
+
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        setDoc(settingsRef, { masterVolume: globalVolumeAmount }, { merge: true });
+                    } catch(e) {}
+                } else if (storageMode === 'local') {
+                    try { localStorage.setItem('lydlab_masterVolume', globalVolumeAmount); } catch(e) {}
+                }
+            }
+        }
+
+        const masterVolSlider = document.getElementById('globalMasterVol');
+        if (masterVolSlider) {
+            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
+            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
+        }
+
+        async function setExpertMode(isExpert, skipStorage = false) {
+            const expertToggleBtn = document.getElementById('expertToggleBtn');
+            if (isExpert) {
+                document.body.classList.add('expert-mode');
+                if(expertToggleBtn) {
+                    expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
+                    expertToggleBtn.style.backgroundColor = '#333';
+                    expertToggleBtn.style.color = '#fff';
+                    expertToggleBtn.style.borderColor = '#444';
+                }
+            } else {
+                document.body.classList.remove('expert-mode');
+                if(expertToggleBtn) {
+                    expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
+                    expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
+                    expertToggleBtn.style.color = '#d2b4de';
+                    expertToggleBtn.style.borderColor = 'var(--reverb-color)';
+                }
+                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
+                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
+                    if (sawBtn) sawBtn.click();
+                }
+            }
+            
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        await setDoc(settingsRef, { isExpertMode: isExpert }, { merge: true });
+                    } catch (e) {}
+                } else if (storageMode === 'local') {
+                    try { localStorage.setItem('lydlab_expertMode', isExpert); } catch(e) {}
+                }
+            }
+            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
+        }
+
+        const expertToggleBtn = document.getElementById('expertToggleBtn');
+        if(expertToggleBtn) expertToggleBtn.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
+
+        async function fetchSettings() {
+            if (!currentUser || storageMode !== 'cloud') return;
+            let loadedVolume = 0.8;
+            try {
+                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.isExpertMode !== undefined) setExpertMode(data.isExpertMode, true); 
+                    if (data.masterVolume !== undefined) loadedVolume = data.masterVolume;
+                }
+            } catch (e) {}
+            updateGlobalVolumeUI(loadedVolume, true); 
+        }
+
+        function setupPresetsListener() {
+            if (!currentUser || !db || storageMode !== 'cloud') return;
+            const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
+            unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
+                const newPresets = {};
+                snapshot.forEach((doc) => { newPresets[doc.id] = doc.data(); });
+                userPresets = newPresets;
+                let valToSelect = document.getElementById('presetSelect').value;
+                if (pendingPresetSelection) { valToSelect = pendingPresetSelection; pendingPresetSelection = null; }
+                updatePresetDropdown(valToSelect);
+            }, (error) => {});
+        }
+
+        function loadLocalPresets() {
+            try {
+                const saved = localStorage.getItem('lydlab_presets');
+                if (saved) userPresets = JSON.parse(saved); else userPresets = {};
+                updatePresetDropdown();
+            } catch (e) { userPresets = {}; }
+        }
+
+        function setLocalStorageMode() {
+            document.getElementById('cloudStatusText').textContent = "Lokal lagring";
+            const ind = document.getElementById('cloudIndicator');
+            ind.classList.remove("connected");
+            ind.classList.add("local-storage");
+            
+            document.getElementById('savePresetBtn').disabled = false;
+            document.getElementById('expertToggleBtn').disabled = false;
+            
+            try {
+                const savedExpertMode = localStorage.getItem('lydlab_expertMode');
+                if (savedExpertMode !== null) setExpertMode(savedExpertMode === 'true', true);
+                const savedVol = localStorage.getItem('lydlab_masterVolume');
+                if (savedVol !== null) updateGlobalVolumeUI(parseFloat(savedVol), true);
+                else updateGlobalVolumeUI(0.8, true);
+            } catch(e) {}
+            
+            loadLocalPresets();
+        }
+
+        function setOfflineMode() {
+            document.getElementById('cloudStatusText').textContent = "Lokal modus (Frakoblet)";
+            document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
+            document.getElementById('cloudIndicator').classList.remove("connected");
+            document.getElementById('cloudIndicator').classList.remove("local-storage");
+            document.getElementById('savePresetBtn').disabled = false;
+            document.getElementById('expertToggleBtn').disabled = false;
+            updateGlobalVolumeUI(0.8, true);
+        }
+
+        function fallbackToLocal() {
+            if (isLocalStorageAvailable()) {
+                storageMode = 'local';
+                setLocalStorageMode();
+            } else {
+                storageMode = 'none';
+                setOfflineMode();
+            }
+        }
+
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                fallbackToLocal();
+            }
+        }
+
+        function startApp() {
+            if (typeof __firebase_config !== 'undefined' && initializeApp) {
+                storageMode = 'cloud';
+                try {
+                    const config = JSON.parse(__firebase_config);
+                    app = initializeApp(config);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+                    
+                    onAuthStateChanged(auth, async (user) => {
+                        currentUser = user;
+                        if (user && storageMode === 'cloud') {
+                            document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
+                            document.getElementById('cloudIndicator').classList.add("connected");
+                            document.getElementById('cloudIndicator').classList.remove("local-storage");
+                            document.getElementById('savePresetBtn').disabled = false;
+                            document.getElementById('expertToggleBtn').disabled = false;
+                            
+                            await fetchSettings(); 
+                            setupPresetsListener();
+                            authInitialized = true;
+                        } else {
+                            if (unsubscribePresets) unsubscribePresets();
+                            if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
+                            if (authInitialized) updateGlobalVolumeUI(0.8, true);
+                        }
+                    });
+
+                    initAuth();
+                } catch(error) {
+                    fallbackToLocal();
+                }
+            } else {
+                fallbackToLocal();
+            }
+
+            Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
+                drawVisualsStatic(); drawADSR();
+                const selectEl = document.getElementById('presetSelect');
+                if(selectEl && selectEl.options.length > 0) { selectEl.dispatchEvent(new Event('change')); }
+            });
+            
+            setTimeout(() => {
+                const controls = document.getElementById('masterVolControls');
+                if (controls && controls.style.display === 'none') {
+                    isAuthenticating = false;
+                    updateGlobalVolumeUI(globalVolumeAmount, true);
+                }
+            }, 3000);
+        }
+
+        // ==========================================
+        // 5. MODALER OG PRESET LOGIKK
+        // ==========================================
+        const modalContent = {
+            general: { title: "Synthesizeren", body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>" },
+            overtones: {
+                title: "Overtoner og Additiv Syntese",
+                body: `<p>Når du spiller en tone (for eksempel en C på et piano), hører du egentlig ikke bare én lyd. Du hører en <strong>grunntone</strong> pluss en hel stige av lysere toner som klinger svakt i bakgrunnen. Det er denne stigen vi kaller <strong>overtoner</strong>.</p>
+                <h4>Naturens egen gangetabell (og brøker!)</h4>
+                <p>Det magiske med disse overtonene er matematikken. Hvis grunntonen din vibrerer med 100 Hz, vil den neste tonen i stigen være nøyaktig <strong>100 Hz &times; 2</strong> (200 Hz). Den neste er <strong>&times; 3</strong> (300 Hz), deretter <strong>&times; 4</strong> (400 Hz), og så videre i en endeløs matematisk rekke.</p>
+                <p>Men de er ikke like sterke! For en standard tone (som en Sagtannbølge) følger volumet (amplituden) en brøk: Den 2. overtonen er bare halvparten (1/2) så sterk som grunntonen. Den 3. er en tredjedel (1/3) så sterk, den 4. er en fjerdedel (1/4), og så videre. Legoklossene blir altså mindre og mindre jo høyere vi bygger!</p>
+                <h4>Additiv syntese (Bygg med Lego)</h4>
+                <p>Se for deg at en helt ren tone (en Sinusbølge) er en enkelt legokloss. Hvis vi stabler mange slike x2, x3 og x4-klosser oppå hverandre i ulike mønstre, endrer vi selve <em>formen</em> på lyden, og vi kan få f.eks. en skarp Sagtannbølge!</p>
+                <p><strong>Praktisk test:</strong><br>
+                1. Trykk på "Sagtann"-knappen.<br>
+                2. Se i det nederste vinduet (Spektrum). Her er stolpe nr. 1 grunntonen (&times;1), stolpe nr. 2 er &times;2-overtonen osv. Du kan se at stolpene blir kortere (lavere volum) jo lenger til høyre de er.<br>
+                3. Dra i slideren for "Overtoner" og se stolpene forsvinne. Hør hvordan lyden blir rundere (og kjedeligere) når vi fjerner de øverste klossene.<br>
+                4. (Ekspert) Bytt til "Orgel". Her er spakene markert med 1x, 2x, 3x! Prøv å dra opp spakene og bygg din helt egen klang, kloss for kloss.</p>`
+            },
+            mixer: {
+                title: "Lydkilder (Oscillator og Mikser)",
+                body: `<p>Når du snakker eller synger, lager stemmebåndene dine vibrasjoner. I en synthesizer er det <strong>Oscillatoren</strong> (Tone) som er stemmebåndet! Den lager en jevn, summende tone.</p>
+                <h4>Hvit støy (White Noise)</h4>
+                <p>Noen ganger trenger vi lyder som ikke er klare toner, for eksempel lyden av vind, havet, eller et trommeslag. Da bruker vi <strong>Støy</strong>. Hvit støy er bokstavelig talt <em>alle frekvenser spilt på likt</em> – akkurat som at hvitt lys er alle farger blandet sammen. Prøv å skru ned oscillatoren og opp støyen!</p>`
+            },
+            filter: {
+                title: "Lowpass og Highpass Filter (Subtraktiv syntese)",
+                body: `<p>Hvis Oscillatoren er legoklossene dine, er Filteret saksen din. Å bruke et filter kalles <strong>Subtraktiv Syntese</strong>, fordi vi <em>trekker fra</em> lyd.</p>
+                <p>Et <strong>Lowpass-filter</strong> lar de dype lydene (low) passere (pass), mens det fjerner de lyse og skarpe overtonene. Det fungerer akkurat som å holde en tjukk pute foran en høyttaler.</p>
+                <p>Et <strong>Highpass-filter</strong> gjør det motsatte: det kutter vekk grunntonen og all den dype bassen, og slipper bare igjennom de lyse, krispe frekvensene.</p>
+                <p><strong>Praktisk test:</strong> Dra Lowpass-slideren langt ned, og Highpass-slideren langt opp. Nå har du fjernet både toppen og bunnen, og sitter igjen med en tynn lyd – akkurat som i en gammel telefon!</p>`
+            },
+            adsr: {
+                title: "Volum-konvolutt (ADSR)",
+                body: `<p>En tone er ikke bare lys eller mørk – den lever i <em>tid</em>. Hvis du slår på en skarptromme, smeller det og dør ut med en gang. Spiller du fiolin, kan lyden smyge seg sakte inn, holdes i mange sekunder, og dø sakte ut. Vi styrer dette med en konvolutt (Envelope) kalt ADSR:</p>
+                <ul>
+                    <li><strong>A for Attack (Angrep):</strong> Hvor lang tid det tar fra du trykker på tangenten til lyden når maks volum. (0 sekunder = smell, 2 sekunder = myk innfading).</li>
+                    <li><strong>D for Decay (Fall):</strong> Tiden lyden bruker på å falle ned til hvilepulsen (Sustain) etter det første slaget. Denne er logaritmisk, som betyr at den faller raskt først og flater ut mot slutten.</li>
+                    <li><strong>S for Sustain (Hvilepuls):</strong> Hvor <em>høyt</em> volumet skal være så lenge du holder tangenten nede.</li>
+                    <li><strong>R for Release (Slipp):</strong> Hva skjer når du slipper knappen? Også logaritmisk – dør ut naturlig som et ekte rom eller en kondensator i en analog synth.</li>
+                </ul>`
+            },
+            lfo: {
+                title: "Modulasjon (LFO og FM-syntese)",
+                body: `<p><strong>LFO</strong> står for <em>Low Frequency Oscillator</em>. Tenk på det som en usynlig robothånd eller en skjult, ekstra motor i synthesizeren som skrur på knappene for deg mens du spiller!</p>
+                
+                <h4>Lav hastighet (Rytme og bevegelse)</h4>
+                <p>Sett hastigheten lavt (f.eks. mellom 1 og 10 Hz) og velg hva motoren skal styre:</p>
+                <ul>
+                    <li><strong>AM-volum (Tremolo):</strong> Skrur volumet opp og ned. Du får en pulserende effekt, som å slå lyden av og på raskt.</li>
+                    <li><strong>FM-Pitch (Vibrato):</strong> Skrur selve tonehøyden (Hertz) opp og ned. Dette gir en syngende effekt, akkurat som når fiolinister vugger på fingeren sin på strengen.</li>
+                    <li><strong>Filter-sweep:</strong> Åpner og lukker filteret. Skaper en levende, sveipende "wub-wub"-lyd som er selve hjertet i mye moderne elektronisk musikk.</li>
+                </ul>
+
+                <h4>Høy hastighet: Fra rytme til metall (Audio Rate Modulasjon)</h4>
+                <p>Nå kommer magien: Hva skjer hvis "robothånden" rister på knappen ekstremt fort? Skru hastigheten (LFO Rate) helt opp (til 50 - 100 Hz)!</p>
+                <p>Når motoren svinger så raskt, klarer ikke øret vårt lenger å oppfatte det som en vibrato (en rytmisk opp-ned-bevegelse). I stedet hører vi selve <em>bevegelsen</em> som en egen tone! Når denne nye hastighets-tonen kolliderer med grunntonen du spiller, oppstår <strong>Frekvensmodulasjon (FM-syntese)</strong>.</p>
+                <p>Tonene "knuser" hverandre og tvinger frem et vell av helt nye overtoner (kalt sidebands). En kjedelig sinusbølge forvandles plutselig til klokkeklanger, gongs, knusende støy, eller aggressive bass-teksturer. Dette er nøyaktig den samme teknologien Yamaha brukte i 80-talls-legenden DX7, og som lydbrikken i Sega Mega Drive var basert på!</p>
+                
+                <p style="background: rgba(255,123,0,0.1); padding: 10px; border-radius: 5px; border-left: 3px solid var(--accent); margin-top: 15px;"><strong>Test det ut:</strong> Velg "Sinus", skru "FM-Pitch (Vibrato)" til 100%, og dra "Hastighet" opp og ned mens du holder en tone. Hør hvordan lyden forvandles fra dyp og myk, til hylende, knallhardt metall!</p>`
+            },
+            delay: {
+                title: "Delay / Ekko",
+                body: `<p>En <strong>Delay</strong>-effekt tar opp lyden du nettopp spilte, og sender tilbake til deg etter en liten stund. Det fungerer akkurat som å rope mot en fjellvegg!</p>
+                <ul>
+                    <li><strong>Tid (Hastighet):</strong> Avstanden til fjellveggen. Bestemmer hvor lang tid det tar før ekkoet smeller tilbake (fra lynraske maskin-repetisjoner til store, trege daler).</li>
+                    <li><strong>Feedback (Lengde):</strong> Hvis ekkoet treffer deg og spretter tilbake mot fjellveggen <em>enda</em> en gang, får vi et nytt ekko. Høy feedback gir evigvarende haler av ekko. Lav feedback gir bare ett lite "Hallo... hallo".</li>
+                    <li><strong>Mix (Volum):</strong> Hvor høyt ekkoet er, sammenlignet med det du faktisk spiller med fingrene.</li>
+                </ul>`
+            },
+            reverb: {
+                title: "Reverb / Romklang",
+                body: `<p><strong>Reverb (Klang)</strong> etterligner hvordan lyd oppfører seg i et fysisk rom. Når du klapper i hendene i en stor kirke, spretter lyden mot tusenvis av overflater og skaper en tett, svømmende sky av ekko.</p>
+                <ul>
+                    <li><strong>Størrelse (Tid):</strong> Bestemmer hvor lang tid det tar før klangen dør ut i det fiktive rommet vårt. En enorm katedral eller en dyp hule har lang tid.</li>
+                    <li><strong>Mix (Volum):</strong> Hvor mye klang som skal blandes med den tørre originallyden. Setter du denne høyt, høres det ut som om instrumentet står langt, langt unna.</li>
+                </ul>
+                <p><strong>Tips for magi:</strong> For å skape en dvelende og filmatisk atmosfære, prøv dette: Sett en lang Attack på ADSR-en, en lang og treig Delay, og dra opp Reverb Størrelse og Mix. Da får du et fantastisk, svevende lydlandskap som forsvinner sakte ut i det fjerne når du slipper tangenten.</p>`
+            },
+            mystery: {
+                title: "Mysteriet om tonen E og pianoets 'Juks'",
+                body: `<p>Har du lagt merke til at det står desimaler på tonene (f.eks. 261.6 Hz)? Har du noen gang tenkt over hvordan man egentlig bestemmer hvor mange Hertz en tone skal ha?</p>
+                <h4>Pythagoras og brøken 1,5</h4>
+                <p>Naturen har sin egen uendelige skala, <em>naturtoneskalaen</em> (som du spiller på en lur eller en seljefløyte). I den skalaen er tonene nøyaktig x2, x3, x4, x5 osv. av grunntonen. Dette er de eksakt samme overtonene du kan se i "Spektrum"-vinduet her i laben!</p>
+                <p>I antikken ble matematikeren Pythagoras helt fascinert av forholdet mellom grunntonen og akkurat den overtonen som svinger 1,5 ganger så fort (x3 delt på x2 - det vi i dag kaller en kvint). Hvis du spiller en <strong>A (440 Hz)</strong>, er denne tonen <br>440 Hz × 1,5 = <strong>660 Hz (tonen E)</strong>.</p>
+                <p>Pythagoras bestemte seg for å bygge <em>hele</em> skalaen sin bare ved å bruke denne ene 1,5-regelen. Han tok en tone, ganget med 1,5 for å finne neste, og fortsatte slik for å regne ut alle notene i musikken. Han ignorerte altså resten av overtonene som luren bruker.</p>
+                <h4>Problemet: Matte-sirkelen som krasjet</h4>
+                <p>Problemet oppsto da man prøvde å lage tangentinstrumenter. Hvis man stablet tolv slike "1,5-toner" oppå hverandre for å komme rundt hele skalaen og tilbake til start, bommet man! Regnestykket gikk rett og slett ikke opp. Et piano stemt etter Pythagoras' regel låt vakkert i én bestemt toneart, men byttet man til en annen, låt det grusomt surt (man kalte det "ulvehyl").</p>
+                <h4>Løsningen: Likesvevende stemming (Jukset)</h4>
+                <p>For at du skal kunne spille alle sanger i verden på det samme tastaturet uten å stemme det om, måtte matematikerne inngå et kompromiss med naturen. I stedet for Pythagoras' perfekte brøk (1,5), delte de opp oktaven i 12 nøyaktig like store, matematiske biter med en veldig lang formel (12-roten av 2).</p>
+                <p>Resultatet? Tonen E på pianoet ditt er ikke naturens 660,0 Hz. Den er flyttet bittelitt ned til <strong>659,25 Hz</strong>.</p>
+                <p>Så neste gang du spiller på et keyboard, kan du tenke på at <em>hver eneste tone (bortsett fra oktavene) faktisk er bittelitt falsk med vilje</em>, bare for at musikken vår skal fungere!</p>`
+            }
+        };
+
+        const infoModal = document.getElementById('infoModal');
+        const presetModal = document.getElementById('presetModal');
+        const shareModal = document.getElementById('shareModal');
+
+        function openModal(section) {
+            const mTitle = document.getElementById('modalTitle');
+            const mBody = document.getElementById('modalBody');
+            if (mTitle && mBody && modalContent[section]) {
+                mTitle.innerText = modalContent[section].title;
+                mBody.innerHTML = modalContent[section].body;
+                if (infoModal) infoModal.style.display = 'flex';
+            }
+        }
+        
+        function closeModal(e) { if(e) e.stopPropagation(); if (infoModal) infoModal.style.display = 'none'; }
+        function closePresetModal(e) { if(e) e.stopPropagation(); if (presetModal) presetModal.style.display = 'none'; }
+        function closeShareModal(e) { if(e) e.stopPropagation(); if (shareModal) shareModal.style.display = 'none'; }
+
+        if (infoModal) infoModal.addEventListener('click', closeModal);
+        if (document.getElementById('infoModalContent')) document.getElementById('infoModalContent').addEventListener('click', e => e.stopPropagation());
+        if (document.getElementById('infoModalClose')) document.getElementById('infoModalClose').addEventListener('click', closeModal);
+
+        if (presetModal) presetModal.addEventListener('click', closePresetModal);
+        if (document.getElementById('presetModalContent')) document.getElementById('presetModalContent').addEventListener('click', e => e.stopPropagation());
+        if (document.getElementById('presetModalClose')) document.getElementById('presetModalClose').addEventListener('click', closePresetModal);
+
+        if (shareModal) shareModal.addEventListener('click', closeShareModal);
+        if (document.getElementById('shareModalContent')) document.getElementById('shareModalContent').addEventListener('click', e => e.stopPropagation());
+        if (document.getElementById('shareModalClose')) document.getElementById('shareModalClose').addEventListener('click', closeShareModal);
+
+        document.querySelectorAll('.info-btn, .mystery-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const infoType = btn.getAttribute('data-info');
+                if (infoType && modalContent[infoType]) openModal(infoType);
+            });
+        });
+
+        function updatePresetDropdown(selectValue = "") {
+            const factoryGroup = document.getElementById('factoryPresetsGroup');
+            const userGroup = document.getElementById('userPresetsGroup');
+            const externalGroup = document.getElementById('externalPresetsGroup');
+            const selectEl = document.getElementById('presetSelect');
+            
+            if (factoryGroup) factoryGroup.innerHTML = ''; 
+            if (userGroup) userGroup.innerHTML = ''; 
+            if (externalGroup) externalGroup.innerHTML = '';
+            
+            if (externalGroup && Object.keys(externalPresets).length > 0) {
+                for (let name in externalPresets) {
+                    let opt = document.createElement('option');
+                    opt.value = "external|" + name;
+                    opt.text = name;
+                    externalGroup.appendChild(opt);
+                }
+                externalGroup.style.display = '';
+            } else if (externalGroup) {
+                externalGroup.style.display = 'none';
+            }
+
+            if (factoryGroup) {
+                for (let name in factoryPresets) {
+                    let opt = document.createElement('option');
+                    opt.value = "factory|" + name;
+                    opt.text = name;
+                    factoryGroup.appendChild(opt);
+                }
+            }
+            
+            if (userGroup) {
+                for (let name in userPresets) {
+                    let opt = document.createElement('option');
+                    opt.value = "user|" + name;
+                    opt.text = name;
+                    userGroup.appendChild(opt);
+                }
+            }
+
+            if (!selectEl) return;
+
+            let unsavedOpt = document.getElementById('unsavedOption');
+            if (unsavedOpt) unsavedOpt.remove();
+
+            if (selectValue === "unsaved") {
+                let opt = document.createElement('option');
+                opt.id = "unsavedOption";
+                opt.value = "unsaved";
+                opt.text = "-- Delt lyd (ulagret) --";
+                opt.style.fontStyle = "italic";
+                selectEl.insertBefore(opt, selectEl.firstChild);
+                selectEl.value = "unsaved";
+                const delBtn = document.getElementById('deletePresetBtn');
+                if (delBtn) delBtn.style.display = 'none';
+            } else {
+                let optionExists = false;
+                if (selectValue) {
+                    for (let i = 0; i < selectEl.options.length; i++) {
+                        if (selectEl.options[i].value === selectValue) {
+                            optionExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (optionExists) {
+                    selectEl.value = selectValue;
+                    const delBtn = document.getElementById('deletePresetBtn');
+                    if (delBtn) delBtn.style.display = selectValue.startsWith('user|') ? 'inline-block' : 'none';
+                } else if (selectEl.options.length > 0) {
+                    selectEl.selectedIndex = 0;
+                    const delBtn = document.getElementById('deletePresetBtn');
+                    if (delBtn) delBtn.style.display = selectEl.options[0].value.startsWith('user|') ? 'inline-block' : 'none';
+                    if (selectValue !== "") {
+                        selectEl.dispatchEvent(new Event('change'));
+                    }
+                } else {
+                    const delBtn = document.getElementById('deletePresetBtn');
+                    if (delBtn) delBtn.style.display = 'none';
+                }
+            }
+        }
+
+        function showErrorBanner(message) {
+            const banner = document.getElementById('urlErrorBanner');
+            if (banner) {
+                banner.textContent = message;
+                banner.style.display = 'block';
+                setTimeout(() => { banner.style.display = 'none'; }, 8000);
+            }
+        }
+
+        async function loadFactoryPresets() {
+            factoryPresets = {
+                "Initiell Patch": {
+                    "wave": "sawtooth",
+                    "sliderValues": {
+                        "harmonicsSlider": "30", "oscMix": "100", "noiseMix": "0",
+                        "cutoff": "20000", "hpCutoff": "40",
+                        "envA": "0.1", "envD": "0.3", "envS": "0.5", "envR": "0.8",
+                        "lfoRate": "39.5", "lfoVibrato": "0", "lfoTremolo": "0", "lfoFilter": "0",
+                        "delayTime": "0.4", "delayFeedback": "40", "delayMix": "0",
+                        "reverbTime": "3.0", "reverbMix": "0"
+                    }
+                }
+            };
+
+            let localLoaded = false;
+            try {
+                const localResponse = await fetch('factory_presets.json?v=' + new Date().getTime(), { cache: 'no-store' });
+                if (localResponse.ok) {
+                    const localData = await localResponse.json();
+                    factoryPresets = { ...factoryPresets, ...localData };
+                    localLoaded = true;
+                }
+            } catch (error) {}
+
+            if (!localLoaded) {
+                try {
+                    let fetchUrl = FACTORY_PRESETS_URL;
+                    if (fetchUrl.includes('dropbox.com')) {
+                        try {
+                            let urlObj = new URL(fetchUrl);
+                            urlObj.hostname = 'dl.dropboxusercontent.com';
+                            urlObj.searchParams.delete('dl');
+                            fetchUrl = urlObj.toString();
+                        } catch(e) {
+                            fetchUrl = fetchUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+                        }
+                    }
+                    const response = await fetch(fetchUrl, { cache: 'no-store' });
+                    if (response.ok) {
+                        const data = await response.json();
+                        factoryPresets = { ...factoryPresets, ...data };
+                    }
+                } catch (error) {}
+            }
+            updatePresetDropdown();
+        }
+
+        async function fetchExternalUrl(presetsUrl) {
+            if (presetsUrl.includes('dropbox.com')) {
+                try {
+                    let urlObj = new URL(presetsUrl);
+                    urlObj.hostname = 'dl.dropboxusercontent.com';
+                    urlObj.searchParams.delete('dl');
+                    presetsUrl = urlObj.toString();
+                } catch(e) {
+                    presetsUrl = presetsUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+                }
+            }
+
+            const response = await fetch(presetsUrl, { cache: 'no-store' });
+            if (!response.ok) throw new Error(`Serveren svarte med status ${response.status}`);
+            const data = await response.json();
+            
+            if (typeof data === 'object' && data !== null) {
+                if (data.wave && data.sliderValues) {
+                    externalPresets = { "Delt lyd": data };
+                } else {
+                    externalPresets = data;
+                }
+                return true;
+            }
+            throw new Error("Ugyldig JSON-format");
+        }
+
+        async function loadExternalPresets() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let presetsUrl = urlParams.get('presets');
+            if (presetsUrl) {
+                try {
+                    await fetchExternalUrl(presetsUrl);
+                } catch (error) {
+                    showErrorBanner("Klarte ikke å hente inn presets fra URL-en. Sjekk at lenken er riktig, og at den peker til en gyldig fil.");
+                }
+            }
+            updatePresetDropdown();
+        }
+
+        function getPresetState() {
+            const state = { wave: currentWave, sliderValues: {} };
+            document.querySelectorAll('input[type="range"]').forEach(inp => {
+                if (inp.id && inp.id !== 'freqSlider' && inp.id !== 'globalMasterVol') { 
+                    state.sliderValues[inp.id] = inp.value;
+                }
+            });
+            return state;
+        }
+
+        function applyPresetState(state) {
+            if (!document.body.classList.contains('expert-mode')) {
+                const usesAdv = (
+                    parseFloat(state.sliderValues.lfoVibrato || 0) > 0 ||
+                    parseFloat(state.sliderValues.lfoTremolo || 0) > 0 ||
+                    parseFloat(state.sliderValues.lfoFilter || 0) > 0 ||
+                    parseFloat(state.sliderValues.delayMix || 0) > 0 ||
+                    parseFloat(state.sliderValues.reverbMix || 0) > 0 ||
+                    state.wave === 'manual'
+                );
+                if (usesAdv) {
+                    setExpertMode(true, true);
+                }
+            }
+
+            const waveBtn = document.querySelector(`.wave-btn[data-wave="${state.wave}"]`);
+            if(waveBtn) waveBtn.click();
+            
+            for (const [id, value] of Object.entries(state.sliderValues)) {
+                if (id === 'globalMasterVol') continue; 
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = value;
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }
+        }
+
+        const presetSelect = document.getElementById('presetSelect');
+        if (presetSelect) {
+            presetSelect.addEventListener('change', (e) => {
+                const val = e.target.value;
+                const delBtn = document.getElementById('deletePresetBtn');
+                
+                if (val !== "unsaved") {
+                     let unsavedOpt = document.getElementById('unsavedOption');
+                     if (unsavedOpt) unsavedOpt.remove();
+                }
+
+                if (!val || val === "unsaved") {
+                    if (delBtn) delBtn.style.display = 'none';
+                    e.target.blur(); 
+                    return;
+                }
+                
+                const [type, name] = val.split('|');
+                if (type === 'factory' && factoryPresets[name]) {
+                    applyPresetState(factoryPresets[name]);
+                    if (delBtn) delBtn.style.display = 'none';
+                } else if (type === 'user' && userPresets[name]) {
+                    applyPresetState(userPresets[name]);
+                    if (delBtn) delBtn.style.display = 'inline-block';
+                } else if (type === 'external' && externalPresets[name]) {
+                    applyPresetState(externalPresets[name]);
+                    if (delBtn) delBtn.style.display = 'none';
+                }
+                e.target.blur(); 
+            });
+        }
+
+        function openSavePresetModal() {
+            const pTitle = document.getElementById('presetModalTitle');
+            const pBody = document.getElementById('presetModalBody');
+            
+            if (pTitle && pBody) {
+                pTitle.innerText = "Lagre Preset";
+                pBody.innerHTML = `
+                    <p style="margin-top: 0;">Skriv inn et navn på den nye lyden din:</p>
+                    <input type="text" id="presetNameInput" placeholder="Min fete synthlyd..." style="width: 100%; padding: 10px; margin-bottom: 20px; background: #111; color: white; border: 1px solid #444; border-radius: 4px; font-family: inherit; font-size: 14px; outline: none;">
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="preset-btn" id="btnCancelPresetSave" style="background: #333;">Avbryt</button>
+                        <button class="preset-btn" id="btnConfirmPresetSave" style="background: var(--accent); color: #111;">Lagre Lyd</button>
+                    </div>
+                `;
+                if (presetModal) presetModal.style.display = 'flex';
+                
+                const cancelBtn = document.getElementById('btnCancelPresetSave');
+                const confirmBtn = document.getElementById('btnConfirmPresetSave');
+                if (cancelBtn) cancelBtn.addEventListener('click', closePresetModal);
+                if (confirmBtn) confirmBtn.addEventListener('click', confirmSavePreset);
+
+                setTimeout(() => {
+                    const inp = document.getElementById('presetNameInput');
+                    if(inp) { inp.focus(); inp.addEventListener('keydown', (e) => { if(e.key==='Enter') confirmSavePreset(); }); }
+                }, 50);
+            }
+        }
+
+        function openDeletePresetModal(name) {
+            const pTitle = document.getElementById('presetModalTitle');
+            const pBody = document.getElementById('presetModalBody');
+            
+            if (pTitle && pBody) {
+                pTitle.innerText = "Slett Preset";
+                pBody.innerHTML = `
+                    <p style="margin-top: 0;">Er du helt sikker på at du vil slette preset <strong>${name}</strong> permanent?</p>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px;">
+                        <button class="preset-btn" id="btnCancelPresetDel" style="background: #333;">Behold den</button>
+                        <button class="preset-btn" id="btnConfirmPresetDel" style="background: #c0392b; color: white;">Ja, slett</button>
+                    </div>
+                `;
+                if (presetModal) presetModal.style.display = 'flex';
+                
+                const cancelBtn = document.getElementById('btnCancelPresetDel');
+                const confirmBtn = document.getElementById('btnConfirmPresetDel');
+                if (cancelBtn) cancelBtn.addEventListener('click', closePresetModal);
+                if (confirmBtn) confirmBtn.addEventListener('click', () => confirmDeletePreset(name));
+            }
+        }
+
+        async function confirmSavePreset() {
+            const nameInput = document.getElementById('presetNameInput');
+            if (!nameInput) return;
+            const name = nameInput.value;
+            if (!name || name.trim() === "") return;
+            
+            const presetName = name.trim();
+            const state = getPresetState();
+            pendingPresetSelection = "user|" + presetName;
+
+            if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                try {
+                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName);
+                    await setDoc(presetRef, state);
+                } catch(e) {}
+            } else if (storageMode === 'local') {
+                userPresets[presetName] = state;
+                try {
+                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
+                    updatePresetDropdown(pendingPresetSelection);
+                    pendingPresetSelection = null;
+                } catch (e) {
+                    showErrorBanner("Klarte ikke å lagre preset i nettleseren.");
+                }
+            }
+            closePresetModal();
+        }
+
+        async function confirmDeletePreset(name) {
+            if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                try {
+                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name);
+                    await deleteDoc(presetRef);
+                } catch(e) {}
+            } else if (storageMode === 'local') {
+                delete userPresets[name];
+                try {
+                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
+                    updatePresetDropdown();
+                } catch(e) {}
+            }
+            closePresetModal();
+        }
+
+        const savePresetBtn = document.getElementById('savePresetBtn');
+        if (savePresetBtn) savePresetBtn.addEventListener('click', openSavePresetModal);
+        
+        const deletePresetBtn = document.getElementById('deletePresetBtn');
+        if (deletePresetBtn) {
+            deletePresetBtn.addEventListener('click', () => {
+                const select = document.getElementById('presetSelect');
+                if (select) {
+                    const val = select.value;
+                    if (!val.startsWith('user|')) return;
+                    const name = val.split('|')[1];
+                    openDeletePresetModal(name);
+                }
+            });
+        }
+
+        function openShareModal() {
+            const currentState = getPresetState();
+            const jsonString = JSON.stringify(currentState, null, 2);
+            const shareTextarea = document.getElementById('shareTextarea');
+            const shareStatusMsg = document.getElementById('shareStatusMsg');
+            
+            if (shareTextarea) shareTextarea.value = jsonString;
+            if (shareStatusMsg) shareStatusMsg.style.display = 'none';
+            if (shareModal) shareModal.style.display = 'flex';
+        }
+
+        function copyPresetToClipboard() {
+            const textarea = document.getElementById('shareTextarea');
+            if (!textarea) return;
+            textarea.select();
+            document.execCommand('copy');
+            const msg = document.getElementById('shareStatusMsg');
+            if (msg) {
+                msg.textContent = "✅ Koden er kopiert til utklippstavlen!";
+                msg.style.color = "#2ecc71";
+                msg.style.display = "block";
+            }
+        }
+
+        function applyPastedPreset() {
+            const textarea = document.getElementById('shareTextarea');
+            if (!textarea) return;
+            const text = textarea.value;
+            const msg = document.getElementById('shareStatusMsg');
+            if (!msg) return;
+
+            try {
+                const state = JSON.parse(text);
+                const keys = Object.keys(state);
+                let actualState = state;
+                
+                if (keys.length === 1 && state[keys[0]].wave && state[keys[0]].sliderValues) {
+                    actualState = state[keys[0]];
+                }
+                
+                if (actualState && actualState.wave && actualState.sliderValues) {
+                    applyPresetState(actualState);
+                    updatePresetDropdown("unsaved");
+                    msg.textContent = "✅ Lyden ble lastet inn! Trykk 'Lagre ny' for å beholde den.";
+                    msg.style.color = "#3498db";
+                    msg.style.display = "block";
+                    setTimeout(() => { closeShareModal(); }, 1500);
+                } else {
+                    throw new Error("Feil format");
+                }
+            } catch (err) {
+                msg.textContent = "❌ Klarte ikke å lese koden. Er du sikker på at den ble kopiert riktig?";
+                msg.style.color = "#e74c3c";
+                msg.style.display = "block";
+            }
+        }
+
+        const sharePresetBtn = document.getElementById('sharePresetBtn');
+        if (sharePresetBtn) sharePresetBtn.addEventListener('click', openShareModal);
+        
+        const btnCopyShareCode = document.getElementById('btnCopyShareCode');
+        if (btnCopyShareCode) btnCopyShareCode.addEventListener('click', copyPresetToClipboard);
+        
+        const btnApplyShareCode = document.getElementById('btnApplyShareCode');
+        if (btnApplyShareCode) btnApplyShareCode.addEventListener('click', applyPastedPreset);
+        
+        const btnImportFromUrl = document.getElementById('btnImportFromUrl');
+        if (btnImportFromUrl) {
+            btnImportFromUrl.addEventListener('click', async () => {
+                const urlInput = document.getElementById('importUrlInput');
+                if (!urlInput) return;
+                const urlVal = urlInput.value.trim();
+                const msg = document.getElementById('shareStatusMsg');
+                if(!urlVal || !msg) return;
+                
+                msg.style.display = 'none';
+                btnImportFromUrl.textContent = "Henter...";
+                
+                try {
+                    await fetchExternalUrl(urlVal);
+                    updatePresetDropdown();
+                    msg.textContent = "✅ Lyder lastet inn fra lenken! Du finner dem i rullegardinmenyen.";
+                    msg.style.color = "#3498db";
+                    msg.style.display = "block";
+                    urlInput.value = "";
+                    
+                    const firstPresetName = Object.keys(externalPresets)[0];
+                    if (firstPresetName) {
+                        const val = "external|" + firstPresetName;
+                        const select = document.getElementById('presetSelect');
+                        if (select) {
+                            select.value = val;
+                            select.dispatchEvent(new Event('change'));
+                        }
+                    }
+                    setTimeout(() => { closeShareModal(); }, 2500);
+                } catch(e) {
+                    msg.textContent = "❌ Klarte ikke å hente filen. Sjekk at lenken går direkte til en .json-fil.";
+                    msg.style.color = "#e74c3c";
+                    msg.style.display = "block";
+                } finally {
+                    btnImportFromUrl.textContent = "Hent lyder";
+                }
+            });
+        }
+
+        // ==========================================
         // 6. PIANO OG TANGENTBORD LOGIKK
         // ==========================================
+        const keyMap = {};
+        let activePcKeys = {};
+        const pianoScrollWrapper = document.getElementById('pianoScrollWrapper');
+        const pianoContainer = document.getElementById('pianoContainer');
+
         const pianoLayout = [
             { white: { note: 'C3', key: null, freq: 130.81 }, black: { note: 'C#3', key: null, freq: 138.59 } },
             { white: { note: 'D3', key: null, freq: 146.83 }, black: { note: 'D#3', key: null, freq: 155.56 } },
@@ -1675,7 +2171,6 @@
             { white: { note: 'G3', key: null, freq: 196.00 }, black: { note: 'G#3', key: null, freq: 207.65 } },
             { white: { note: 'A3', key: null, freq: 220.00 }, black: { note: 'A#3', key: null, freq: 233.08 } },
             { white: { note: 'B3', key: null, freq: 246.94 }, black: null },
-
             { white: { note: 'C4', key: 'a', freq: 261.63 }, black: { note: 'C#4', key: 'w', freq: 277.18 } },
             { white: { note: 'D4', key: 's', freq: 293.66 }, black: { note: 'D#4', key: 'e', freq: 311.13 } },
             { white: { note: 'E4', key: 'd', freq: 329.63 }, black: null },
@@ -1683,7 +2178,6 @@
             { white: { note: 'G4', key: 'g', freq: 392.00 }, black: { note: 'G#4', key: 'y', freq: 415.30 } },
             { white: { note: 'A4', key: 'h', freq: 440.00 }, black: { note: 'A#4', key: 'u', freq: 466.16 } },
             { white: { note: 'B4', key: 'j', freq: 493.88 }, black: null },
-
             { white: { note: 'C5', key: 'k', freq: 523.25 }, black: { note: 'C#5', key: 'o', freq: 554.37 } },
             { white: { note: 'D5', key: 'l', freq: 587.33 }, black: { note: 'D#5', key: 'p', freq: 622.25 } },
             { white: { note: 'E5', key: 'ø', freq: 659.25 }, black: null },
@@ -1691,52 +2185,44 @@
             { white: { note: 'G5', key: null, freq: 783.99 }, black: { note: 'G#5', key: null, freq: 830.61 } },
             { white: { note: 'A5', key: null, freq: 880.00 }, black: { note: 'A#5', key: null, freq: 932.33 } },
             { white: { note: 'B5', key: null, freq: 987.77 }, black: null },
-
             { white: { note: 'C6', key: null, freq: 1046.50 }, black: null }
         ];
 
-        const pianoScrollWrapper = document.getElementById('pianoScrollWrapper');
-        const pianoContainer = document.getElementById('pianoContainer');
-        const keyMap = {};
-        let activePcKeys = {};
+        if (pianoScrollWrapper) {
+            pianoLayout.forEach(group => {
+                const groupEl = document.createElement('div');
+                groupEl.className = 'key-group';
 
-        pianoLayout.forEach(group => {
-            const groupEl = document.createElement('div');
-            groupEl.className = 'key-group';
+                const whiteEl = document.createElement('div');
+                whiteEl.className = 'white-key';
+                whiteEl.setAttribute('data-freq', group.white.freq);
+                whiteEl.setAttribute('data-note', group.white.note);
+                if (group.white.key) keyMap[group.white.key] = { note: group.white.note, freq: group.white.freq };
 
-            const whiteEl = document.createElement('div');
-            whiteEl.className = 'white-key';
-            whiteEl.setAttribute('data-freq', group.white.freq);
-            whiteEl.setAttribute('data-note', group.white.note);
+                whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
+                whiteEl.addEventListener('mouseup', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
+                whiteEl.addEventListener('mouseleave', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
+                whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
+                whiteEl.addEventListener('touchend', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
+                groupEl.appendChild(whiteEl);
 
-            if (group.white.key) keyMap[group.white.key] = { note: group.white.note, freq: group.white.freq };
+                if (group.black) {
+                    const blackEl = document.createElement('div');
+                    blackEl.className = 'black-key';
+                    blackEl.setAttribute('data-freq', group.black.freq);
+                    blackEl.setAttribute('data-note', group.black.note);
+                    if (group.black.key) keyMap[group.black.key] = { note: group.black.note, freq: group.black.freq };
 
-            whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
-            whiteEl.addEventListener('mouseup', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
-            whiteEl.addEventListener('mouseleave', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
-            whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
-            whiteEl.addEventListener('touchend', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
-
-            groupEl.appendChild(whiteEl);
-
-            if (group.black) {
-                const blackEl = document.createElement('div');
-                blackEl.className = 'black-key';
-                blackEl.setAttribute('data-freq', group.black.freq);
-                blackEl.setAttribute('data-note', group.black.note);
-
-                if (group.black.key) keyMap[group.black.key] = { note: group.black.note, freq: group.black.freq };
-
-                blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
-                blackEl.addEventListener('mouseup', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
-                blackEl.addEventListener('mouseleave', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
-                blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
-                blackEl.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
-
-                groupEl.appendChild(blackEl);
-            }
-            pianoScrollWrapper.appendChild(groupEl);
-        });
+                    blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
+                    blackEl.addEventListener('mouseup', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
+                    blackEl.addEventListener('mouseleave', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
+                    blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
+                    blackEl.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
+                    groupEl.appendChild(blackEl);
+                }
+                pianoScrollWrapper.appendChild(groupEl);
+            });
+        }
 
         function getShiftedNoteName(noteStr, shift) {
             let match = noteStr.match(/([A-G]#?)(\d)/);
@@ -1748,7 +2234,8 @@
             document.querySelectorAll('.white-key, .black-key').forEach(el => {
                 let note = el.getAttribute('data-note');
                 if (displayMode === 'notes') {
-                    el.textContent = note; el.style.color = '';
+                    el.textContent = note;
+                    el.style.color = '';
                 } else {
                     if (note && note.startsWith('C') && note.length === 2 && el.classList.contains('white-key')) {
                         el.textContent = note; el.style.color = '#aaa';
@@ -1757,6 +2244,7 @@
                     }
                 }
             });
+
             if (displayMode === 'pc') {
                 for (let key in keyMap) {
                     let baseNote = keyMap[key].note;
@@ -1765,16 +2253,20 @@
                     if (targetEl) { targetEl.textContent = key.toUpperCase(); targetEl.style.color = ''; }
                 }
             }
+
             let centerC = getShiftedNoteName('C4', pcOctaveShift);
             let centerCEl = document.querySelector(`[data-note="${centerC}"]`);
-            if (centerCEl) { pianoContainer.scrollTo({ left: centerCEl.parentElement.offsetLeft - 30, behavior: 'smooth' }); }
+            if (centerCEl && pianoContainer) {
+                pianoContainer.scrollTo({ left: centerCEl.parentElement.offsetLeft - 30, behavior: 'smooth' });
+            }
         }
 
         function triggerNotePress(freq, noteId) {
             activeNotes = activeNotes.filter(n => n.id !== noteId);
             activeNotes.push({ id: noteId, freq: freq });
             fundamentalFreq = freq;
-            document.getElementById('toolbarFreqVal').textContent = freq.toFixed(1) + " Hz";
+            const tfv = document.getElementById('toolbarFreqVal');
+            if (tfv) tfv.textContent = freq.toFixed(1) + " Hz";
 
             let keyEl = document.querySelector(`[data-note="${noteId}"]`);
             if (keyEl) keyEl.classList.add('active');
@@ -1805,7 +2297,9 @@
                 if (activeNotes.length > 0) {
                     let lastNote = activeNotes[activeNotes.length - 1];
                     fundamentalFreq = lastNote.freq;
-                    document.getElementById('toolbarFreqVal').textContent = fundamentalFreq.toFixed(1) + " Hz";
+                    const tfv = document.getElementById('toolbarFreqVal');
+                    if (tfv) tfv.textContent = fundamentalFreq.toFixed(1) + " Hz";
+                    
                     let monoVoice = activeVoices['mono'];
                     if (monoVoice && monoVoice.osc) {
                         monoVoice.osc.frequency.setTargetAtTime(fundamentalFreq, audioCtx.currentTime, 0.02);
@@ -1816,47 +2310,75 @@
             }
         }
 
-        renderPianoLabels();
-
         const polyToggleBtn = document.getElementById('polyToggleBtn');
-        polyToggleBtn.addEventListener('click', (e) => {
-            isPolyphonic = !isPolyphonic;
-            if (isPolyphonic) {
-                e.target.textContent = 'Polyfoni: PÅ'; e.target.style.backgroundColor = 'var(--accent)'; e.target.style.color = '#111'; e.target.style.borderColor = 'var(--accent)';
-            } else {
-                e.target.textContent = 'Polyfoni: AV'; e.target.style.backgroundColor = '#222'; e.target.style.color = 'var(--text-main)'; e.target.style.borderColor = '#444';
-            }
-            for (let vid in activeVoices) { stopVoice(vid, true); }
-            activeNotes = [];
-            document.querySelectorAll('.white-key, .black-key').forEach(el => el.classList.remove('active'));
-        });
+        if (polyToggleBtn) {
+            polyToggleBtn.addEventListener('click', (e) => {
+                isPolyphonic = !isPolyphonic;
+                if (isPolyphonic) {
+                    e.target.textContent = 'Polyfoni: PÅ';
+                    e.target.style.backgroundColor = 'var(--accent)';
+                    e.target.style.color = '#111';
+                    e.target.style.borderColor = 'var(--accent)';
+                } else {
+                    e.target.textContent = 'Polyfoni: AV';
+                    e.target.style.backgroundColor = '#222';
+                    e.target.style.color = 'var(--text-main)';
+                    e.target.style.borderColor = '#444';
+                }
+                for (let vid in activeVoices) { stopVoice(vid, true); }
+                activeNotes = [];
+                document.querySelectorAll('.white-key, .black-key').forEach(el => el.classList.remove('active'));
+            });
+        }
 
-        document.getElementById('toggleLabelsBtn').addEventListener('click', (e) => {
-            if (displayMode === 'pc') { displayMode = 'notes'; e.target.textContent = 'Vis PC-taster'; } 
-            else { displayMode = 'pc'; e.target.textContent = 'Vis Notenavn'; }
-            renderPianoLabels();
-        });
+        const toggleLabelsBtn = document.getElementById('toggleLabelsBtn');
+        if (toggleLabelsBtn) {
+            toggleLabelsBtn.addEventListener('click', (e) => {
+                if (displayMode === 'pc') {
+                    displayMode = 'notes';
+                    e.target.textContent = 'Vis PC-taster';
+                } else {
+                    displayMode = 'pc';
+                    e.target.textContent = 'Vis Notenavn';
+                }
+                renderPianoLabels();
+            });
+        }
 
-        document.getElementById('octDownBtn').addEventListener('click', () => {
-            pcOctaveShift = Math.max(-1, pcOctaveShift - 1); document.getElementById('octaveDisplay').textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift; renderPianoLabels();
-        });
-        document.getElementById('octUpBtn').addEventListener('click', () => {
-            pcOctaveShift = Math.min(1, pcOctaveShift + 1); document.getElementById('octaveDisplay').textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift; renderPianoLabels();
-        });
+        const octDownBtn = document.getElementById('octDownBtn');
+        if (octDownBtn) {
+            octDownBtn.addEventListener('click', () => {
+                pcOctaveShift = Math.max(-1, pcOctaveShift - 1);
+                const disp = document.getElementById('octaveDisplay');
+                if(disp) disp.textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift;
+                renderPianoLabels();
+            });
+        }
+
+        const octUpBtn = document.getElementById('octUpBtn');
+        if (octUpBtn) {
+            octUpBtn.addEventListener('click', () => {
+                pcOctaveShift = Math.min(1, pcOctaveShift + 1);
+                const disp = document.getElementById('octaveDisplay');
+                if(disp) disp.textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift;
+                renderPianoLabels();
+            });
+        }
 
         let presetScrollThrottle = false;
-        
         let hasUnlockedAudio = false;
+        
         function unlockAudioContext() {
             if (hasUnlockedAudio) return;
             if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
             } else if (!audioCtx) {
                 initAudio();
-                if(audioCtx.state === 'suspended') audioCtx.resume();
+                if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
             }
             hasUnlockedAudio = true;
-            document.getElementById('urlErrorBanner').style.display = 'none';
+            const errBanner = document.getElementById('urlErrorBanner');
+            if(errBanner) errBanner.style.display = 'none';
             window.removeEventListener('mousedown', unlockAudioContext);
             window.removeEventListener('keydown', unlockAudioContext);
             window.removeEventListener('touchstart', unlockAudioContext);
@@ -1874,18 +2396,14 @@
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault(); 
                 if (e.repeat && presetScrollThrottle) return;
-                
                 presetScrollThrottle = true;
                 setTimeout(() => presetScrollThrottle = false, 150);
 
                 const select = document.getElementById('presetSelect');
                 if (select && select.options.length > 0) {
                     let newIndex = select.selectedIndex;
-                    if (e.key === 'ArrowDown') {
-                        newIndex = Math.min(newIndex + 1, select.options.length - 1);
-                    } else {
-                        newIndex = Math.max(newIndex - 1, 0);
-                    }
+                    if (e.key === 'ArrowDown') newIndex = Math.min(newIndex + 1, select.options.length - 1);
+                    else newIndex = Math.max(newIndex - 1, 0);
                     if (newIndex !== select.selectedIndex) {
                         select.selectedIndex = newIndex;
                         select.dispatchEvent(new Event('change'));
@@ -1896,12 +2414,18 @@
 
             if (e.key === 'ArrowLeft') {
                 e.preventDefault(); 
-                if (!e.repeat) document.getElementById('octDownBtn').click();
+                if (!e.repeat) {
+                    const btn = document.getElementById('octDownBtn');
+                    if (btn) btn.click();
+                }
                 return;
             }
             if (e.key === 'ArrowRight') {
                 e.preventDefault(); 
-                if (!e.repeat) document.getElementById('octUpBtn').click();
+                if (!e.repeat) {
+                    const btn = document.getElementById('octUpBtn');
+                    if (btn) btn.click();
+                }
                 return;
             }
             
@@ -1925,17 +2449,24 @@
         });
 
         const midiStatusLight = document.getElementById('midiStatusLight');
-        let activeMidiNotes = {};
-
         if (navigator.requestMIDIAccess) {
             try {
-                navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure).catch(err => onMIDIFailure());
-            } catch (err) { onMIDIFailure(); }
+                navigator.requestMIDIAccess()
+                    .then(onMIDISuccess, onMIDIFailure)
+                    .catch(err => {
+                        console.warn("MIDI ble blokkert av nettleserens sikkerhetspolicy:", err);
+                        onMIDIFailure();
+                    });
+            } catch (err) {
+                console.warn("Kunne ikke sjekke MIDI-tilgang:", err);
+                onMIDIFailure();
+            }
         } else {
-            midiStatusLight.title = "MIDI ikke støttet";
+            if (midiStatusLight) midiStatusLight.title = "MIDI ikke støttet i denne nettleseren";
         }
 
         function onMIDISuccess(midiAccess) {
+            if (!midiStatusLight) return;
             midiStatusLight.title = "Klar. Venter på tilkobling...";
             const inputs = midiAccess.inputs.values();
             for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -1943,6 +2474,7 @@
                 midiStatusLight.title = "Tilkoblet: " + input.value.name;
                 midiStatusLight.classList.add("active");
             }
+
             midiAccess.onstatechange = (e) => {
                 if (e.port.type === "input") {
                     if (e.port.state === "connected") {
@@ -1958,59 +2490,54 @@
         }
 
         function onMIDIFailure() {
-            midiStatusLight.title = "MIDI-tilgang nektet / Ikke tilgjengelig";
-            midiStatusLight.classList.remove("active");
+            if (midiStatusLight) {
+                midiStatusLight.title = "MIDI-tilgang nektet / Ikke tilgjengelig";
+                midiStatusLight.classList.remove("active");
+            }
         }
 
         function onMIDIMessage(event) {
-            const [command, data1, data2] = event.data;
-            const statusNibble = command & 0xf0;
-            const velocity = data2;
-            const isNoteOn = statusNibble === 144 && velocity > 0;
-            const isNoteOff = statusNibble === 128 || (statusNibble === 144 && velocity === 0);
+            const [command, note, velocity] = event.data;
+            const isNoteOn = command >= 144 && command <= 159;
+            const isNoteOff = command >= 128 && command <= 143 || (isNoteOn && velocity === 0);
 
-            if (isNoteOn) {
-                // Vi forsøker å låse opp lydmotoren direkte (støttes av mange moderne nettlesere på MIDI-input)
+            if (isNoteOn && velocity > 0) {
                 if (!hasUnlockedAudio) unlockAudioContext();
                 
-                const freq = 440 * Math.pow(2, (data1 - 69) / 12);
-                const noteId = 'M' + data1;
-                activeMidiNotes[data1] = noteId;
+                const freq = 440 * Math.pow(2, (note - 69) / 12);
+                const noteId = 'M' + note;
+                activeMidiNotes[note] = noteId;
+
                 let visualNoteStr = null;
-                if (data1 >= 48 && data1 <= 84) {
+                if (note >= 48 && note <= 84) {
                     const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-                    visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
+                    const octave = Math.floor(note / 12) - 1;
+                    const noteName = noteNames[note % 12];
+                    visualNoteStr = noteName + octave;
                 }
+
                 triggerNotePress(freq, visualNoteStr || noteId);
-                
+
             } else if (isNoteOff) {
-                const noteId = activeMidiNotes[data1];
+                const noteId = activeMidiNotes[note];
                 if (noteId) {
                     let visualNoteStr = null;
-                    if (data1 >= 48 && data1 <= 84) {
+                    if (note >= 48 && note <= 84) {
                         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-                        visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
+                        const octave = Math.floor(note / 12) - 1;
+                        const noteName = noteNames[note % 12];
+                        visualNoteStr = noteName + octave;
                     }
+
                     triggerNoteRelease(visualNoteStr || noteId);
-                    delete activeMidiNotes[data1];
+                    delete activeMidiNotes[note];
                 }
-            } 
+            }
         }
 
         // ==========================================
-        // 7. EVENT LISTENERS FOR SLIDERS
+        // 7. EVENT LISTENERS FOR UI SLIDERS
         // ==========================================
-        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
-            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
-            currentWave = e.target.dataset.wave; 
-            const infoTextEl = document.getElementById('infoText'); if (infoTextEl && explanations[currentWave]) infoTextEl.innerHTML = explanations[currentWave];
-            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
-            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
-            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
-            if (!isSounding) drawVisualsStatic(); if (isPlaying || isSounding) updateAudioWaveform();
-        }));
-
         const drawbarsContainerInit = document.getElementById('drawbarsContainer');
         for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
             const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
@@ -2024,29 +2551,133 @@
             const label = document.createElement('div'); label.className = 'drawbar-label';
             label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
             wrapper.appendChild(slider); wrapper.appendChild(label);
-            drawbarsContainerInit.appendChild(wrapper);
+            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
         }
 
-        document.getElementById('harmonicsSlider').addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); document.getElementById('harmonicsVal').textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying || isSounding) updateAudioWaveform(); });
-        document.getElementById('oscMix').addEventListener('input', (e) => { oscAmount = parseFloat(e.target.value) / 100; document.getElementById('oscVolVal').textContent = e.target.value + " %"; if (audioCtx) { for (let vid in activeVoices) { if(activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05); } } if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('noiseMix').addEventListener('input', (e) => { noiseAmount = parseFloat(e.target.value) / 100; document.getElementById('noiseVal').textContent = e.target.value + " %"; if (audioCtx) { for (let vid in activeVoices) { if(activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05); } } if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('cutoff').addEventListener('input', (e) => { lpFilterCutoff = parseFloat(e.target.value); document.getElementById('cutoffVal').textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('hpCutoff').addEventListener('input', (e) => { hpFilterCutoff = parseFloat(e.target.value); document.getElementById('hpCutoffVal').textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); if (!isSounding) drawVisualsStatic(); });
-        ['a', 'd', 's', 'r'].forEach(p => document.getElementById('env' + p.toUpperCase()).addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); document.getElementById('val' + p.toUpperCase()).textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); }));
-        document.getElementById('lfoRate').addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); document.getElementById('valLfoRate').textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoVibrato').addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; document.getElementById('valLfoVibrato').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoTremolo').addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; document.getElementById('valLfoTremolo').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoFilter').addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; document.getElementById('valLfoFilter').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('delayTime').addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); document.getElementById('valDelayTime').textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
-        document.getElementById('delayFeedback').addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; document.getElementById('valDelayFeedback').textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
-        document.getElementById('delayMix').addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; document.getElementById('valDelayMix').textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
-        document.getElementById('reverbTime').addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); document.getElementById('valReverbTime').textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
-        document.getElementById('reverbMix').addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; document.getElementById('valReverbMix').textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
+        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
+            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
+            currentWave = e.target.dataset.wave; 
+            const infoTextEl = document.getElementById('infoText');
+            if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
+            
+            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
+            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
+            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
+            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
+        }));
+
+        const harmSlider = document.getElementById('harmonicsSlider');
+        if (harmSlider) {
+            harmSlider.addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); const harmVal = document.getElementById('harmonicsVal'); if (harmVal) harmVal.textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
+        }
+
+        const oscMixSlider = document.getElementById('oscMix');
+        if (oscMixSlider) {
+            oscMixSlider.addEventListener('input', (e) => {
+                oscAmount = parseFloat(e.target.value) / 100;
+                const oscVolVal = document.getElementById('oscVolVal'); if (oscVolVal) oscVolVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
         
+        const noiseMixSlider = document.getElementById('noiseMix');
+        if (noiseMixSlider) {
+            noiseMixSlider.addEventListener('input', (e) => {
+                noiseAmount = parseFloat(e.target.value) / 100;
+                const noiseVal = document.getElementById('noiseVal'); if (noiseVal) noiseVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
+
+        const cutoffSlider = document.getElementById('cutoff');
+        if (cutoffSlider) {
+            cutoffSlider.addEventListener('input', (e) => { 
+                lpFilterCutoff = parseFloat(e.target.value); 
+                const cutoffVal = document.getElementById('cutoffVal');
+                if (cutoffVal) cutoffVal.textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
+                if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        const hpCutoffSlider = document.getElementById('hpCutoff');
+        if (hpCutoffSlider) {
+            hpCutoffSlider.addEventListener('input', (e) => { 
+                hpFilterCutoff = parseFloat(e.target.value); 
+                const hpCutoffVal = document.getElementById('hpCutoffVal');
+                if (hpCutoffVal) hpCutoffVal.textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
+                if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        ['a', 'd', 's', 'r'].forEach(p => {
+            const envSlider = document.getElementById('env' + p.toUpperCase());
+            if (envSlider) {
+                envSlider.addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); const envVal = document.getElementById('val' + p.toUpperCase()); if (envVal) envVal.textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); });
+            }
+        });
+
+        const lfoRateSlider = document.getElementById('lfoRate');
+        if (lfoRateSlider) lfoRateSlider.addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); const valLfoRate = document.getElementById('valLfoRate'); if (valLfoRate) valLfoRate.textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoVibratoSlider = document.getElementById('lfoVibrato');
+        if (lfoVibratoSlider) lfoVibratoSlider.addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; const valLfoVibrato = document.getElementById('valLfoVibrato'); if (valLfoVibrato) valLfoVibrato.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoTremoloSlider = document.getElementById('lfoTremolo');
+        if (lfoTremoloSlider) lfoTremoloSlider.addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; const valLfoTremolo = document.getElementById('valLfoTremolo'); if(valLfoTremolo) valLfoTremolo.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoFilterSlider = document.getElementById('lfoFilter');
+        if (lfoFilterSlider) lfoFilterSlider.addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; const valLfoFilter = document.getElementById('valLfoFilter'); if (valLfoFilter) valLfoFilter.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+
+        const delayTimeSlider = document.getElementById('delayTime');
+        if (delayTimeSlider) delayTimeSlider.addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); const valDelayTime = document.getElementById('valDelayTime'); if(valDelayTime) valDelayTime.textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
+        
+        const delayFeedbackSlider = document.getElementById('delayFeedback');
+        if (delayFeedbackSlider) delayFeedbackSlider.addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; const valDelayFeedback = document.getElementById('valDelayFeedback'); if (valDelayFeedback) valDelayFeedback.textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
+        
+        const delayMixSlider = document.getElementById('delayMix');
+        if (delayMixSlider) delayMixSlider.addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; const valDelayMix = document.getElementById('valDelayMix'); if (valDelayMix) valDelayMix.textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
+        
+        const reverbTimeSlider = document.getElementById('reverbTime');
+        if (reverbTimeSlider) reverbTimeSlider.addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); const valReverbTime = document.getElementById('valReverbTime'); if(valReverbTime) valReverbTime.textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
+        
+        const reverbMixSlider = document.getElementById('reverbMix');
+        if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
+
+        // ==========================================
+        // 8. OPPSTART AV APPEN
+        // ==========================================
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
+        renderPianoLabels();
+
+        Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
+            drawVisualsStatic(); 
+            drawADSR();
+            const select = document.getElementById('presetSelect');
+            if (select && select.options.length > 0) {
+                select.dispatchEvent(new Event('change'));
+            }
+        });
+
+        window.focus();
+        if (document.activeElement !== document.body) {
+            document.body.focus();
+        }
         
         startApp();
-        
+
     </script>
 </body>
 </html>
