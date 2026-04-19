@@ -1,3 +1,7 @@
 {
-    "cmake.sourceDirectory": "/Users/johanhovda/Documents/Lybbølge-Lab/lyd-lab/plugin"
+    "cmake.sourceDirectory": "/Users/johanhovda/Documents/Lybbølge-Lab/lyd-lab/plugin",
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/plugin/build/compile_commands.json",
+    "clangd.arguments": [
+        "--compile-commands-dir=${workspaceFolder}/plugin/build"
+    ]
 }
