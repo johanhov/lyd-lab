@@ -1970,9 +1970,9 @@
             const isNoteOff = statusNibble === 128 || (statusNibble === 144 && velocity === 0);
 
             if (isNoteOn) {
-                if (!hasUnlockedAudio || !audioCtx || audioCtx.state === 'suspended') {
-                    showErrorBanner("🔇 Lydmotoren sover (sikkerhetsfunksjon i nettleseren). Klikk hvor som helst på siden med musen for å vekke den!");
-                }
+                // Vi forsøker å låse opp lydmotoren direkte (støttes av mange moderne nettlesere på MIDI-input)
+                if (!hasUnlockedAudio) unlockAudioContext();
+                
                 const freq = 440 * Math.pow(2, (data1 - 69) / 12);
                 const noteId = 'M' + data1;
                 activeMidiNotes[data1] = noteId;
