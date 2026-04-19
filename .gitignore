@@ -1,0 +1,3 @@
+# JUCE / C++ Build output
+plugin/build/
+.DS_Store
