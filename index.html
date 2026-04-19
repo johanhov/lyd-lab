@@ -637,9 +637,10 @@
             color: #e74c3c;
             padding: 10px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 13px;
             margin-bottom: 15px;
             display: none;
+            font-weight: 500;
         }
 
         @media (max-width: 900px) {
@@ -919,9 +920,10 @@
         </div>
     </div>
 
+    <!-- SCRIPT -->
     <script type="module">
         // ==========================================
-        // 1. IMPORTS OG FIREBASE SETUP
+        // 1. IMPORTS
         // ==========================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -970,7 +972,6 @@
         let activeNotes = [];
         let activeVoices = {};
 
-        // Firebase & Lagring state
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         let app, auth, db;
@@ -987,7 +988,7 @@
         const FACTORY_PRESETS_URL = "https://www.dropbox.com/scl/fi/dwd8vz1g6x3uxdxlo9dai/Lydb-lge-Lab-presets.json?rlkey=593o8azjmedjjcex8n7abcao7&dl=0";
 
         // ==========================================
-        // 3. HJELPEFUNKSJONER FOR LYD & VISUALISERING
+        // 3. LYD & VISUALISERING
         // ==========================================
         const waveCanvas = document.getElementById('waveCanvas');
         const waveCtx = waveCanvas ? waveCanvas.getContext('2d') : null;
@@ -1180,6 +1181,9 @@
             isSounding = false; 
         }
 
+        // ==========================================
+        // 4. AUDIO ENGINE
+        // ==========================================
         function createReverbBuffer(ctx, duration) {
             const sampleRate = ctx.sampleRate;
             const length = sampleRate * duration;
@@ -1266,7 +1270,7 @@
 
         function startVoice(freq, voiceId) {
             initAudio(); 
-            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (audioCtx.state === 'suspended') audioCtx.resume().catch(()=>{});
             
             if (activeVoices[voiceId]) stopVoice(voiceId, true);
 
@@ -1335,229 +1339,7 @@
         }
 
         // ==========================================
-        // 4. STORAGE, AUTH & SETTINGS
-        // ==========================================
-        function isLocalStorageAvailable() {
-            try { const test = '__storage_test__'; localStorage.setItem(test, test); localStorage.removeItem(test); return true; } catch (e) { return false; }
-        }
-
-        function updateGlobalVolumeUI(val, skipStorage = false) {
-            globalVolumeAmount = val;
-            const percent = Math.round(val * 100);
-            
-            const slider = document.getElementById('globalMasterVol');
-            if (slider) slider.value = percent;
-            
-            const valDisp = document.getElementById('globalMasterVal');
-            if (valDisp) valDisp.textContent = percent + ' %';
-            
-            const loader = document.getElementById('masterVolLoader');
-            const controls = document.getElementById('masterVolControls');
-            if (loader) loader.style.display = 'none';
-            if (controls) controls.style.display = 'flex';
-
-            if (audioCtx && globalVolumeNode) {
-                globalVolumeNode.gain.setTargetAtTime(globalVolumeAmount, audioCtx.currentTime, 0.05);
-            }
-
-            if (!skipStorage) {
-                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
-                    try {
-                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                        setDoc(settingsRef, { masterVolume: globalVolumeAmount }, { merge: true });
-                    } catch(e) {}
-                } else if (storageMode === 'local') {
-                    try { localStorage.setItem('lydlab_masterVolume', globalVolumeAmount); } catch(e) {}
-                }
-            }
-        }
-
-        const masterVolSlider = document.getElementById('globalMasterVol');
-        if (masterVolSlider) {
-            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
-            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
-        }
-
-        async function setExpertMode(isExpert, skipStorage = false) {
-            const expertToggleBtn = document.getElementById('expertToggleBtn');
-            if (isExpert) {
-                document.body.classList.add('expert-mode');
-                if(expertToggleBtn) {
-                    expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
-                    expertToggleBtn.style.backgroundColor = '#333';
-                    expertToggleBtn.style.color = '#fff';
-                    expertToggleBtn.style.borderColor = '#444';
-                }
-            } else {
-                document.body.classList.remove('expert-mode');
-                if(expertToggleBtn) {
-                    expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
-                    expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
-                    expertToggleBtn.style.color = '#d2b4de';
-                    expertToggleBtn.style.borderColor = 'var(--reverb-color)';
-                }
-                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
-                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
-                    if (sawBtn) sawBtn.click();
-                }
-            }
-            
-            if (!skipStorage) {
-                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
-                    try {
-                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                        await setDoc(settingsRef, { isExpertMode: isExpert }, { merge: true });
-                    } catch (e) {}
-                } else if (storageMode === 'local') {
-                    try { localStorage.setItem('lydlab_expertMode', isExpert); } catch(e) {}
-                }
-            }
-            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
-        }
-
-        const expertToggleBtn = document.getElementById('expertToggleBtn');
-        if(expertToggleBtn) expertToggleBtn.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
-
-        async function fetchSettings() {
-            if (!currentUser || storageMode !== 'cloud') return;
-            let loadedVolume = 0.8;
-            try {
-                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'));
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.isExpertMode !== undefined) setExpertMode(data.isExpertMode, true); 
-                    if (data.masterVolume !== undefined) loadedVolume = data.masterVolume;
-                }
-            } catch (e) {}
-            updateGlobalVolumeUI(loadedVolume, true); 
-        }
-
-        function setupPresetsListener() {
-            if (!currentUser || !db || storageMode !== 'cloud') return;
-            const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
-            unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
-                const newPresets = {};
-                snapshot.forEach((doc) => { newPresets[doc.id] = doc.data(); });
-                userPresets = newPresets;
-                let valToSelect = document.getElementById('presetSelect').value;
-                if (pendingPresetSelection) { valToSelect = pendingPresetSelection; pendingPresetSelection = null; }
-                updatePresetDropdown(valToSelect);
-            }, (error) => {});
-        }
-
-        function loadLocalPresets() {
-            try {
-                const saved = localStorage.getItem('lydlab_presets');
-                if (saved) userPresets = JSON.parse(saved); else userPresets = {};
-                updatePresetDropdown();
-            } catch (e) { userPresets = {}; }
-        }
-
-        function setLocalStorageMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal lagring";
-            const ind = document.getElementById('cloudIndicator');
-            ind.classList.remove("connected");
-            ind.classList.add("local-storage");
-            
-            document.getElementById('savePresetBtn').disabled = false;
-            document.getElementById('expertToggleBtn').disabled = false;
-            
-            try {
-                const savedExpertMode = localStorage.getItem('lydlab_expertMode');
-                if (savedExpertMode !== null) setExpertMode(savedExpertMode === 'true', true);
-                const savedVol = localStorage.getItem('lydlab_masterVolume');
-                if (savedVol !== null) updateGlobalVolumeUI(parseFloat(savedVol), true);
-                else updateGlobalVolumeUI(0.8, true);
-            } catch(e) {}
-            
-            loadLocalPresets();
-        }
-
-        function setOfflineMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal modus (Frakoblet)";
-            document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
-            document.getElementById('cloudIndicator').classList.remove("connected");
-            document.getElementById('cloudIndicator').classList.remove("local-storage");
-            document.getElementById('savePresetBtn').disabled = false;
-            document.getElementById('expertToggleBtn').disabled = false;
-            updateGlobalVolumeUI(0.8, true);
-        }
-
-        function fallbackToLocal() {
-            if (isLocalStorageAvailable()) {
-                storageMode = 'local';
-                setLocalStorageMode();
-            } else {
-                storageMode = 'none';
-                setOfflineMode();
-            }
-        }
-
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                fallbackToLocal();
-            }
-        }
-
-        function startApp() {
-            if (typeof __firebase_config !== 'undefined' && initializeApp) {
-                storageMode = 'cloud';
-                try {
-                    const config = JSON.parse(__firebase_config);
-                    app = initializeApp(config);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
-                    
-                    onAuthStateChanged(auth, async (user) => {
-                        currentUser = user;
-                        if (user && storageMode === 'cloud') {
-                            document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
-                            document.getElementById('cloudIndicator').classList.add("connected");
-                            document.getElementById('cloudIndicator').classList.remove("local-storage");
-                            document.getElementById('savePresetBtn').disabled = false;
-                            document.getElementById('expertToggleBtn').disabled = false;
-                            
-                            await fetchSettings(); 
-                            setupPresetsListener();
-                            authInitialized = true;
-                        } else {
-                            if (unsubscribePresets) unsubscribePresets();
-                            if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
-                            if (authInitialized) updateGlobalVolumeUI(0.8, true);
-                        }
-                    });
-
-                    initAuth();
-                } catch(error) {
-                    fallbackToLocal();
-                }
-            } else {
-                fallbackToLocal();
-            }
-
-            Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
-                drawVisualsStatic(); drawADSR();
-                const selectEl = document.getElementById('presetSelect');
-                if(selectEl && selectEl.options.length > 0) { selectEl.dispatchEvent(new Event('change')); }
-            });
-            
-            setTimeout(() => {
-                const controls = document.getElementById('masterVolControls');
-                if (controls && controls.style.display === 'none') {
-                    isAuthenticating = false;
-                    updateGlobalVolumeUI(globalVolumeAmount, true);
-                }
-            }, 3000);
-        }
-
-        // ==========================================
-        // 5. MODALER OG PRESET LOGIKK
+        // 5. MODALER OG PRESETS
         // ==========================================
         const modalContent = {
             general: { title: "Synthesizeren", body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>" },
@@ -2155,9 +1937,380 @@
             });
         }
 
+
         // ==========================================
-        // 6. PIANO OG TANGENTBORD LOGIKK
+        // 6. STORAGE, SETTINGS & FIREBASE INIT
         // ==========================================
+        function isLocalStorageAvailable() {
+            try { const test = '__storage_test__'; localStorage.setItem(test, test); localStorage.removeItem(test); return true; } catch (e) { return false; }
+        }
+
+        function updateGlobalVolumeUI(val, skipStorage = false) {
+            globalVolumeAmount = val;
+            const percent = Math.round(val * 100);
+            
+            const slider = document.getElementById('globalMasterVol');
+            if (slider) slider.value = percent;
+            
+            const valDisp = document.getElementById('globalMasterVal');
+            if (valDisp) valDisp.textContent = percent + ' %';
+            
+            const loader = document.getElementById('masterVolLoader');
+            const controls = document.getElementById('masterVolControls');
+            if (loader) loader.style.display = 'none';
+            if (controls) controls.style.display = 'flex';
+
+            if (audioCtx && globalVolumeNode) {
+                globalVolumeNode.gain.setTargetAtTime(globalVolumeAmount, audioCtx.currentTime, 0.05);
+            }
+
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        setDoc(settingsRef, { masterVolume: globalVolumeAmount }, { merge: true });
+                    } catch(e) {}
+                } else if (storageMode === 'local') {
+                    try { localStorage.setItem('lydlab_masterVolume', globalVolumeAmount); } catch(e) {}
+                }
+            }
+        }
+
+        async function setExpertMode(isExpert, skipStorage = false) {
+            const expertToggleBtn = document.getElementById('expertToggleBtn');
+            if (isExpert) {
+                document.body.classList.add('expert-mode');
+                if(expertToggleBtn) {
+                    expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
+                    expertToggleBtn.style.backgroundColor = '#333';
+                    expertToggleBtn.style.color = '#fff';
+                    expertToggleBtn.style.borderColor = '#444';
+                }
+            } else {
+                document.body.classList.remove('expert-mode');
+                if(expertToggleBtn) {
+                    expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
+                    expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
+                    expertToggleBtn.style.color = '#d2b4de';
+                    expertToggleBtn.style.borderColor = 'var(--reverb-color)';
+                }
+                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
+                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
+                    if (sawBtn) sawBtn.click();
+                }
+            }
+            
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        await setDoc(settingsRef, { isExpertMode: isExpert }, { merge: true });
+                    } catch (e) {}
+                } else if (storageMode === 'local') {
+                    try { localStorage.setItem('lydlab_expertMode', isExpert); } catch(e) {}
+                }
+            }
+            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
+        }
+
+        async function fetchSettings() {
+            if (!currentUser || storageMode !== 'cloud') return;
+            let loadedVolume = 0.8;
+            try {
+                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.isExpertMode !== undefined) setExpertMode(data.isExpertMode, true); 
+                    if (data.masterVolume !== undefined) loadedVolume = data.masterVolume;
+                }
+            } catch (e) {}
+            updateGlobalVolumeUI(loadedVolume, true); 
+        }
+
+        function setupPresetsListener() {
+            if (!currentUser || !db || storageMode !== 'cloud') return;
+            const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
+            unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
+                const newPresets = {};
+                snapshot.forEach((doc) => { newPresets[doc.id] = doc.data(); });
+                userPresets = newPresets;
+                let valToSelect = document.getElementById('presetSelect').value;
+                if (pendingPresetSelection) { valToSelect = pendingPresetSelection; pendingPresetSelection = null; }
+                updatePresetDropdown(valToSelect);
+            }, (error) => {});
+        }
+
+        function loadLocalPresets() {
+            try {
+                const saved = localStorage.getItem('lydlab_presets');
+                if (saved) userPresets = JSON.parse(saved); else userPresets = {};
+                updatePresetDropdown();
+            } catch (e) { userPresets = {}; }
+        }
+
+        function setLocalStorageMode() {
+            const statusTxt = document.getElementById('cloudStatusText');
+            if (statusTxt) statusTxt.textContent = "Lokal lagring";
+            
+            const ind = document.getElementById('cloudIndicator');
+            if (ind) {
+                ind.classList.remove("connected");
+                ind.classList.add("local-storage");
+            }
+            
+            const saveBtn = document.getElementById('savePresetBtn');
+            const expBtn = document.getElementById('expertToggleBtn');
+            if (saveBtn) saveBtn.disabled = false;
+            if (expBtn) expBtn.disabled = false;
+            
+            try {
+                const savedExpertMode = localStorage.getItem('lydlab_expertMode');
+                if (savedExpertMode !== null) setExpertMode(savedExpertMode === 'true', true);
+                const savedVol = localStorage.getItem('lydlab_masterVolume');
+                if (savedVol !== null) updateGlobalVolumeUI(parseFloat(savedVol), true);
+                else updateGlobalVolumeUI(0.8, true);
+            } catch(e) {}
+            
+            loadLocalPresets();
+        }
+
+        function setOfflineMode() {
+            const statusTxt = document.getElementById('cloudStatusText');
+            if (statusTxt) statusTxt.textContent = "Lokal modus (Frakoblet)";
+            
+            const ind = document.getElementById('cloudIndicator');
+            if (ind) {
+                ind.style.backgroundColor = "#95a5a6";
+                ind.classList.remove("connected");
+                ind.classList.remove("local-storage");
+            }
+            
+            const saveBtn = document.getElementById('savePresetBtn');
+            const expBtn = document.getElementById('expertToggleBtn');
+            if (saveBtn) saveBtn.disabled = false;
+            if (expBtn) expBtn.disabled = false;
+            
+            updateGlobalVolumeUI(0.8, true);
+        }
+
+        function fallbackToLocal() {
+            if (isLocalStorageAvailable()) {
+                storageMode = 'local';
+                setLocalStorageMode();
+            } else {
+                storageMode = 'none';
+                setOfflineMode();
+            }
+        }
+
+        async function initAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                fallbackToLocal();
+            }
+        }
+
+        function startApp() {
+            if (typeof __firebase_config !== 'undefined' && initializeApp) {
+                storageMode = 'cloud';
+                try {
+                    const config = JSON.parse(__firebase_config);
+                    app = initializeApp(config);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+                    
+                    onAuthStateChanged(auth, async (user) => {
+                        currentUser = user;
+                        if (user && storageMode === 'cloud') {
+                            const statusTxt = document.getElementById('cloudStatusText');
+                            if (statusTxt) statusTxt.textContent = "Tilkoblet skyen";
+                            
+                            const ind = document.getElementById('cloudIndicator');
+                            if (ind) {
+                                ind.classList.add("connected");
+                                ind.classList.remove("local-storage");
+                            }
+                            
+                            const saveBtn = document.getElementById('savePresetBtn');
+                            const expBtn = document.getElementById('expertToggleBtn');
+                            if (saveBtn) saveBtn.disabled = false;
+                            if (expBtn) expBtn.disabled = false;
+                            
+                            await fetchSettings(); 
+                            setupPresetsListener();
+                            authInitialized = true;
+                        } else {
+                            if (unsubscribePresets) unsubscribePresets();
+                            if (storageMode === 'cloud') {
+                                const saveBtn = document.getElementById('savePresetBtn');
+                                if (saveBtn) saveBtn.disabled = true;
+                            }
+                            if (authInitialized) updateGlobalVolumeUI(0.8, true);
+                        }
+                    });
+
+                    initAuth();
+                } catch(error) {
+                    fallbackToLocal();
+                }
+            } else {
+                fallbackToLocal();
+            }
+
+            Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
+                drawVisualsStatic(); 
+                drawADSR();
+                const selectEl = document.getElementById('presetSelect');
+                if(selectEl && selectEl.options.length > 0) { 
+                    selectEl.dispatchEvent(new Event('change')); 
+                }
+            });
+            
+            setTimeout(() => {
+                const controls = document.getElementById('masterVolControls');
+                if (controls && controls.style.display === 'none') {
+                    isAuthenticating = false;
+                    updateGlobalVolumeUI(globalVolumeAmount, true);
+                }
+            }, 3000);
+        }
+
+        // ==========================================
+        // 7. EVENT LISTENERS FOR PIANO / UI 
+        // ==========================================
+        const masterVolSlider = document.getElementById('globalMasterVol');
+        if (masterVolSlider) {
+            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
+            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
+        }
+        
+        const expertToggleBtnRef = document.getElementById('expertToggleBtn');
+        if(expertToggleBtnRef) expertToggleBtnRef.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
+
+        const drawbarsContainerInit = document.getElementById('drawbarsContainer');
+        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
+            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
+            const slider = document.createElement('input'); 
+            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
+            slider.addEventListener('input', (e) => {
+                manualHarmonics[i] = parseFloat(e.target.value);
+                if (!isSounding) drawVisualsStatic();
+                if (isPlaying) updateAudioWaveform();
+            });
+            const label = document.createElement('div'); label.className = 'drawbar-label';
+            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
+            wrapper.appendChild(slider); wrapper.appendChild(label);
+            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
+        }
+
+        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
+            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
+            currentWave = e.target.dataset.wave; 
+            const infoTextEl = document.getElementById('infoText');
+            if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
+            
+            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
+            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
+            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
+            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
+        }));
+
+        const harmSlider = document.getElementById('harmonicsSlider');
+        if (harmSlider) {
+            harmSlider.addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); const harmVal = document.getElementById('harmonicsVal'); if (harmVal) harmVal.textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
+        }
+
+        const oscMixSlider = document.getElementById('oscMix');
+        if (oscMixSlider) {
+            oscMixSlider.addEventListener('input', (e) => {
+                oscAmount = parseFloat(e.target.value) / 100;
+                const oscVolVal = document.getElementById('oscVolVal'); if (oscVolVal) oscVolVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
+        
+        const noiseMixSlider = document.getElementById('noiseMix');
+        if (noiseMixSlider) {
+            noiseMixSlider.addEventListener('input', (e) => {
+                noiseAmount = parseFloat(e.target.value) / 100;
+                const noiseVal = document.getElementById('noiseVal'); if (noiseVal) noiseVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
+
+        const cutoffSlider = document.getElementById('cutoff');
+        if (cutoffSlider) {
+            cutoffSlider.addEventListener('input', (e) => { 
+                lpFilterCutoff = parseFloat(e.target.value); 
+                const cutoffVal = document.getElementById('cutoffVal');
+                if (cutoffVal) cutoffVal.textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
+                if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        const hpCutoffSlider = document.getElementById('hpCutoff');
+        if (hpCutoffSlider) {
+            hpCutoffSlider.addEventListener('input', (e) => { 
+                hpFilterCutoff = parseFloat(e.target.value); 
+                const hpCutoffVal = document.getElementById('hpCutoffVal');
+                if (hpCutoffVal) hpCutoffVal.textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
+                if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        ['a', 'd', 's', 'r'].forEach(p => {
+            const envSlider = document.getElementById('env' + p.toUpperCase());
+            if (envSlider) {
+                envSlider.addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); const envVal = document.getElementById('val' + p.toUpperCase()); if (envVal) envVal.textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); });
+            }
+        });
+
+        const lfoRateSlider = document.getElementById('lfoRate');
+        if (lfoRateSlider) lfoRateSlider.addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); const valLfoRate = document.getElementById('valLfoRate'); if (valLfoRate) valLfoRate.textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoVibratoSlider = document.getElementById('lfoVibrato');
+        if (lfoVibratoSlider) lfoVibratoSlider.addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; const valLfoVibrato = document.getElementById('valLfoVibrato'); if (valLfoVibrato) valLfoVibrato.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoTremoloSlider = document.getElementById('lfoTremolo');
+        if (lfoTremoloSlider) lfoTremoloSlider.addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; const valLfoTremolo = document.getElementById('valLfoTremolo'); if(valLfoTremolo) valLfoTremolo.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoFilterSlider = document.getElementById('lfoFilter');
+        if (lfoFilterSlider) lfoFilterSlider.addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; const valLfoFilter = document.getElementById('valLfoFilter'); if (valLfoFilter) valLfoFilter.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+
+        const delayTimeSlider = document.getElementById('delayTime');
+        if (delayTimeSlider) delayTimeSlider.addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); const valDelayTime = document.getElementById('valDelayTime'); if(valDelayTime) valDelayTime.textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
+        
+        const delayFeedbackSlider = document.getElementById('delayFeedback');
+        if (delayFeedbackSlider) delayFeedbackSlider.addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; const valDelayFeedback = document.getElementById('valDelayFeedback'); if (valDelayFeedback) valDelayFeedback.textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
+        
+        const delayMixSlider = document.getElementById('delayMix');
+        if (delayMixSlider) delayMixSlider.addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; const valDelayMix = document.getElementById('valDelayMix'); if (valDelayMix) valDelayMix.textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
+        
+        const reverbTimeSlider = document.getElementById('reverbTime');
+        if (reverbTimeSlider) reverbTimeSlider.addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); const valReverbTime = document.getElementById('valReverbTime'); if(valReverbTime) valReverbTime.textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
+        
+        const reverbMixSlider = document.getElementById('reverbMix');
+        if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
+
+
         const keyMap = {};
         let activePcKeys = {};
         const pianoScrollWrapper = document.getElementById('pianoScrollWrapper');
@@ -2366,27 +2519,6 @@
         }
 
         let presetScrollThrottle = false;
-        let hasUnlockedAudio = false;
-        
-        function unlockAudioContext() {
-            if (hasUnlockedAudio) return;
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            } else if (!audioCtx) {
-                initAudio();
-                if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            }
-            hasUnlockedAudio = true;
-            const errBanner = document.getElementById('urlErrorBanner');
-            if(errBanner) errBanner.style.display = 'none';
-            window.removeEventListener('mousedown', unlockAudioContext);
-            window.removeEventListener('keydown', unlockAudioContext);
-            window.removeEventListener('touchstart', unlockAudioContext);
-        }
-        
-        window.addEventListener('mousedown', unlockAudioContext);
-        window.addEventListener('keydown', unlockAudioContext);
-        window.addEventListener('touchstart', unlockAudioContext);
 
         window.addEventListener('keydown', (e) => {
             const targetTag = e.target.tagName.toLowerCase();
@@ -2448,17 +2580,17 @@
             if (activePcKeys[key]) { triggerNoteRelease(activePcKeys[key].note); delete activePcKeys[key]; }
         });
 
+        // Håndtering av MIDI Input
         const midiStatusLight = document.getElementById('midiStatusLight');
         if (navigator.requestMIDIAccess) {
             try {
                 navigator.requestMIDIAccess()
                     .then(onMIDISuccess, onMIDIFailure)
                     .catch(err => {
-                        console.warn("MIDI ble blokkert av nettleserens sikkerhetspolicy:", err);
+                        console.warn("MIDI ble blokkert:", err);
                         onMIDIFailure();
                     });
             } catch (err) {
-                console.warn("Kunne ikke sjekke MIDI-tilgang:", err);
                 onMIDIFailure();
             }
         } else {
@@ -2497,187 +2629,77 @@
         }
 
         function onMIDIMessage(event) {
-            const [command, note, velocity] = event.data;
-            const isNoteOn = command >= 144 && command <= 159;
-            const isNoteOff = command >= 128 && command <= 143 || (isNoteOn && velocity === 0);
+            if (event.data.length < 3) return;
+            const command = event.data[0];
+            const note = event.data[1];
+            const velocity = event.data[2];
+            const status = command & 0xf0;
 
-            if (isNoteOn && velocity > 0) {
-                if (!hasUnlockedAudio) unlockAudioContext();
+            const isNoteOn = status === 144 && velocity > 0;
+            const isNoteOff = status === 128 || (status === 144 && velocity === 0);
+
+            if (isNoteOn) {
+                if (!audioCtx) initAudio();
                 
-                const freq = 440 * Math.pow(2, (note - 69) / 12);
-                const noteId = 'M' + note;
-                activeMidiNotes[note] = noteId;
+                // Chrome sikkerhetspolicy blokkerer audio via MIDI uten klikk
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume().then(() => {
+                        hasUnlockedAudio = true;
+                        const errBanner = document.getElementById('urlErrorBanner');
+                        if (errBanner && errBanner.textContent.includes('sover')) errBanner.style.display = 'none';
+                        removeUnlockListeners();
+                        playMidiNote(note, velocity);
+                    }).catch(() => {
+                        showErrorBanner("🔇 Lydmotoren sover. Klikk én gang på siden med musen for å vekke den!");
+                    });
+                } else {
+                    playMidiNote(note, velocity);
+                }
+            } else if (isNoteOff) {
+                releaseMidiNote(note);
+            }
+        }
 
+        function playMidiNote(note, velocity) {
+            const freq = 440 * Math.pow(2, (note - 69) / 12);
+            const noteId = 'M' + note;
+            activeMidiNotes[note] = noteId;
+
+            let visualNoteStr = null;
+            if (note >= 48 && note <= 84) {
+                const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+                const octave = Math.floor(note / 12) - 1;
+                visualNoteStr = noteNames[note % 12] + octave;
+            }
+            triggerNotePress(freq, visualNoteStr || noteId);
+        }
+
+        function releaseMidiNote(note) {
+            const noteId = activeMidiNotes[note];
+            if (noteId) {
                 let visualNoteStr = null;
                 if (note >= 48 && note <= 84) {
                     const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
                     const octave = Math.floor(note / 12) - 1;
-                    const noteName = noteNames[note % 12];
-                    visualNoteStr = noteName + octave;
+                    visualNoteStr = noteNames[note % 12] + octave;
                 }
-
-                triggerNotePress(freq, visualNoteStr || noteId);
-
-            } else if (isNoteOff) {
-                const noteId = activeMidiNotes[note];
-                if (noteId) {
-                    let visualNoteStr = null;
-                    if (note >= 48 && note <= 84) {
-                        const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-                        const octave = Math.floor(note / 12) - 1;
-                        const noteName = noteNames[note % 12];
-                        visualNoteStr = noteName + octave;
-                    }
-
-                    triggerNoteRelease(visualNoteStr || noteId);
-                    delete activeMidiNotes[note];
-                }
+                triggerNoteRelease(visualNoteStr || noteId);
+                delete activeMidiNotes[note];
             }
         }
 
         // ==========================================
-        // 7. EVENT LISTENERS FOR UI SLIDERS
-        // ==========================================
-        const drawbarsContainerInit = document.getElementById('drawbarsContainer');
-        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
-            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
-            const slider = document.createElement('input'); 
-            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
-            slider.addEventListener('input', (e) => {
-                manualHarmonics[i] = parseFloat(e.target.value);
-                if (!isSounding) drawVisualsStatic();
-                if (isPlaying) updateAudioWaveform();
-            });
-            const label = document.createElement('div'); label.className = 'drawbar-label';
-            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
-            wrapper.appendChild(slider); wrapper.appendChild(label);
-            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
-        }
-
-        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
-            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
-            currentWave = e.target.dataset.wave; 
-            const infoTextEl = document.getElementById('infoText');
-            if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
-            
-            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
-            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
-            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
-            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
-        }));
-
-        const harmSlider = document.getElementById('harmonicsSlider');
-        if (harmSlider) {
-            harmSlider.addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); const harmVal = document.getElementById('harmonicsVal'); if (harmVal) harmVal.textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
-        }
-
-        const oscMixSlider = document.getElementById('oscMix');
-        if (oscMixSlider) {
-            oscMixSlider.addEventListener('input', (e) => {
-                oscAmount = parseFloat(e.target.value) / 100;
-                const oscVolVal = document.getElementById('oscVolVal'); if (oscVolVal) oscVolVal.textContent = e.target.value + " %";
-                if (audioCtx) {
-                    for (let vid in activeVoices) {
-                        if (activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05);
-                    }
-                }
-                if (!isSounding) drawVisualsStatic();
-            });
-        }
-        
-        const noiseMixSlider = document.getElementById('noiseMix');
-        if (noiseMixSlider) {
-            noiseMixSlider.addEventListener('input', (e) => {
-                noiseAmount = parseFloat(e.target.value) / 100;
-                const noiseVal = document.getElementById('noiseVal'); if (noiseVal) noiseVal.textContent = e.target.value + " %";
-                if (audioCtx) {
-                    for (let vid in activeVoices) {
-                        if (activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05);
-                    }
-                }
-                if (!isSounding) drawVisualsStatic();
-            });
-        }
-
-        const cutoffSlider = document.getElementById('cutoff');
-        if (cutoffSlider) {
-            cutoffSlider.addEventListener('input', (e) => { 
-                lpFilterCutoff = parseFloat(e.target.value); 
-                const cutoffVal = document.getElementById('cutoffVal');
-                if (cutoffVal) cutoffVal.textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
-                if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
-                if (!isSounding) drawVisualsStatic(); 
-            });
-        }
-
-        const hpCutoffSlider = document.getElementById('hpCutoff');
-        if (hpCutoffSlider) {
-            hpCutoffSlider.addEventListener('input', (e) => { 
-                hpFilterCutoff = parseFloat(e.target.value); 
-                const hpCutoffVal = document.getElementById('hpCutoffVal');
-                if (hpCutoffVal) hpCutoffVal.textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
-                if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
-                if (!isSounding) drawVisualsStatic(); 
-            });
-        }
-
-        ['a', 'd', 's', 'r'].forEach(p => {
-            const envSlider = document.getElementById('env' + p.toUpperCase());
-            if (envSlider) {
-                envSlider.addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); const envVal = document.getElementById('val' + p.toUpperCase()); if (envVal) envVal.textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); });
-            }
-        });
-
-        const lfoRateSlider = document.getElementById('lfoRate');
-        if (lfoRateSlider) lfoRateSlider.addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); const valLfoRate = document.getElementById('valLfoRate'); if (valLfoRate) valLfoRate.textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoVibratoSlider = document.getElementById('lfoVibrato');
-        if (lfoVibratoSlider) lfoVibratoSlider.addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; const valLfoVibrato = document.getElementById('valLfoVibrato'); if (valLfoVibrato) valLfoVibrato.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoTremoloSlider = document.getElementById('lfoTremolo');
-        if (lfoTremoloSlider) lfoTremoloSlider.addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; const valLfoTremolo = document.getElementById('valLfoTremolo'); if(valLfoTremolo) valLfoTremolo.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoFilterSlider = document.getElementById('lfoFilter');
-        if (lfoFilterSlider) lfoFilterSlider.addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; const valLfoFilter = document.getElementById('valLfoFilter'); if (valLfoFilter) valLfoFilter.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-
-        const delayTimeSlider = document.getElementById('delayTime');
-        if (delayTimeSlider) delayTimeSlider.addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); const valDelayTime = document.getElementById('valDelayTime'); if(valDelayTime) valDelayTime.textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
-        
-        const delayFeedbackSlider = document.getElementById('delayFeedback');
-        if (delayFeedbackSlider) delayFeedbackSlider.addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; const valDelayFeedback = document.getElementById('valDelayFeedback'); if (valDelayFeedback) valDelayFeedback.textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
-        
-        const delayMixSlider = document.getElementById('delayMix');
-        if (delayMixSlider) delayMixSlider.addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; const valDelayMix = document.getElementById('valDelayMix'); if (valDelayMix) valDelayMix.textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
-        
-        const reverbTimeSlider = document.getElementById('reverbTime');
-        if (reverbTimeSlider) reverbTimeSlider.addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); const valReverbTime = document.getElementById('valReverbTime'); if(valReverbTime) valReverbTime.textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
-        
-        const reverbMixSlider = document.getElementById('reverbMix');
-        if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
-
-        // ==========================================
-        // 8. OPPSTART AV APPEN
+        // 8. OPPSTART
         // ==========================================
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         renderPianoLabels();
-
-        Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
-            drawVisualsStatic(); 
-            drawADSR();
-            const select = document.getElementById('presetSelect');
-            if (select && select.options.length > 0) {
-                select.dispatchEvent(new Event('change'));
-            }
-        });
-
-        window.focus();
-        if (document.activeElement !== document.body) {
-            document.body.focus();
+        
+        if (typeof app !== 'undefined' && app && auth) {
+             initAuth();
+        } else {
+             startApp();
         }
         
-        startApp();
-
     </script>
 </body>
 </html>
