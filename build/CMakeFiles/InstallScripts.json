@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/cmake_install.cmake",
+		"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/cmake_install.cmake",
+		"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/modules/cmake_install.cmake",
+		"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/extras/Build/cmake_install.cmake",
+		"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/extras/Build/juceaide/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

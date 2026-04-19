@@ -1,0 +1,65 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 160,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/JUCE-8.0.12",
+			"paths" : 
+			[
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/JUCEConfigVersion.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/JUCEConfig.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCECheckAtomic.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCEHelperTargets.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCEModuleSupport.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCEUtils.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JuceLV2Defines.h.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/LaunchScreen.storyboard",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/PIPAudioProcessor.cpp.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/PIPAudioProcessorWithARA.cpp.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/PIPComponent.cpp.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/PIPConsole.cpp.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/RecentFilesMenuTemplate.nib",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/UnityPluginGUIScript.cs.in",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/checkBundleSigning.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/copyDir.cmake",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/juce_runtime_arch_detection.cpp",
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/juce_LinuxSubprocessHelper.cpp"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/juce-build",
+		"source" : "/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src"
+	}
+}

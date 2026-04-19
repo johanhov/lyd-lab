@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+758aad01d66b3c452e8763e6eddb064b LydbolgeLab_artefacts/JuceLibraryCode/JuceHeader.h
+edacec984e975b02cea93d9a7391320c LydbolgeLab_artefacts/JuceLibraryCode/LydbolgeLab_Standalone/PkgInfo
+c9506d88d9881978fb76734f4433d161 LydbolgeLab_artefacts/JuceLibraryCode/LydbolgeLab_VST3/PkgInfo

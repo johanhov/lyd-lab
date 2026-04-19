@@ -1,0 +1,56 @@
+{
+	"abstract" : true,
+	"backtrace" : 3,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"juce_add_module",
+			"juce_add_modules"
+		],
+		"files" : 
+		[
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCEModuleSupport.cmake",
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/modules/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 33,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 686,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 543,
+				"parent" : 2
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "juce_lilv_headers::@d258f3a116863e478940",
+	"name" : "juce_lilv_headers",
+	"paths" : 
+	{
+		"build" : "_deps/juce-build/modules",
+		"source" : "/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/modules"
+	},
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}

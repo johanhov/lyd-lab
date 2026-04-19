@@ -1,0 +1,48 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/juceaide/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 174,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "bin/JUCE-8.0.12",
+			"paths" : 
+			[
+				"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-build/tools/extras/Build/juceaide/juceaide_artefacts/Custom/juceaide"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/juce-build/extras/Build/juceaide",
+		"source" : "/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/juceaide"
+	}
+}

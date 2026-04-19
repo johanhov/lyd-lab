@@ -1,0 +1,159 @@
+{
+	"abstract" : true,
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"_juce_add_interface_library",
+			"juce_add_module",
+			"juce_add_modules",
+			"target_link_libraries",
+			"_juce_link_frameworks"
+		],
+		"files" : 
+		[
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/extras/Build/CMake/JUCEModuleSupport.cmake",
+			"/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/modules/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 33,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 686,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 505,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 98,
+				"parent" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 612,
+				"parent" : 2
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 341,
+				"parent" : 5
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 612,
+				"parent" : 2
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 341,
+				"parent" : 7
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 612,
+				"parent" : 2
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 341,
+				"parent" : 9
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 659,
+				"parent" : 2
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "juce_audio_devices::@d258f3a116863e478940",
+	"interfaceCompileDependencies" : 
+	[
+		{
+			"backtrace" : 11,
+			"id" : "juce_audio_basics::@d258f3a116863e478940"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "juce_events::@d258f3a116863e478940"
+		}
+	],
+	"interfaceLinkLibraries" : 
+	[
+		{
+			"backtrace" : 6,
+			"fragment" : "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreAudio.framework"
+		},
+		{
+			"backtrace" : 8,
+			"fragment" : "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreMIDI.framework"
+		},
+		{
+			"backtrace" : 10,
+			"fragment" : "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioToolbox.framework"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "juce_audio_basics::@d258f3a116863e478940"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "juce_events::@d258f3a116863e478940"
+		}
+	],
+	"interfaceSources" : 
+	[
+		{
+			"path" : "/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/modules/juce_audio_devices/juce_audio_devices.mm",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"name" : "juce_audio_devices",
+	"paths" : 
+	{
+		"build" : "_deps/juce-build/modules",
+		"source" : "/Users/johanhovda/Documents/Lybb\u00f8lge-Lab/lyd-lab/build/_deps/juce-src/modules"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"interfaceSourceIndexes" : 
+			[
+				0
+			],
+			"name" : "Source Files",
+			"sourceIndexes" : []
+		}
+	],
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}
