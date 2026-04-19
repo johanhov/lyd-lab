@@ -635,8 +635,6 @@
         const waveCtx = waveCanvas ? waveCanvas.getContext('2d') : null;
         const spectrumCanvas = document.getElementById('spectrumCanvas');
         const spectrumCtx = spectrumCanvas ? spectrumCanvas.getContext('2d') : null;
-        const adsrCanvas = document.getElementById('adsrCanvas');
-        const adsrCtx = adsrCanvas ? adsrCanvas.getContext('2d') : null;
 
         function getHarmonicAmplitude(type, n) {
             if (type === 'manual') return n <= MANUAL_HARMONICS_COUNT ? manualHarmonics[n] : 0;
@@ -678,18 +676,78 @@
         }
 
         function drawADSR() {
+            const adsrCanvas = document.getElementById('adsrCanvas');
+            const adsrCtx = adsrCanvas ? adsrCanvas.getContext('2d') : null;
             if (!adsrCanvas || !adsrCtx) return;
+            
             const dim = resizeCanvas(adsrCanvas, adsrCtx);
             adsrCtx.clearRect(0, 0, dim.width, dim.height);
-            const pxPerSec = dim.width / 13;
-            const xA = adsr.a * pxPerSec, xD = xA + (adsr.d * pxPerSec), xS = xD + (2 * pxPerSec), xR = xS + (adsr.r * pxPerSec);
-            const yB = dim.height - 5, yT = 5, yS = yB - (adsr.s * (yB - yT));
             
-            adsrCtx.strokeStyle = '#333'; adsrCtx.beginPath(); adsrCtx.moveTo(0, yT); adsrCtx.lineTo(dim.width, yT); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(dim.width, yB); adsrCtx.stroke();
+            const pxPerSec = dim.width / 13; // Antar at 13 sekunder er maks synlig bredde
+            const xA = adsr.a * pxPerSec;
+            const xD = xA + (adsr.d * pxPerSec);
+            const xS = xD + (2 * pxPerSec); // Viser 2 sekunder med sustain
+            const xR = xS + (adsr.r * pxPerSec);
             
-            adsrCtx.beginPath(); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(xA, yT); adsrCtx.lineTo(xD, yS); adsrCtx.lineTo(xS, yS); adsrCtx.lineTo(xR, yB); adsrCtx.lineTo(0, yB);
-            adsrCtx.fillStyle = 'rgba(155, 89, 182, 0.3)'; adsrCtx.fill();
-            adsrCtx.strokeStyle = '#9b59b6'; adsrCtx.lineWidth = 2.5; adsrCtx.stroke();
+            const yB = dim.height - 5; // Bunn
+            const yT = 5; // Topp (Maks volum)
+            const yS = yB - (adsr.s * (yB - yT)); // Sustain-nivå
+            
+            // Tegn rammen/bakgrunnen
+            adsrCtx.strokeStyle = '#333'; adsrCtx.lineWidth = 1; adsrCtx.beginPath();
+            adsrCtx.moveTo(0, yT); adsrCtx.lineTo(dim.width, yT); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(dim.width, yB); adsrCtx.stroke();
+            
+            // Hjelpefunksjon for å tegne selve den eksponentielle veien
+            function traceEnvelopePath() {
+                adsrCtx.beginPath();
+                adsrCtx.moveTo(0, yB);
+                
+                // 1. Attack (Lineær)
+                adsrCtx.lineTo(xA, yT);
+                
+                // 2. Decay (Eksponentiell fra topp til sustain)
+                if (xD > xA) {
+                    const v0 = 1.0;
+                    const v1 = Math.max(adsr.s, 0.0001); // Kan ikke gå helt i null matematisk i pow
+                    for (let x = xA; x <= xD; x++) {
+                        let t = (x - xA) / (xD - xA); // Prosent av decay-fasen (0 til 1)
+                        let v_t = v0 * Math.pow(v1/v0, t); // Beregn eksponentielt fall
+                        let y = yB - (v_t) * (yB - yT); // Oversett verdien til piksler
+                        adsrCtx.lineTo(x, y);
+                    }
+                } else {
+                    adsrCtx.lineTo(xD, yS);
+                }
+                
+                // 3. Sustain (Flat)
+                adsrCtx.lineTo(xS, yS);
+                
+                // 4. Release (Eksponentiell fra sustain til null)
+                if (xR > xS) {
+                    const v0 = Math.max(adsr.s, 0.0001);
+                    const v1 = 0.0001;
+                    for (let x = xS; x <= xR; x++) {
+                        let t = (x - xS) / (xR - xS); // Prosent av release-fasen
+                        let v_t = v0 * Math.pow(v1/v0, t);
+                        // Skalerer mot den totale max-høyden (yB - yT) for at grafen skal stemme
+                        let y = yB - (v_t) * (yB - yT); 
+                        adsrCtx.lineTo(x, y);
+                    }
+                } else {
+                    adsrCtx.lineTo(xR, yB);
+                }
+            }
+
+            // Fyll fargen inni konvolutten
+            traceEnvelopePath();
+            adsrCtx.lineTo(xR, yB);
+            adsrCtx.lineTo(0, yB);
+            adsrCtx.fillStyle = 'rgba(155, 89, 182, 0.3)';
+            adsrCtx.fill();
+
+            // Tegn selve linjen på toppen
+            traceEnvelopePath();
+            adsrCtx.strokeStyle = '#9b59b6'; adsrCtx.lineWidth = 2.5; adsrCtx.lineJoin = 'round'; adsrCtx.stroke();
         }
 
         function drawVisualsDynamic() {
