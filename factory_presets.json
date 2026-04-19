@@ -357,7 +357,6 @@
             "reverbMix": "65"
         }
     },
-    
   "Unspoken Pad": {
     "wave": "triangle",
     "sliderValues": {
@@ -404,7 +403,6 @@
       "reverbMix": "25"
     }
   },
-  
   "Echo Pluck": {
     "wave": "square",
     "sliderValues": {
@@ -673,7 +671,6 @@
       "reverbMix": "10"
     }
   },
-  
   "Glass Harmonica": {
     "wave": "manual",
     "sliderValues": {
