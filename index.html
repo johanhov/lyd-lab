@@ -980,7 +980,6 @@
         let pendingPresetSelection = null; 
         let storageMode = 'none';
         let authInitialized = false;
-        let isAuthenticating = true;
 
         let factoryPresets = {}; 
         let userPresets = {}; 
@@ -1339,7 +1338,7 @@
         }
 
         // ==========================================
-        // 5. MODALER OG PRESETS
+        // 5. MODALER OG PRESETS (UI LOGIKK)
         // ==========================================
         const modalContent = {
             general: { title: "Synthesizeren", body: "<p>Dette er en virtuell synthesizer. Prøv å trykk på forskjellige moduser og skru på sliderne for å forme lyden!</p>" },
@@ -1433,35 +1432,41 @@
             }
         };
 
-        const infoModal = document.getElementById('infoModal');
-        const presetModal = document.getElementById('presetModal');
-        const shareModal = document.getElementById('shareModal');
-
         function openModal(section) {
             const mTitle = document.getElementById('modalTitle');
             const mBody = document.getElementById('modalBody');
             if (mTitle && mBody && modalContent[section]) {
                 mTitle.innerText = modalContent[section].title;
                 mBody.innerHTML = modalContent[section].body;
+                const infoModal = document.getElementById('infoModal');
                 if (infoModal) infoModal.style.display = 'flex';
             }
         }
         
-        function closeModal(e) { if(e) e.stopPropagation(); if (infoModal) infoModal.style.display = 'none'; }
-        function closePresetModal(e) { if(e) e.stopPropagation(); if (presetModal) presetModal.style.display = 'none'; }
-        function closeShareModal(e) { if(e) e.stopPropagation(); if (shareModal) shareModal.style.display = 'none'; }
+        function closeModal(e) { if(e) e.stopPropagation(); const m = document.getElementById('infoModal'); if (m) m.style.display = 'none'; }
+        function closePresetModal(e) { if(e) e.stopPropagation(); const m = document.getElementById('presetModal'); if (m) m.style.display = 'none'; }
+        function closeShareModal(e) { if(e) e.stopPropagation(); const m = document.getElementById('shareModal'); if (m) m.style.display = 'none'; }
 
+        const infoModal = document.getElementById('infoModal');
         if (infoModal) infoModal.addEventListener('click', closeModal);
-        if (document.getElementById('infoModalContent')) document.getElementById('infoModalContent').addEventListener('click', e => e.stopPropagation());
-        if (document.getElementById('infoModalClose')) document.getElementById('infoModalClose').addEventListener('click', closeModal);
+        const infoModalContent = document.getElementById('infoModalContent');
+        if (infoModalContent) infoModalContent.addEventListener('click', e => e.stopPropagation());
+        const infoModalClose = document.getElementById('infoModalClose');
+        if (infoModalClose) infoModalClose.addEventListener('click', closeModal);
 
+        const presetModal = document.getElementById('presetModal');
         if (presetModal) presetModal.addEventListener('click', closePresetModal);
-        if (document.getElementById('presetModalContent')) document.getElementById('presetModalContent').addEventListener('click', e => e.stopPropagation());
-        if (document.getElementById('presetModalClose')) document.getElementById('presetModalClose').addEventListener('click', closePresetModal);
+        const presetModalContent = document.getElementById('presetModalContent');
+        if (presetModalContent) presetModalContent.addEventListener('click', e => e.stopPropagation());
+        const presetModalClose = document.getElementById('presetModalClose');
+        if (presetModalClose) presetModalClose.addEventListener('click', closePresetModal);
 
+        const shareModal = document.getElementById('shareModal');
         if (shareModal) shareModal.addEventListener('click', closeShareModal);
-        if (document.getElementById('shareModalContent')) document.getElementById('shareModalContent').addEventListener('click', e => e.stopPropagation());
-        if (document.getElementById('shareModalClose')) document.getElementById('shareModalClose').addEventListener('click', closeShareModal);
+        const shareModalContent = document.getElementById('shareModalContent');
+        if (shareModalContent) shareModalContent.addEventListener('click', e => e.stopPropagation());
+        const shareModalClose = document.getElementById('shareModalClose');
+        if (shareModalClose) shareModalClose.addEventListener('click', closeShareModal);
 
         document.querySelectorAll('.info-btn, .mystery-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1735,7 +1740,8 @@
                         <button class="preset-btn" id="btnConfirmPresetSave" style="background: var(--accent); color: #111;">Lagre Lyd</button>
                     </div>
                 `;
-                if (presetModal) presetModal.style.display = 'flex';
+                const modal = document.getElementById('presetModal');
+                if (modal) modal.style.display = 'flex';
                 
                 const cancelBtn = document.getElementById('btnCancelPresetSave');
                 const confirmBtn = document.getElementById('btnConfirmPresetSave');
@@ -1762,7 +1768,8 @@
                         <button class="preset-btn" id="btnConfirmPresetDel" style="background: #c0392b; color: white;">Ja, slett</button>
                     </div>
                 `;
-                if (presetModal) presetModal.style.display = 'flex';
+                const modal = document.getElementById('presetModal');
+                if (modal) modal.style.display = 'flex';
                 
                 const cancelBtn = document.getElementById('btnCancelPresetDel');
                 const confirmBtn = document.getElementById('btnConfirmPresetDel');
@@ -1839,7 +1846,8 @@
             
             if (shareTextarea) shareTextarea.value = jsonString;
             if (shareStatusMsg) shareStatusMsg.style.display = 'none';
-            if (shareModal) shareModal.style.display = 'flex';
+            const modal = document.getElementById('shareModal');
+            if (modal) modal.style.display = 'flex';
         }
 
         function copyPresetToClipboard() {
@@ -1936,6 +1944,7 @@
                 }
             });
         }
+
 
         // ==========================================
         // 6. STORAGE, SETTINGS & FIREBASE INIT
@@ -2390,27 +2399,6 @@
         }
 
         let presetScrollThrottle = false;
-        let hasUnlockedAudio = false;
-        
-        function unlockAudioContext() {
-            if (hasUnlockedAudio) return;
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            } else if (!audioCtx) {
-                initAudio();
-                if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            }
-            hasUnlockedAudio = true;
-            const errBanner = document.getElementById('urlErrorBanner');
-            if(errBanner) errBanner.style.display = 'none';
-            window.removeEventListener('mousedown', unlockAudioContext);
-            window.removeEventListener('keydown', unlockAudioContext);
-            window.removeEventListener('touchstart', unlockAudioContext);
-        }
-        
-        window.addEventListener('mousedown', unlockAudioContext);
-        window.addEventListener('keydown', unlockAudioContext);
-        window.addEventListener('touchstart', unlockAudioContext);
 
         window.addEventListener('keydown', (e) => {
             const targetTag = e.target.tagName.toLowerCase();
@@ -2531,22 +2519,15 @@
             const isNoteOff = status === 128 || (status === 144 && velocity === 0);
 
             if (isNoteOn) {
-                if (!audioCtx) initAudio();
-                
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume().then(() => {
-                        hasUnlockedAudio = true;
-                        const errBanner = document.getElementById('urlErrorBanner');
-                        if (errBanner && errBanner.textContent.includes('sover')) errBanner.style.display = 'none';
-                        window.removeEventListener('mousedown', unlockAudioContext);
-                        window.removeEventListener('keydown', unlockAudioContext);
-                        window.removeEventListener('touchstart', unlockAudioContext);
-                        playMidiNote(note, velocity);
-                    }).catch(() => {
-                        showErrorBanner("🔇 Lydmotoren sover. Klikk én gang på siden med musen for å vekke den!");
-                    });
+                // VISUELL OPPDATERING: Kjører alltid uansett lyd-status!
+                playMidiNote(note, velocity);
+
+                // LYD-SJEKK: Hvis lydmotoren fortsatt sover, si ifra til brukeren
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    showErrorBanner("🔇 Lydmotoren sover. Klikk én gang på siden med musen for å vekke den!");
                 } else {
-                    playMidiNote(note, velocity);
+                    const errBanner = document.getElementById('urlErrorBanner');
+                    if (errBanner && errBanner.textContent.includes('sover')) errBanner.style.display = 'none';
                 }
             } else if (isNoteOff) {
                 releaseMidiNote(note);
@@ -2585,19 +2566,22 @@
         // 8. EVENT LISTENERS FOR UI SLIDERS
         // ==========================================
         const drawbarsContainerInit = document.getElementById('drawbarsContainer');
-        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
-            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
-            const slider = document.createElement('input'); 
-            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
-            slider.addEventListener('input', (e) => {
-                manualHarmonics[i] = parseFloat(e.target.value);
-                if (!isSounding) drawVisualsStatic();
-                if (isPlaying) updateAudioWaveform();
-            });
-            const label = document.createElement('div'); label.className = 'drawbar-label';
-            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
-            wrapper.appendChild(slider); wrapper.appendChild(label);
-            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
+        if (drawbarsContainerInit) {
+            drawbarsContainerInit.innerHTML = '';
+            for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
+                const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
+                const slider = document.createElement('input'); 
+                slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
+                slider.addEventListener('input', (e) => {
+                    manualHarmonics[i] = parseFloat(e.target.value);
+                    if (!isSounding) drawVisualsStatic();
+                    if (isPlaying) updateAudioWaveform();
+                });
+                const label = document.createElement('div'); label.className = 'drawbar-label';
+                label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
+                wrapper.appendChild(slider); wrapper.appendChild(label);
+                drawbarsContainerInit.appendChild(wrapper);
+            }
         }
 
         document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
@@ -2702,9 +2686,35 @@
         const reverbMixSlider = document.getElementById('reverbMix');
         if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
 
+        const expertToggleBtnRef = document.getElementById('expertToggleBtn');
+        if(expertToggleBtnRef) expertToggleBtnRef.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
+
         // ==========================================
         // 9. OPPSTART
         // ==========================================
+        let hasUnlockedAudio = false;
+
+        function unlockAudioContext() {
+            if (!audioCtx) initAudio();
+            
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume().then(() => {
+                    hasUnlockedAudio = true;
+                    const errBanner = document.getElementById('urlErrorBanner');
+                    if (errBanner && errBanner.textContent.includes('sover')) errBanner.style.display = 'none';
+                }).catch(e => {});
+            } else {
+                hasUnlockedAudio = true;
+            }
+            window.removeEventListener('mousedown', unlockAudioContext);
+            window.removeEventListener('keydown', unlockAudioContext);
+            window.removeEventListener('touchstart', unlockAudioContext);
+        }
+        
+        window.addEventListener('mousedown', unlockAudioContext);
+        window.addEventListener('keydown', unlockAudioContext);
+        window.addEventListener('touchstart', unlockAudioContext);
+
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         renderPianoLabels();
         
