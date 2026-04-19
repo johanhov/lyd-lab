@@ -695,7 +695,7 @@
             <select id="presetSelect" class="preset-select">
                 <optgroup label="Eksterne presets (via lenke)" id="externalPresetsGroup" style="display: none;"></optgroup>
                 <optgroup label="Fabrikk-presets" id="factoryPresetsGroup"></optgroup>
-                <optgroup label="Dine lagrede (Sky)" id="userPresetsGroup"></optgroup>
+                <optgroup label="Dine lagrede (Sky/Lokalt)" id="userPresetsGroup"></optgroup>
             </select>
             <button id="savePresetBtn" class="preset-btn" disabled>Lagre ny</button>
             <button id="deletePresetBtn" class="preset-btn" style="display: none; background-color: #c0392b; border: 1px solid #c0392b;">Slett</button>
@@ -1937,7 +1937,6 @@
             });
         }
 
-
         // ==========================================
         // 6. STORAGE, SETTINGS & FIREBASE INIT
         // ==========================================
@@ -2181,136 +2180,8 @@
         }
 
         // ==========================================
-        // 7. EVENT LISTENERS FOR PIANO / UI 
+        // 7. PIANO, KEYBOARD OG MIDI
         // ==========================================
-        const masterVolSlider = document.getElementById('globalMasterVol');
-        if (masterVolSlider) {
-            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
-            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
-        }
-        
-        const expertToggleBtnRef = document.getElementById('expertToggleBtn');
-        if(expertToggleBtnRef) expertToggleBtnRef.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
-
-        const drawbarsContainerInit = document.getElementById('drawbarsContainer');
-        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
-            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
-            const slider = document.createElement('input'); 
-            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
-            slider.addEventListener('input', (e) => {
-                manualHarmonics[i] = parseFloat(e.target.value);
-                if (!isSounding) drawVisualsStatic();
-                if (isPlaying) updateAudioWaveform();
-            });
-            const label = document.createElement('div'); label.className = 'drawbar-label';
-            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
-            wrapper.appendChild(slider); wrapper.appendChild(label);
-            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
-        }
-
-        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
-            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
-            currentWave = e.target.dataset.wave; 
-            const infoTextEl = document.getElementById('infoText');
-            if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
-            
-            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
-            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
-            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
-            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
-        }));
-
-        const harmSlider = document.getElementById('harmonicsSlider');
-        if (harmSlider) {
-            harmSlider.addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); const harmVal = document.getElementById('harmonicsVal'); if (harmVal) harmVal.textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
-        }
-
-        const oscMixSlider = document.getElementById('oscMix');
-        if (oscMixSlider) {
-            oscMixSlider.addEventListener('input', (e) => {
-                oscAmount = parseFloat(e.target.value) / 100;
-                const oscVolVal = document.getElementById('oscVolVal'); if (oscVolVal) oscVolVal.textContent = e.target.value + " %";
-                if (audioCtx) {
-                    for (let vid in activeVoices) {
-                        if (activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05);
-                    }
-                }
-                if (!isSounding) drawVisualsStatic();
-            });
-        }
-        
-        const noiseMixSlider = document.getElementById('noiseMix');
-        if (noiseMixSlider) {
-            noiseMixSlider.addEventListener('input', (e) => {
-                noiseAmount = parseFloat(e.target.value) / 100;
-                const noiseVal = document.getElementById('noiseVal'); if (noiseVal) noiseVal.textContent = e.target.value + " %";
-                if (audioCtx) {
-                    for (let vid in activeVoices) {
-                        if (activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05);
-                    }
-                }
-                if (!isSounding) drawVisualsStatic();
-            });
-        }
-
-        const cutoffSlider = document.getElementById('cutoff');
-        if (cutoffSlider) {
-            cutoffSlider.addEventListener('input', (e) => { 
-                lpFilterCutoff = parseFloat(e.target.value); 
-                const cutoffVal = document.getElementById('cutoffVal');
-                if (cutoffVal) cutoffVal.textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
-                if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
-                if (!isSounding) drawVisualsStatic(); 
-            });
-        }
-
-        const hpCutoffSlider = document.getElementById('hpCutoff');
-        if (hpCutoffSlider) {
-            hpCutoffSlider.addEventListener('input', (e) => { 
-                hpFilterCutoff = parseFloat(e.target.value); 
-                const hpCutoffVal = document.getElementById('hpCutoffVal');
-                if (hpCutoffVal) hpCutoffVal.textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
-                if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
-                if (!isSounding) drawVisualsStatic(); 
-            });
-        }
-
-        ['a', 'd', 's', 'r'].forEach(p => {
-            const envSlider = document.getElementById('env' + p.toUpperCase());
-            if (envSlider) {
-                envSlider.addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); const envVal = document.getElementById('val' + p.toUpperCase()); if (envVal) envVal.textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); });
-            }
-        });
-
-        const lfoRateSlider = document.getElementById('lfoRate');
-        if (lfoRateSlider) lfoRateSlider.addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); const valLfoRate = document.getElementById('valLfoRate'); if (valLfoRate) valLfoRate.textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoVibratoSlider = document.getElementById('lfoVibrato');
-        if (lfoVibratoSlider) lfoVibratoSlider.addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; const valLfoVibrato = document.getElementById('valLfoVibrato'); if (valLfoVibrato) valLfoVibrato.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoTremoloSlider = document.getElementById('lfoTremolo');
-        if (lfoTremoloSlider) lfoTremoloSlider.addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; const valLfoTremolo = document.getElementById('valLfoTremolo'); if(valLfoTremolo) valLfoTremolo.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        
-        const lfoFilterSlider = document.getElementById('lfoFilter');
-        if (lfoFilterSlider) lfoFilterSlider.addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; const valLfoFilter = document.getElementById('valLfoFilter'); if (valLfoFilter) valLfoFilter.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-
-        const delayTimeSlider = document.getElementById('delayTime');
-        if (delayTimeSlider) delayTimeSlider.addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); const valDelayTime = document.getElementById('valDelayTime'); if(valDelayTime) valDelayTime.textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
-        
-        const delayFeedbackSlider = document.getElementById('delayFeedback');
-        if (delayFeedbackSlider) delayFeedbackSlider.addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; const valDelayFeedback = document.getElementById('valDelayFeedback'); if (valDelayFeedback) valDelayFeedback.textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
-        
-        const delayMixSlider = document.getElementById('delayMix');
-        if (delayMixSlider) delayMixSlider.addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; const valDelayMix = document.getElementById('valDelayMix'); if (valDelayMix) valDelayMix.textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
-        
-        const reverbTimeSlider = document.getElementById('reverbTime');
-        if (reverbTimeSlider) reverbTimeSlider.addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); const valReverbTime = document.getElementById('valReverbTime'); if(valReverbTime) valReverbTime.textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
-        
-        const reverbMixSlider = document.getElementById('reverbMix');
-        if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
-
-
         const keyMap = {};
         let activePcKeys = {};
         const pianoScrollWrapper = document.getElementById('pianoScrollWrapper');
@@ -2519,6 +2390,27 @@
         }
 
         let presetScrollThrottle = false;
+        let hasUnlockedAudio = false;
+        
+        function unlockAudioContext() {
+            if (hasUnlockedAudio) return;
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            } else if (!audioCtx) {
+                initAudio();
+                if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            }
+            hasUnlockedAudio = true;
+            const errBanner = document.getElementById('urlErrorBanner');
+            if(errBanner) errBanner.style.display = 'none';
+            window.removeEventListener('mousedown', unlockAudioContext);
+            window.removeEventListener('keydown', unlockAudioContext);
+            window.removeEventListener('touchstart', unlockAudioContext);
+        }
+        
+        window.addEventListener('mousedown', unlockAudioContext);
+        window.addEventListener('keydown', unlockAudioContext);
+        window.addEventListener('touchstart', unlockAudioContext);
 
         window.addEventListener('keydown', (e) => {
             const targetTag = e.target.tagName.toLowerCase();
@@ -2528,6 +2420,7 @@
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault(); 
                 if (e.repeat && presetScrollThrottle) return;
+                
                 presetScrollThrottle = true;
                 setTimeout(() => presetScrollThrottle = false, 150);
 
@@ -2580,7 +2473,6 @@
             if (activePcKeys[key]) { triggerNoteRelease(activePcKeys[key].note); delete activePcKeys[key]; }
         });
 
-        // Håndtering av MIDI Input
         const midiStatusLight = document.getElementById('midiStatusLight');
         if (navigator.requestMIDIAccess) {
             try {
@@ -2641,13 +2533,14 @@
             if (isNoteOn) {
                 if (!audioCtx) initAudio();
                 
-                // Chrome sikkerhetspolicy blokkerer audio via MIDI uten klikk
                 if (audioCtx.state === 'suspended') {
                     audioCtx.resume().then(() => {
                         hasUnlockedAudio = true;
                         const errBanner = document.getElementById('urlErrorBanner');
                         if (errBanner && errBanner.textContent.includes('sover')) errBanner.style.display = 'none';
-                        removeUnlockListeners();
+                        window.removeEventListener('mousedown', unlockAudioContext);
+                        window.removeEventListener('keydown', unlockAudioContext);
+                        window.removeEventListener('touchstart', unlockAudioContext);
                         playMidiNote(note, velocity);
                     }).catch(() => {
                         showErrorBanner("🔇 Lydmotoren sover. Klikk én gang på siden med musen for å vekke den!");
@@ -2689,7 +2582,128 @@
         }
 
         // ==========================================
-        // 8. OPPSTART
+        // 8. EVENT LISTENERS FOR UI SLIDERS
+        // ==========================================
+        const drawbarsContainerInit = document.getElementById('drawbarsContainer');
+        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
+            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
+            const slider = document.createElement('input'); 
+            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
+            slider.addEventListener('input', (e) => {
+                manualHarmonics[i] = parseFloat(e.target.value);
+                if (!isSounding) drawVisualsStatic();
+                if (isPlaying) updateAudioWaveform();
+            });
+            const label = document.createElement('div'); label.className = 'drawbar-label';
+            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
+            wrapper.appendChild(slider); wrapper.appendChild(label);
+            if (drawbarsContainerInit) drawbarsContainerInit.appendChild(wrapper);
+        }
+
+        document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
+            document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
+            currentWave = e.target.dataset.wave; 
+            const infoTextEl = document.getElementById('infoText');
+            if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
+            
+            const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
+            if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
+            if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
+            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
+        }));
+
+        const harmSlider = document.getElementById('harmonicsSlider');
+        if (harmSlider) {
+            harmSlider.addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); const harmVal = document.getElementById('harmonicsVal'); if (harmVal) harmVal.textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
+        }
+
+        const oscMixSlider = document.getElementById('oscMix');
+        if (oscMixSlider) {
+            oscMixSlider.addEventListener('input', (e) => {
+                oscAmount = parseFloat(e.target.value) / 100;
+                const oscVolVal = document.getElementById('oscVolVal'); if (oscVolVal) oscVolVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
+        
+        const noiseMixSlider = document.getElementById('noiseMix');
+        if (noiseMixSlider) {
+            noiseMixSlider.addEventListener('input', (e) => {
+                noiseAmount = parseFloat(e.target.value) / 100;
+                const noiseVal = document.getElementById('noiseVal'); if (noiseVal) noiseVal.textContent = e.target.value + " %";
+                if (audioCtx) {
+                    for (let vid in activeVoices) {
+                        if (activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05);
+                    }
+                }
+                if (!isSounding) drawVisualsStatic();
+            });
+        }
+
+        const cutoffSlider = document.getElementById('cutoff');
+        if (cutoffSlider) {
+            cutoffSlider.addEventListener('input', (e) => { 
+                lpFilterCutoff = parseFloat(e.target.value); 
+                const cutoffVal = document.getElementById('cutoffVal');
+                if (cutoffVal) cutoffVal.textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
+                if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        const hpCutoffSlider = document.getElementById('hpCutoff');
+        if (hpCutoffSlider) {
+            hpCutoffSlider.addEventListener('input', (e) => { 
+                hpFilterCutoff = parseFloat(e.target.value); 
+                const hpCutoffVal = document.getElementById('hpCutoffVal');
+                if (hpCutoffVal) hpCutoffVal.textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
+                if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
+                if (!isSounding) drawVisualsStatic(); 
+            });
+        }
+
+        ['a', 'd', 's', 'r'].forEach(p => {
+            const envSlider = document.getElementById('env' + p.toUpperCase());
+            if (envSlider) {
+                envSlider.addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); const envVal = document.getElementById('val' + p.toUpperCase()); if (envVal) envVal.textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); });
+            }
+        });
+
+        const lfoRateSlider = document.getElementById('lfoRate');
+        if (lfoRateSlider) lfoRateSlider.addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); const valLfoRate = document.getElementById('valLfoRate'); if (valLfoRate) valLfoRate.textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoVibratoSlider = document.getElementById('lfoVibrato');
+        if (lfoVibratoSlider) lfoVibratoSlider.addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; const valLfoVibrato = document.getElementById('valLfoVibrato'); if (valLfoVibrato) valLfoVibrato.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoTremoloSlider = document.getElementById('lfoTremolo');
+        if (lfoTremoloSlider) lfoTremoloSlider.addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; const valLfoTremolo = document.getElementById('valLfoTremolo'); if(valLfoTremolo) valLfoTremolo.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        
+        const lfoFilterSlider = document.getElementById('lfoFilter');
+        if (lfoFilterSlider) lfoFilterSlider.addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; const valLfoFilter = document.getElementById('valLfoFilter'); if (valLfoFilter) valLfoFilter.textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
+
+        const delayTimeSlider = document.getElementById('delayTime');
+        if (delayTimeSlider) delayTimeSlider.addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); const valDelayTime = document.getElementById('valDelayTime'); if(valDelayTime) valDelayTime.textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
+        
+        const delayFeedbackSlider = document.getElementById('delayFeedback');
+        if (delayFeedbackSlider) delayFeedbackSlider.addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; const valDelayFeedback = document.getElementById('valDelayFeedback'); if (valDelayFeedback) valDelayFeedback.textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
+        
+        const delayMixSlider = document.getElementById('delayMix');
+        if (delayMixSlider) delayMixSlider.addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; const valDelayMix = document.getElementById('valDelayMix'); if (valDelayMix) valDelayMix.textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
+        
+        const reverbTimeSlider = document.getElementById('reverbTime');
+        if (reverbTimeSlider) reverbTimeSlider.addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); const valReverbTime = document.getElementById('valReverbTime'); if(valReverbTime) valReverbTime.textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
+        
+        const reverbMixSlider = document.getElementById('reverbMix');
+        if (reverbMixSlider) reverbMixSlider.addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; const valReverbMix = document.getElementById('valReverbMix'); if(valReverbMix) valReverbMix.textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
+
+        // ==========================================
+        // 9. OPPSTART
         // ==========================================
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         renderPianoLabels();
