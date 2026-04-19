@@ -357,29 +357,7 @@
             "reverbMix": "65"
         }
     },
-    "The Quiet Hours Keys": {
-    "wave": "sine",
-    "sliderValues": {
-      "harmonicsSlider": "1",
-      "oscMix": "100",
-      "noiseMix": "2",
-      "cutoff": "800",
-      "hpCutoff": "40",
-      "envA": "0.8",
-      "envD": "1.5",
-      "envS": "0.6",
-      "envR": "3.0",
-      "lfoRate": "3.5",
-      "lfoVibrato": "2",
-      "lfoTremolo": "0",
-      "lfoFilter": "0",
-      "delayTime": "0.5",
-      "delayFeedback": "30",
-      "delayMix": "15",
-      "reverbTime": "4.5",
-      "reverbMix": "40"
-    }
-  },
+    
   "Unspoken Pad": {
     "wave": "triangle",
     "sliderValues": {
@@ -393,7 +371,7 @@
       "envS": "0.8",
       "envR": "2.5",
       "lfoRate": "0.5",
-      "lfoVibrato": "3",
+      "lfoVibrato": "0",
       "lfoTremolo": "10",
       "lfoFilter": "15",
       "delayTime": "0.4",
@@ -403,7 +381,7 @@
       "reverbMix": "55"
     }
   },
-  "Diva Analog Brass": {
+  "Analog Brass": {
     "wave": "sawtooth",
     "sliderValues": {
       "harmonicsSlider": "30",
@@ -416,7 +394,7 @@
       "envS": "0.7",
       "envR": "0.6",
       "lfoRate": "4.5",
-      "lfoVibrato": "2",
+      "lfoVibrato": "0",
       "lfoTremolo": "0",
       "lfoFilter": "0",
       "delayTime": "0.4",
@@ -426,30 +404,8 @@
       "reverbMix": "25"
     }
   },
-  "Zebra FM Bass": {
-    "wave": "sine",
-    "sliderValues": {
-      "harmonicsSlider": "1",
-      "oscMix": "100",
-      "noiseMix": "0",
-      "cutoff": "20000",
-      "hpCutoff": "40",
-      "envA": "0.01",
-      "envD": "0.4",
-      "envS": "0.2",
-      "envR": "0.2",
-      "lfoRate": "85",
-      "lfoVibrato": "75",
-      "lfoTremolo": "0",
-      "lfoFilter": "0",
-      "delayTime": "0.4",
-      "delayFeedback": "0",
-      "delayMix": "0",
-      "reverbTime": "1.0",
-      "reverbMix": "0"
-    }
-  },
-  "Bitwig Pluck": {
+  
+  "Echo Pluck": {
     "wave": "square",
     "sliderValues": {
       "harmonicsSlider": "15",
@@ -470,44 +426,6 @@
       "delayMix": "25",
       "reverbTime": "2.0",
       "reverbMix": "15"
-    }
-  },
-  "Cathedral Organ": {
-    "wave": "manual",
-    "sliderValues": {
-      "drawbar_1": "1",
-      "drawbar_2": "1",
-      "drawbar_3": "0",
-      "drawbar_4": "1",
-      "drawbar_5": "0",
-      "drawbar_6": "0",
-      "drawbar_7": "0",
-      "drawbar_8": "1",
-      "drawbar_9": "0",
-      "drawbar_10": "0",
-      "drawbar_11": "0",
-      "drawbar_12": "0",
-      "drawbar_13": "0",
-      "drawbar_14": "0",
-      "drawbar_15": "0",
-      "drawbar_16": "0.5",
-      "oscMix": "100",
-      "noiseMix": "0",
-      "cutoff": "20000",
-      "hpCutoff": "40",
-      "envA": "0.1",
-      "envD": "0.1",
-      "envS": "1.0",
-      "envR": "0.5",
-      "lfoRate": "6.0",
-      "lfoVibrato": "0",
-      "lfoTremolo": "20",
-      "lfoFilter": "0",
-      "delayTime": "0.4",
-      "delayFeedback": "0",
-      "delayMix": "0",
-      "reverbTime": "5.0",
-      "reverbMix": "45"
     }
   },
   "Ghost Choir": {
@@ -592,7 +510,7 @@
       "envS": "0.8",
       "envR": "2.0",
       "lfoRate": "4.0",
-      "lfoVibrato": "3",
+      "lfoVibrato": "0",
       "lfoTremolo": "5",
       "lfoFilter": "0",
       "delayTime": "0.4",
@@ -630,7 +548,7 @@
       "envS": "0.4",
       "envR": "0.5",
       "lfoRate": "1.5",
-      "lfoVibrato": "5",
+      "lfoVibrato": "0",
       "lfoTremolo": "0",
       "lfoFilter": "0",
       "delayTime": "0.4",
@@ -676,7 +594,7 @@
       "envS": "1.0",
       "envR": "0.1",
       "lfoRate": "6.0",
-      "lfoVibrato": "12",
+      "lfoVibrato": "0",
       "lfoTremolo": "0",
       "lfoFilter": "0",
       "delayTime": "0.2",
@@ -755,29 +673,7 @@
       "reverbMix": "10"
     }
   },
-  "Wub Wub Bass": {
-    "wave": "square",
-    "sliderValues": {
-      "harmonicsSlider": "15",
-      "oscMix": "100",
-      "noiseMix": "0",
-      "cutoff": "400",
-      "hpCutoff": "40",
-      "envA": "0.05",
-      "envD": "0.3",
-      "envS": "0.8",
-      "envR": "0.2",
-      "lfoRate": "3.5",
-      "lfoVibrato": "0",
-      "lfoTremolo": "0",
-      "lfoFilter": "85",
-      "delayTime": "0.4",
-      "delayFeedback": "0",
-      "delayMix": "0",
-      "reverbTime": "3.0",
-      "reverbMix": "5"
-    }
-  },
+  
   "Glass Harmonica": {
     "wave": "manual",
     "sliderValues": {
@@ -806,7 +702,7 @@
       "envS": "0.8",
       "envR": "1.5",
       "lfoRate": "5.5",
-      "lfoVibrato": "3",
+      "lfoVibrato": "0",
       "lfoTremolo": "10",
       "lfoFilter": "0",
       "delayTime": "0.4",
@@ -851,8 +747,8 @@
       "envD": "0.5",
       "envS": "0.6",
       "envR": "0.8",
-      "lfoRate": "6.0",
-      "lfoVibrato": "12",
+      "lfoRate": "100",
+      "lfoVibrato": "9",
       "lfoTremolo": "0",
       "lfoFilter": "0",
       "delayTime": "0.45",
