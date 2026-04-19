@@ -2,7 +2,7 @@
 #include "PluginEditor.h"
 
 LydbolgeLabEditor::LydbolgeLabEditor (LydbolgeLabProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : juce::AudioProcessorEditor (&p), audioProcessor (p)
 {
     masterVolSlider.setSliderStyle(juce::Slider::LinearHorizontal);
     masterVolSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 50, 20);
