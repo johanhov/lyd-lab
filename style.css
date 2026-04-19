@@ -337,6 +337,7 @@
 
         input[type=range] {
             -webkit-appearance: none;
+            appearance: none;
             width: 100%;
             background: transparent;
             margin: 4px 0;
@@ -344,6 +345,7 @@
 
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
+            appearance: none;
             height: 16px;
             width: 16px;
             border-radius: 50%;
