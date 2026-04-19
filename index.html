@@ -50,7 +50,7 @@
         .header { display: flex; flex-direction: column; gap: 4px; }
         h1 { margin: 0; color: var(--accent); font-weight: 600; font-size: 24px; }
         p.intro { margin: 0; color: var(--text-muted); font-size: 13px; }
-        
+
         .cloud-status {
             font-size: 11px;
             color: #888;
@@ -59,12 +59,15 @@
             gap: 5px;
             margin-top: -2px;
         }
+
         .cloud-indicator {
-            width: 8px; height: 8px; border-radius: 50%; background-color: #f39c12; 
+            width: 8px; height: 8px; border-radius: 50%; background-color: #f39c12;
         }
+
         .cloud-indicator.connected {
             background-color: #2ecc71; box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
         }
+
         .cloud-indicator.local-storage {
             background-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
         }
@@ -82,6 +85,7 @@
             padding: 6px 10px; border-radius: 4px; font-family: inherit;
             font-size: 13px; outline: none; cursor: pointer;
         }
+
         .preset-select:focus { border-color: var(--accent); }
 
         .preset-btn {
@@ -89,6 +93,7 @@
             padding: 6px 15px; border-radius: 4px; font-size: 12px;
             font-weight: 600; cursor: pointer; transition: all 0.2s ease; flex: none;
         }
+
         .preset-btn:hover { background-color: var(--accent); color: #111; }
         .preset-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
@@ -99,11 +104,13 @@
             background-color: rgba(142, 68, 173, 0.2); border: 1px solid var(--reverb-color);
             color: #d2b4de; margin-left: auto;
         }
+
         .expert-toggle-btn:hover { background-color: var(--reverb-color); color: white; }
 
         .synth-dashboard {
             display: grid; grid-template-columns: 1fr 1.1fr 1fr;
             gap: 15px; align-items: stretch; transition: all 0.3s ease;
+            min-height: 580px;
         }
 
         .synth-col {
@@ -115,6 +122,7 @@
             position: relative; width: 100%; height: 135px;
             background-color: #111; border-radius: 6px; overflow: hidden; border: 1px solid #333;
         }
+
         canvas { display: block; width: 100%; height: 100%; }
 
         .canvas-label {
@@ -128,25 +136,23 @@
             background-color: #3a3a3a; color: var(--text-main); border: 2px solid transparent;
             padding: 8px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;
         }
+
         button.wave-btn:hover { background-color: #4a4a4a; }
         button.wave-btn.active { background-color: var(--accent); color: #111; }
 
         .explanation {
             background: rgba(255, 123, 0, 0.1); border-left: 3px solid var(--accent);
             padding: 8px 12px; font-size: 12px; line-height: 1.4; border-radius: 0 4px 4px 0;
-            height: 60px; 
-            overflow-y: auto; 
+            height: 60px; overflow-y: auto;
         }
 
         .slider-group {
             display: flex; flex-direction: column; gap: 4px; background: #222;
             padding: 10px 12px; border-radius: 6px; border: 1px solid #333;
         }
-        
-        #autoHarmonicsGroup, #manualHarmonicsGroup {
-            height: 135px; 
-        }
-        
+
+        #autoHarmonicsGroup, #manualHarmonicsGroup { height: 135px; }
+
         .slider-group.filter-group { border-color: var(--filter-color); background: rgba(231, 76, 60, 0.05); }
         .slider-group.env-group { border-color: var(--env-color); background: rgba(155, 89, 182, 0.05); }
         .slider-group.lfo-group { border-color: var(--lfo-color); background: rgba(241, 196, 15, 0.05); }
@@ -163,13 +169,13 @@
         .lfo-group .slider-value { color: var(--lfo-color); }
         .delay-group .slider-value { color: var(--delay-color); }
         .reverb-group .slider-value { color: var(--reverb-color); }
-        .mix-group .master-val { color: var(--master-color); }
 
         .info-btn {
             background: transparent; color: inherit; border: 1px solid currentColor;
             border-radius: 50%; width: 16px; height: 16px; font-size: 10px; font-weight: bold;
             display: inline-flex; justify-content: center; align-items: center; cursor: pointer; opacity: 0.7; flex: none;
         }
+
         .info-btn:hover { opacity: 1; transform: scale(1.1); }
 
         .mystery-btn {
@@ -177,6 +183,7 @@
             padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; width: 100%;
             margin-top: 8px; transition: all 0.2s ease; cursor: pointer; text-align: left;
         }
+
         .mystery-btn:hover { background: var(--accent); color: #111; }
 
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 4px 0; }
@@ -191,7 +198,7 @@
         .delay-group input[type=range]::-webkit-slider-thumb { background: var(--delay-color); }
         .reverb-group input[type=range]::-webkit-slider-thumb { background: var(--reverb-color); }
         #noiseMix::-webkit-slider-thumb { background: var(--noise-color); }
-        #masterVol::-webkit-slider-thumb { background: var(--master-color); }
+        #globalMasterVol::-webkit-slider-thumb { background: var(--master-color); }
 
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #444; border-radius: 2px; }
         input[type=range]:focus { outline: none; }
@@ -212,7 +219,7 @@
 
         .piano-toolbar { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 5px; }
         .piano-title { font-size: 12px; color: var(--accent); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-        .midi-status-container { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; font-weight: normal; margin-left: 10px; }
+        .midi-status-container { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; font-weight: normal; margin-left: 10px; text-transform: none;}
         .midi-light { width: 8px; height: 8px; border-radius: 50%; background-color: #444; transition: all 0.3s ease; }
         .midi-light.active { background-color: #2ecc71; box-shadow: 0 0 6px rgba(46, 204, 113, 0.6); }
 
@@ -292,11 +299,23 @@
 
     <div class="container">
         <div class="header">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h1>Lydbølge-Lab 🎛️</h1>
-                <div class="cloud-status">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <h1>Lydbølge-Lab 🎛️</h1>
+                    <div style="display: flex; align-items: center; gap: 8px; background: #222; padding: 4px 12px; border-radius: 6px; border: 1px solid #333; min-width: 170px; min-height: 28px;">
+                        <span style="font-size: 10px; font-weight: bold; color: #888; letter-spacing: 0.5px;">MASTER</span>
+                        <!-- Laster-tekst som vises inntil vi vet eksakt hva volumet fra skyen er -->
+                        <div id="masterVolLoader" style="font-size: 10px; color: #888; font-style: italic; width: 100%; text-align: center;">Synkroniserer...</div>
+                        <!-- Kontrollene er skjult inntil dataen er ferdig hentet -->
+                        <div id="masterVolControls" style="display: none; align-items: center; gap: 8px; width: 100%; justify-content: flex-end;">
+                            <span id="globalMasterVal" style="font-size: 11px; font-weight: bold; color: #2ecc71; min-width: 30px; text-align: right;"></span>
+                            <input type="range" id="globalMasterVol" data-exclude-preset="true" min="0" max="100" style="width: 80px; margin: 0;">
+                        </div>
+                    </div>
+                </div>
+                <div class="cloud-status" style="margin-top: 0;">
                     <div id="cloudIndicator" class="cloud-indicator"></div>
-                    <span id="cloudStatusText">Initialiserer...</span>
+                    <span id="cloudStatusText">Kobler til skyen...</span>
                 </div>
             </div>
             <p class="intro">En interaktiv synthesizer. Form lyden visuelt, og spill på tastaturet ditt!</p>
@@ -351,7 +370,7 @@
                 </div>
 
                 <div class="explanation" id="infoText">
-                    <strong>Sagtann (Sawtooth):</strong> Inneholder <em>alle</em> overtoner i en jevn, synkende rekke. Dette gir en rik, skarp og fyldig klang som ofte brukes for å etterligne strykere, blåsere eller fete synth-leads.
+                    <strong>Sagtann:</strong> Inneholder <em>alle</em> overtoner. Gir en skarp, fyldig klang.
                 </div>
 
                 <div class="slider-group" id="autoHarmonicsGroup">
@@ -384,12 +403,6 @@
                                     (Vind/Støy)</span><span id="noiseVal" class="slider-value"
                                     style="color: var(--noise-color)">0 %</span></div>
                             <input type="range" id="noiseMix" min="0" max="100" value="0" step="1">
-                        </div>
-                        <div style="margin-top: 5px; padding-top: 10px; border-top: 1px solid #444;">
-                            <div class="slider-header" style="font-weight: bold; font-size: 11px;"><span>Master Volum</span>
-                                <span id="masterVolVal" class="slider-value master-val">60 %</span>
-                            </div>
-                            <input type="range" id="masterVol" min="0" max="100" value="60" step="1">
                         </div>
                     </div>
                 </div>
@@ -506,9 +519,7 @@
 
         <div class="piano-toolbar">
             <span class="piano-title">🎹 Tangentbord 
-                <span class="midi-status-container">
-                    MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span>
-                </span>
+                <span class="midi-status-container">MIDI <span id="midiStatusLight" class="midi-light" title="Frakoblet"></span></span>
                 <span id="toolbarFreqVal" style="color: var(--sine-color); font-family: monospace; font-size: 13px; font-weight: normal; background: #222; padding: 2px 6px; border-radius: 4px; margin-left: 10px; border: 1px solid #444;">261.6 Hz</span>
             </span>
             <div class="piano-actions">
@@ -572,8 +583,205 @@
         </div>
     </div>
 
+    <!-- MAIN SCRIPT -->
     <script type="module">
-        // Firebase moduler (Disse feiler ofte på GitHub Pages hvis de ikke er konfigurert rett, så vi fanger evt feil)
+        // ==========================================
+        // 1. GLOBALE VARIABLER OG OPPLYSNINGER
+        // ==========================================
+        const MAX_HARMONICS = 30; 
+        const MANUAL_HARMONICS_COUNT = 16;
+        let currentWave = 'sawtooth'; 
+        let numHarmonics = 30;
+        let fundamentalFreq = 261.63; 
+        let lpFilterCutoff = 20000;
+        let hpFilterCutoff = 40;
+        let oscAmount = 1.0;
+        let noiseAmount = 0;
+        let globalVolumeAmount = 0.6; // Master volum state
+        let pcOctaveShift = 0;
+        let displayMode = 'pc';
+        let isPolyphonic = true;
+
+        const explanations = {
+            sawtooth: "<strong>Sagtann:</strong> Inneholder <em>alle</em> overtoner. Gir en skarp, fyldig klang.",
+            square: "<strong>Firkant:</strong> Kun <em>oddetalls-overtoner</em>. Gir en hul, treaktig klang.",
+            triangle: "<strong>Triangel:</strong> Oddetalls-overtoner, men svakere. Rund og fløyte-aktig.",
+            sine: "<strong>Sinus:</strong> Kun grunntonen! Rund, ren og dyp.",
+            manual: "<strong>Orgel:</strong> Bygg lyden selv overtone for overtone med spakene."
+        };
+
+        let adsr = { a: 0.1, d: 0.3, s: 0.5, r: 0.8 };
+        let lfo = { rate: 5.0, vibrato: 0, tremolo: 0, filterMod: 0 };
+        let delayConfig = { time: 0.4, feedback: 0.4, mix: 0.0 };
+        let reverbConfig = { time: 3.0, mix: 0.0 }; 
+
+        let manualHarmonics = new Array(MANUAL_HARMONICS_COUNT + 1).fill(0); 
+        manualHarmonics[1] = 1.0;
+
+        let audioCtx = null, globalVolumeNode = null, masterOutput = null;
+        let lpFilterNode = null, hpFilterNode = null, tremoloGain = null;
+        let lfoOsc = null, lfoPitchGain = null, lfoAmpGain = null, lfoFilterGain = null, noiseBuffer = null; 
+        let delayNode = null, delayFeedbackGain = null, delayMixGain = null;
+        let convolverNode = null, reverbMixGain = null; 
+
+        let isPlaying = false, isSounding = false, animationFrameId = null;
+        let activeNotes = [];
+        let activeVoices = {};
+
+        // ==========================================
+        // 2. HJELPEFUNKSJONER (LYD / VISUALISERING)
+        // ==========================================
+        const waveCanvas = document.getElementById('waveCanvas');
+        const waveCtx = waveCanvas ? waveCanvas.getContext('2d') : null;
+        const spectrumCanvas = document.getElementById('spectrumCanvas');
+        const spectrumCtx = spectrumCanvas ? spectrumCanvas.getContext('2d') : null;
+        const adsrCanvas = document.getElementById('adsrCanvas');
+        const adsrCtx = adsrCanvas ? adsrCanvas.getContext('2d') : null;
+
+        function getHarmonicAmplitude(type, n) {
+            if (type === 'manual') return n <= MANUAL_HARMONICS_COUNT ? manualHarmonics[n] : 0;
+            if (type === 'sine') return n === 1 ? 1 : 0;
+            if (type === 'sawtooth') return 1 / n;
+            if (type === 'square') return n % 2 !== 0 ? 1 / n : 0;
+            if (type === 'triangle') {
+                if (n % 2 === 0) return 0;
+                return (((n - 1) / 2) % 2 === 0 ? 1 : -1) * (1 / (n * n));
+            }
+            return 0;
+        }
+
+        function getVisualFilterMultiplier(freq, lpCut = lpFilterCutoff, hpCut = hpFilterCutoff) { 
+            const lpMult = freq >= 20000 ? 1 : 1 / Math.sqrt(1 + Math.pow(freq / lpCut, 8));
+            const hpMult = freq <= 40 ? 1 : 1 / Math.sqrt(1 + Math.pow(hpCut / freq, 8));
+            return lpMult * hpMult; 
+        }
+
+        function updateAudioWaveform() {
+            if (!audioCtx) return;
+            const limit = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
+            const r = new Float32Array(limit + 1), i = new Float32Array(limit + 1);
+            for (let n = 1; n <= limit; n++) i[n] = getHarmonicAmplitude(currentWave, n);
+            const wave = audioCtx.createPeriodicWave(r, i, { disableNormalization: false });
+            for (let vid in activeVoices) {
+                if (activeVoices[vid].osc) activeVoices[vid].osc.setPeriodicWave(wave);
+            }
+        }
+
+        function resizeCanvas(canvas, ctx) {
+            if (!canvas || !ctx) return { width: 0, height: 0 };
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            return { width: rect.width, height: rect.height };
+        }
+
+        function drawADSR() {
+            if (!adsrCanvas || !adsrCtx) return;
+            const dim = resizeCanvas(adsrCanvas, adsrCtx);
+            adsrCtx.clearRect(0, 0, dim.width, dim.height);
+            const pxPerSec = dim.width / 13;
+            const xA = adsr.a * pxPerSec, xD = xA + (adsr.d * pxPerSec), xS = xD + (2 * pxPerSec), xR = xS + (adsr.r * pxPerSec);
+            const yB = dim.height - 5, yT = 5, yS = yB - (adsr.s * (yB - yT));
+            
+            adsrCtx.strokeStyle = '#333'; adsrCtx.beginPath(); adsrCtx.moveTo(0, yT); adsrCtx.lineTo(dim.width, yT); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(dim.width, yB); adsrCtx.stroke();
+            
+            adsrCtx.beginPath(); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(xA, yT); adsrCtx.lineTo(xD, yS); adsrCtx.lineTo(xS, yS); adsrCtx.lineTo(xR, yB); adsrCtx.lineTo(0, yB);
+            adsrCtx.fillStyle = 'rgba(155, 89, 182, 0.3)'; adsrCtx.fill();
+            adsrCtx.strokeStyle = '#9b59b6'; adsrCtx.lineWidth = 2.5; adsrCtx.stroke();
+        }
+
+        function drawVisualsDynamic() {
+            if (!isSounding && animationFrameId) { 
+                cancelAnimationFrame(animationFrameId); 
+                animationFrameId = null; 
+                drawVisualsStatic(); 
+                return; 
+            }
+            if (!waveCanvas || !waveCtx || !spectrumCanvas || !spectrumCtx) return;
+
+            const waveDims = resizeCanvas(waveCanvas, waveCtx);
+            const specDims = resizeCanvas(spectrumCanvas, spectrumCtx);
+            const limit = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
+            
+            let curAmp = 1.0, curCyc = 2.0;
+            let effLp = lpFilterCutoff, effHp = hpFilterCutoff;
+
+            if (audioCtx) {
+                const lfoVal = Math.sin(audioCtx.currentTime * Math.min(lfo.rate, 20) * Math.PI * 2);
+                curAmp = 1.0 - (lfo.tremolo / 200) + (lfoVal * lfo.tremolo / 200);
+                curCyc = 2 * (Math.max(10, fundamentalFreq + (lfoVal * lfo.vibrato)) / fundamentalFreq);
+                const freqMult = Math.pow(2, (lfoVal * lfo.filterMod) / 1200);
+                effLp = Math.min(22000, Math.max(20, lpFilterCutoff * freqMult));
+                effHp = Math.min(22000, Math.max(20, hpFilterCutoff * freqMult));
+            }
+            
+            let peakY = 0.01;
+            for (let i = 0; i <= 50; i++) {
+                let testPhase = (i / 50) * Math.PI * 2;
+                let val = 0;
+                for (let n = 1; n <= limit; n++) {
+                    let a = getHarmonicAmplitude(currentWave, n);
+                    if (a !== 0) val += a * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp) * Math.sin(n * testPhase);
+                }
+                if (Math.abs(val) > peakY) peakY = Math.abs(val);
+            }
+            let dynamicScale = 0.425 / peakY;
+            
+            waveCtx.clearRect(0, 0, waveDims.width, waveDims.height);
+            waveCtx.beginPath(); waveCtx.strokeStyle = currentWave === 'manual' ? '#2ecc71' : '#ff7b00'; waveCtx.lineWidth = 2.5; waveCtx.lineJoin = 'round';
+            for (let x = 0; x < waveDims.width; x++) {
+                let phase = (x / waveDims.width) * Math.PI * 2 * curCyc;
+                let yAmp = 0;
+                for (let n = 1; n <= limit; n++) {
+                    let a = getHarmonicAmplitude(currentWave, n);
+                    if (a !== 0) yAmp += a * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp) * Math.sin(n * phase);
+                }
+                let jitter = (Math.random() - 0.5) * noiseAmount * 1.5;
+                let y = (waveDims.height / 2) - (((yAmp * oscAmount * dynamicScale) + jitter) * waveDims.height * curAmp);
+                y = Math.max(2, Math.min(waveDims.height - 2, y));
+                x === 0 ? waveCtx.moveTo(x, y) : waveCtx.lineTo(x, y);
+            }
+            waveCtx.stroke();
+
+            spectrumCtx.clearRect(0, 0, specDims.width, specDims.height);
+            const limitMax = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : MAX_HARMONICS;
+            const bw = (specDims.width / limitMax) - 2; 
+            const maxH = (specDims.height - 15) * curAmp;
+
+            if (noiseAmount > 0) {
+                for (let i = 0; i < specDims.width; i += 2) {
+                    let nH = Math.random() * noiseAmount * maxH * 0.4;
+                    spectrumCtx.fillStyle = 'rgba(149, 165, 166, 0.4)'; spectrumCtx.fillRect(i, specDims.height - nH, 2, nH);
+                }
+            }
+
+            for (let n = 1; n <= limitMax; n++) {
+                let bA = Math.abs(getHarmonicAmplitude(currentWave, n));
+                let visualBA = bA * oscAmount;
+                let fA = visualBA * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp);
+                let x = (n - 1) * (specDims.width / limitMax) + 1, y = specDims.height - (fA * maxH);
+
+                spectrumCtx.fillStyle = currentWave === 'manual' ? (n === 1 ? '#4fc3f7' : '#2ecc71') : (n <= limit ? (n === 1 ? '#4fc3f7' : '#ff7b00') : (visualBA > 0 ? '#444444' : '#222222'));
+                if (fA > 0) spectrumCtx.fillRect(x, y, bw, fA * maxH);
+
+                if (n <= 16 || n % 5 === 0) { spectrumCtx.fillStyle = '#888'; spectrumCtx.font = '9px sans-serif'; spectrumCtx.textAlign = 'center'; spectrumCtx.fillText(n, x + bw / 2, specDims.height - 2); }
+            }
+
+            if (isSounding) animationFrameId = requestAnimationFrame(drawVisualsDynamic);
+        }
+
+        function drawVisualsStatic() { 
+            isSounding = true; 
+            drawVisualsDynamic(); 
+            isSounding = false; 
+        }
+
+
+        // ==========================================
+        // 3. FIREBASE OG LAGRING
+        // ==========================================
         let initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged;
         let getFirestore, doc, setDoc, getDoc, collection, onSnapshot, deleteDoc;
         
@@ -605,20 +813,55 @@
         let unsubscribePresets = null;
         let pendingPresetSelection = null; 
         let storageMode = 'none';
+        let authInitialized = false;
         
         function isLocalStorageAvailable() {
-            try {
-                const test = '__storage_test__';
-                localStorage.setItem(test, test);
-                localStorage.removeItem(test);
-                return true;
-            } catch (e) {
-                return false;
+            try { const test = '__storage_test__'; localStorage.setItem(test, test); localStorage.removeItem(test); return true; } catch (e) { return false; }
+        }
+
+        // PERFEKSJONERT VOLUM-LASTER
+        function updateGlobalVolumeUI(val, skipStorage = false) {
+            globalVolumeAmount = val;
+            const percent = Math.round(val * 100);
+            
+            const slider = document.getElementById('globalMasterVol');
+            if (slider) slider.value = percent;
+            
+            const valDisp = document.getElementById('globalMasterVal');
+            if (valDisp) valDisp.textContent = percent + ' %';
+            
+            // Først nå skjuler vi lasteren og viser volumslideren!
+            const loader = document.getElementById('masterVolLoader');
+            const controls = document.getElementById('masterVolControls');
+            if (loader) loader.style.display = 'none';
+            if (controls) controls.style.display = 'flex';
+
+            if (audioCtx && globalVolumeNode) {
+                globalVolumeNode.gain.setTargetAtTime(globalVolumeAmount, audioCtx.currentTime, 0.05);
+            }
+
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && typeof db !== 'undefined' && db) {
+                    try {
+                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
+                        setDoc(settingsRef, { masterVolume: globalVolumeAmount }, { merge: true });
+                    } catch(e) {}
+                } else if (storageMode === 'local') {
+                    try {
+                        localStorage.setItem('lydlab_masterVolume', globalVolumeAmount);
+                    } catch(e) {}
+                }
             }
         }
 
+        const masterVolSlider = document.getElementById('globalMasterVol');
+        if (masterVolSlider) {
+            masterVolSlider.addEventListener('input', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, true); });
+            masterVolSlider.addEventListener('change', (e) => { updateGlobalVolumeUI(parseFloat(e.target.value) / 100, false); });
+        }
+
+        // Hovedoppstart
         function startApp() {
-            // Sjekk strengt for __firebase_config-variabelen som Garanterer at vi er i testmiljøet
             if (typeof __firebase_config !== 'undefined' && initializeApp) {
                 storageMode = 'cloud';
                 try {
@@ -627,7 +870,7 @@
                     auth = getAuth(app);
                     db = getFirestore(app);
                     
-                    onAuthStateChanged(auth, (user) => {
+                    onAuthStateChanged(auth, async (user) => {
                         currentUser = user;
                         if (user && storageMode === 'cloud') {
                             document.getElementById('cloudStatusText').textContent = "Tilkoblet skyen";
@@ -636,31 +879,38 @@
                             document.getElementById('savePresetBtn').disabled = false;
                             document.getElementById('expertToggleBtn').disabled = false;
                             
-                            fetchSettings();
+                            await fetchSettings(); // Dette vil trigge updateGlobalVolumeUI når det er ferdig
                             setupPresetsListener();
+                            authInitialized = true;
                         } else {
                             if (unsubscribePresets) unsubscribePresets();
                             if (storageMode === 'cloud') document.getElementById('savePresetBtn').disabled = true;
+                            if (authInitialized) updateGlobalVolumeUI(0.6, true);
                         }
                     });
 
                     initAuth();
                 } catch(error) {
-                    console.error("Feil under oppsett av Firebase:", error);
                     fallbackToLocal();
                 }
             } else {
-                // Vi er utenfor testmiljøet (f.eks. GitHub Pages)
                 fallbackToLocal();
             }
 
             Promise.all([loadFactoryPresets(), loadExternalPresets()]).then(() => {
                 drawVisualsStatic(); drawADSR();
                 const selectEl = document.getElementById('presetSelect');
-                if(selectEl.options.length > 0) {
-                    selectEl.dispatchEvent(new Event('change'));
-                }
+                if(selectEl.options.length > 0) { selectEl.dispatchEvent(new Event('change')); }
             });
+            
+            // Sikkerhetsnett: Hvis Firebase eller nettet henger i mer enn 3 sekunder, 
+            // tving fram volumslideren slik at appen kan brukes.
+            setTimeout(() => {
+                const controls = document.getElementById('masterVolControls');
+                if (controls && controls.style.display === 'none') {
+                    updateGlobalVolumeUI(0.6, true);
+                }
+            }, 3000);
         }
         
         function fallbackToLocal() {
@@ -681,13 +931,12 @@
                     await signInAnonymously(auth);
                 }
             } catch (error) {
-                console.error("Autentiseringsfeil:", error);
                 fallbackToLocal();
             }
         }
 
         function setLocalStorageMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal lagring (Nettleser)";
+            document.getElementById('cloudStatusText').textContent = "Lokal lagring";
             const ind = document.getElementById('cloudIndicator');
             ind.classList.remove("connected");
             ind.classList.add("local-storage");
@@ -697,9 +946,11 @@
             
             try {
                 const savedExpertMode = localStorage.getItem('lydlab_expertMode');
-                if (savedExpertMode !== null) {
-                    setExpertMode(savedExpertMode === 'true', true);
-                }
+                if (savedExpertMode !== null) setExpertMode(savedExpertMode === 'true', true);
+                
+                const savedVol = localStorage.getItem('lydlab_masterVolume');
+                if (savedVol !== null) updateGlobalVolumeUI(parseFloat(savedVol), true);
+                else updateGlobalVolumeUI(0.6, true);
             } catch(e) {}
             
             loadLocalPresets();
@@ -708,123 +959,54 @@
         function loadLocalPresets() {
             try {
                 const saved = localStorage.getItem('lydlab_presets');
-                if (saved) {
-                    userPresets = JSON.parse(saved);
-                } else {
-                    userPresets = {};
-                }
+                if (saved) userPresets = JSON.parse(saved); else userPresets = {};
                 updatePresetDropdown();
-            } catch (e) {
-                userPresets = {};
-            }
+            } catch (e) { userPresets = {}; }
         }
 
         function setOfflineMode() {
-            document.getElementById('cloudStatusText').textContent = "Lokal modus (Ingen lagring)";
+            document.getElementById('cloudStatusText').textContent = "Lokal modus (Frakoblet)";
             document.getElementById('cloudIndicator').style.backgroundColor = "#95a5a6";
             document.getElementById('cloudIndicator').classList.remove("connected");
             document.getElementById('cloudIndicator').classList.remove("local-storage");
-            
-            const saveBtn = document.getElementById('savePresetBtn');
-            saveBtn.disabled = false;
-            
+            document.getElementById('savePresetBtn').disabled = false;
             document.getElementById('expertToggleBtn').disabled = false;
+            updateGlobalVolumeUI(0.6, true);
         }
 
         async function fetchSettings() {
             if (!currentUser || storageMode !== 'cloud') return;
+            let loadedVolume = 0.6;
             try {
-                const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                const docSnap = await getDoc(settingsRef);
+                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'));
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.isExpertMode !== undefined) {
-                        setExpertMode(data.isExpertMode, true); 
-                    }
+                    if (data.isExpertMode !== undefined) setExpertMode(data.isExpertMode, true); 
+                    if (data.masterVolume !== undefined) loadedVolume = data.masterVolume;
                 }
             } catch (e) {}
+            
+            // Dette erstatter "Synkroniserer" med slideren
+            updateGlobalVolumeUI(loadedVolume, true); 
         }
 
         function setupPresetsListener() {
             if (!currentUser || !db || storageMode !== 'cloud') return;
             const presetsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'presets');
-            
             unsubscribePresets = onSnapshot(presetsRef, (snapshot) => {
                 const newPresets = {};
                 snapshot.forEach((doc) => { newPresets[doc.id] = doc.data(); });
                 userPresets = newPresets;
-                
                 let valToSelect = document.getElementById('presetSelect').value;
-                if (pendingPresetSelection) {
-                    valToSelect = pendingPresetSelection;
-                    pendingPresetSelection = null;
-                }
+                if (pendingPresetSelection) { valToSelect = pendingPresetSelection; pendingPresetSelection = null; }
                 updatePresetDropdown(valToSelect);
             }, (error) => {});
         }
 
-        const infoModal = document.getElementById('infoModal');
-        const presetModal = document.getElementById('presetModal');
-        const shareModal = document.getElementById('shareModal');
 
-        function closeModal(e) { if(e) e.stopPropagation(); infoModal.style.display = 'none'; }
-        function closePresetModal(e) { if(e) e.stopPropagation(); presetModal.style.display = 'none'; }
-        function closeShareModal(e) { if(e) e.stopPropagation(); shareModal.style.display = 'none'; }
-
-        infoModal.addEventListener('click', closeModal);
-        document.getElementById('infoModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('infoModalClose').addEventListener('click', closeModal);
-
-        presetModal.addEventListener('click', closePresetModal);
-        document.getElementById('presetModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('presetModalClose').addEventListener('click', closePresetModal);
-
-        shareModal.addEventListener('click', closeShareModal);
-        document.getElementById('shareModalContent').addEventListener('click', e => e.stopPropagation());
-        document.getElementById('shareModalClose').addEventListener('click', closeShareModal);
-
-        const expertToggleBtn = document.getElementById('expertToggleBtn');
-        
-        async function setExpertMode(isExpert, skipStorage = false) {
-            if (isExpert) {
-                document.body.classList.add('expert-mode');
-                expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
-                expertToggleBtn.style.backgroundColor = '#333';
-                expertToggleBtn.style.color = '#fff';
-                expertToggleBtn.style.borderColor = '#444';
-            } else {
-                document.body.classList.remove('expert-mode');
-                expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
-                expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
-                expertToggleBtn.style.color = '#d2b4de';
-                expertToggleBtn.style.borderColor = 'var(--reverb-color)';
-                
-                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
-                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
-                    if (sawBtn) sawBtn.click();
-                }
-            }
-            
-            if (!skipStorage) {
-                if (storageMode === 'cloud' && currentUser && db) {
-                    try {
-                        const settingsRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences');
-                        await setDoc(settingsRef, { isExpertMode: isExpert });
-                    } catch (e) {}
-                } else if (storageMode === 'local') {
-                    try {
-                        localStorage.setItem('lydlab_expertMode', isExpert);
-                    } catch(e) {}
-                }
-            }
-            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
-        }
-
-        expertToggleBtn.addEventListener('click', () => {
-            const willBeExpert = !document.body.classList.contains('expert-mode');
-            setExpertMode(willBeExpert);
-        });
-
+        // ==========================================
+        // 4. PRESETS OG MODALER
+        // ==========================================
         const modalContent = {
             general: {
                 title: "Synthesizeren",
@@ -862,30 +1044,37 @@
                 body: `
                 <p>En tone lever i <em>tid</em>. En skarptromme smeller og forsvinner, mens en fiolin smyger seg inn. Vi styrer dette med ADSR:</p>
                 <ul>
-                    <li><strong>A for Attack (Angrep):</strong> Tiden det tar fra du trykker på tangenten til lyden når maks volum.</li>
-                    <li><strong>D for Decay (Fall):</strong> Tiden lyden bruker ned til hvilepulsen (Sustain) etter det første slaget.</li>
-                    <li><strong>S for Sustain (Hvilepuls):</strong> Hvor <em>høyt</em> volumet skal være så lenge du holder knappen nede.</li>
-                    <li><strong>R for Release (Slipp):</strong> Hva skjer når du slipper? Forsvinner lyden brått (orgel), eller klinger den videre i rommet (piano med pedal)?</li>
-                </ul>
-                `
+                    <li><strong>A for Attack (Angrep):</strong> Hvor lang tid det tar fra du trykker på tangenten til lyden når maks volum. (0 sekunder = smell, 2 sekunder = myk innfading).</li>
+                    <li><strong>D for Decay (Fall):</strong> Tiden lyden bruker på å falle ned til hvilepulsen (Sustain) etter det første slaget. Denne er logaritmisk, som betyr at den faller raskt først og flater ut mot slutten.</li>
+                    <li><strong>S for Sustain (Hvilepuls):</strong> Hvor <em>høyt</em> volumet skal være så lenge du holder tangenten nede.</li>
+                    <li><strong>R for Release (Slipp):</strong> Hva skjer når du slipper knappen? Også logaritmisk – dør ut naturlig som et ekte rom eller en kondensator i en analog synth.</li>
+                </ul>`
             },
             lfo: {
-                title: "Modulasjon (LFO og FM)",
-                body: `
-                <p><strong>LFO</strong> står for <em>Low Frequency Oscillator</em>. Det er som en usynlig robothånd som skrur på knappene for deg!</p>
+                title: "Modulasjon (LFO, AM og FM)",
+                body: `<p><strong>LFO</strong> står for <em>Low Frequency Oscillator</em>. Tenk på det som en usynlig robothånd eller en ekstra motor som skrur på knappene for deg mens du spiller!</p>
+                
+                <h4>Lav hastighet (Rytme og bevegelse)</h4>
+                <p>Sett hastigheten (Rate) lavt (f.eks. mellom 1 og 10 Hz):</p>
                 <ul>
-                    <li><strong>Vibrato (Pitch):</strong> Roboten skrur tonehøyden opp og ned. Slik gjør fiolinister og sangere!</li>
-                    <li><strong>Tremolo (Volum):</strong> Roboten skrur volumet opp og ned.</li>
-                    <li><strong>Filter:</strong> Roboten åpner og lukker filteret for en "wah-wah"-effekt.</li>
+                    <li><strong>AM-volum (Tremolo):</strong> Skrur volumet opp og ned. Gir en pulserende effekt.</li>
+                    <li><strong>FM-Pitch (Vibrato):</strong> Skrur tonehøyden opp og ned. Gir en syngende effekt, akkurat som en fiolinist som vugger på fingeren.</li>
+                    <li><strong>Filter:</strong> Åpner og lukker filteret, noe som skaper en levende "wah-wah"-effekt.</li>
                 </ul>
-                <h4>Lyd i spill (FM-syntese)</h4>
-                <p>Hvis roboten rister på pitch-knappen ekstremt fort (over 100 ganger i sekundet), blir det metalliske lyder i stedet for vibrato. Dette kalles <strong>Audio Rate Modulasjon (FM)</strong>, og ble brukt for å lage musikk i gamle TV-spill som Sega og Nintendo!</p>
-                `
+
+                <h4>Høy hastighet (Audio Rate Modulasjon)</h4>
+                <p>Magi oppstår når motoren rister på knappen ekstremt fort (over 20 Hz)! Da slutter øret vårt å oppfatte det som en rytmisk "bevegelse", og i stedet forvandles det til <strong>helt nye klanger</strong>:</p>
+                <ul>
+                    <li><strong>Hurtig AM (Ring Modulator):</strong> Hvis du modulerer volumet superraskt, knuses tonen og det oppstår to helt nye overtoner. Du får en statisk, hul klokkeklang – perfekt for sci-fi-effekter (Dette var teknologien bak stemmen til Daleks i Doctor Who!).</li>
+                    <li><strong>Hurtig FM (Frekvensmodulasjon):</strong> Rister du tonehøyden superraskt, skjer det et matematisk kaos! Det skapes en uendelig foss av nye overtoner. En kjedelig sinusbølge forvandles til aggressive basser, gongs eller skrikende metall. (Yamaha DX7 og lydbrikken i Sega Mega Drive brukte denne teknologien).</li>
+                </ul>
+                
+                <p style="background: rgba(255,123,0,0.1); padding: 10px; border-radius: 5px; border-left: 3px solid var(--accent); margin-top: 15px;"><strong>Praktisk test:</strong> Velg "Sinus". Skru opp "Hastighet" på LFO-en til maks. Dra først opp "Tremolo" (AM) og lytt til den hule sci-fi-klangen. Skru den deretter ned igjen, og dra opp "Vibrato" (FM). Hør hvordan lyden eksploderer i et aggressivt metallisk brøl!</p>`
             },
             delay: {
                 title: "Delay (Ekko)",
                 body: `
-                <p><strong>Delay</strong> er en ekko-effekt. Den tar opp lyden du spiller og sender den tilbake til deg med en forsinkelse (Tid).</p>
+                <p>En <strong>Delay</strong>-effekt tar opp lyden du nettopp spilte, og sender tilbake til deg etter en liten stund. Det fungerer akkurat som å rope mot en fjellvegg!</p>
                 <p><strong>Feedback</strong> bestemmer hvor mange ganger ekkoet skal gjentas før det dør ut. Med høy feedback kan lyden rulle videre i evigheter!</p>
                 `
             },
@@ -911,6 +1100,58 @@
             }
         };
 
+        const infoModal = document.getElementById('infoModal');
+        const presetModal = document.getElementById('presetModal');
+        const shareModal = document.getElementById('shareModal');
+
+        function closeModal(e) { if(e) e.stopPropagation(); infoModal.style.display = 'none'; }
+        function closePresetModal(e) { if(e) e.stopPropagation(); presetModal.style.display = 'none'; }
+        function closeShareModal(e) { if(e) e.stopPropagation(); shareModal.style.display = 'none'; }
+
+        infoModal.addEventListener('click', closeModal);
+        document.getElementById('infoModalContent').addEventListener('click', e => e.stopPropagation());
+        document.getElementById('infoModalClose').addEventListener('click', closeModal);
+
+        presetModal.addEventListener('click', closePresetModal);
+        document.getElementById('presetModalContent').addEventListener('click', e => e.stopPropagation());
+        document.getElementById('presetModalClose').addEventListener('click', closePresetModal);
+
+        shareModal.addEventListener('click', closeShareModal);
+        document.getElementById('shareModalContent').addEventListener('click', e => e.stopPropagation());
+        document.getElementById('shareModalClose').addEventListener('click', closeShareModal);
+
+        const expertToggleBtn = document.getElementById('expertToggleBtn');
+        
+        async function setExpertMode(isExpert, skipStorage = false) {
+            if (isExpert) {
+                document.body.classList.add('expert-mode');
+                expertToggleBtn.innerHTML = 'Skjul avansert (Nybegynner) 🙈';
+                expertToggleBtn.style.backgroundColor = '#333';
+                expertToggleBtn.style.color = '#fff';
+                expertToggleBtn.style.borderColor = '#444';
+            } else {
+                document.body.classList.remove('expert-mode');
+                expertToggleBtn.innerHTML = 'Vis avansert (LFO, Ekko) 🚀';
+                expertToggleBtn.style.backgroundColor = 'rgba(142, 68, 173, 0.2)';
+                expertToggleBtn.style.color = '#d2b4de';
+                expertToggleBtn.style.borderColor = 'var(--reverb-color)';
+                if (typeof currentWave !== 'undefined' && currentWave === 'manual') {
+                    const sawBtn = document.querySelector('.wave-btn[data-wave="sawtooth"]');
+                    if (sawBtn) sawBtn.click();
+                }
+            }
+            if (!skipStorage) {
+                if (storageMode === 'cloud' && currentUser && db) {
+                    try { await setDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'settings', 'preferences'), { isExpertMode: isExpert }, { merge: true }); } catch (e) {}
+                } else if (storageMode === 'local') {
+                    try { localStorage.setItem('lydlab_expertMode', isExpert); } catch(e) {}
+                }
+            }
+            setTimeout(() => { if(typeof drawADSR === 'function') { drawADSR(); drawVisualsStatic(); } }, 50);
+        }
+
+        expertToggleBtn.addEventListener('click', () => { setExpertMode(!document.body.classList.contains('expert-mode')); });
+
         function openModal(section) {
             if(modalContent[section]) {
                 document.getElementById('modalTitle').innerText = modalContent[section].title;
@@ -926,7 +1167,6 @@
             });
         });
 
-        // --- PRESET SYSTEM ---
         let factoryPresets = {}; 
         let userPresets = {}; 
         let externalPresets = {}; 
@@ -937,48 +1177,31 @@
             const externalGroup = document.getElementById('externalPresetsGroup');
             const selectEl = document.getElementById('presetSelect');
             
-            factoryGroup.innerHTML = '';
-            userGroup.innerHTML = '';
-            externalGroup.innerHTML = '';
+            factoryGroup.innerHTML = ''; userGroup.innerHTML = ''; externalGroup.innerHTML = '';
             
             if (Object.keys(externalPresets).length > 0) {
                 for (let name in externalPresets) {
-                    let opt = document.createElement('option');
-                    opt.value = "external|" + name;
-                    opt.text = name;
-                    externalGroup.appendChild(opt);
+                    let opt = document.createElement('option'); opt.value = "external|" + name; opt.text = name; externalGroup.appendChild(opt);
                 }
                 externalGroup.style.display = '';
-            } else {
-                externalGroup.style.display = 'none';
-            }
+            } else { externalGroup.style.display = 'none'; }
 
             for (let name in factoryPresets) {
-                let opt = document.createElement('option');
-                opt.value = "factory|" + name;
-                opt.text = name;
-                factoryGroup.appendChild(opt);
+                let opt = document.createElement('option'); opt.value = "factory|" + name; opt.text = name; factoryGroup.appendChild(opt);
             }
             
             for (let name in userPresets) {
-                let opt = document.createElement('option');
-                opt.value = "user|" + name;
-                opt.text = name;
-                userGroup.appendChild(opt);
+                let opt = document.createElement('option'); opt.value = "user|" + name; opt.text = name; userGroup.appendChild(opt);
             }
             
             let found = false;
             if (selectValue) {
                 for (let i = 0; i < selectEl.options.length; i++) {
-                    if (selectEl.options[i].value === selectValue) {
-                        found = true; break;
-                    }
+                    if (selectEl.options[i].value === selectValue) { found = true; break; }
                 }
             }
             
-            if (!found && selectEl.options.length > 0) {
-                selectValue = selectEl.options[0].value;
-            }
+            if (!found && selectEl.options.length > 0) selectValue = selectEl.options[0].value;
             
             if(selectValue) {
                 selectEl.value = selectValue;
@@ -991,8 +1214,7 @@
         let errorBannerTimeout = null;
         function showErrorBanner(message) {
             const banner = document.getElementById('urlErrorBanner');
-            banner.textContent = message;
-            banner.style.display = 'block';
+            banner.textContent = message; banner.style.display = 'block';
             if(errorBannerTimeout) clearTimeout(errorBannerTimeout);
             errorBannerTimeout = setTimeout(() => { banner.style.display = 'none'; }, 8000);
         }
@@ -1004,16 +1226,13 @@
                 "Initiell Patch": {
                     "wave": "sawtooth",
                     "sliderValues": {
-                        "harmonicsSlider": "30", "oscMix": "100", "noiseMix": "0", "masterVol": "60",
-                        "cutoff": "20000", "hpCutoff": "40",
+                        "harmonicsSlider": "30", "oscMix": "100", "noiseMix": "0", "cutoff": "20000", "hpCutoff": "40",
                         "envA": "0.1", "envD": "0.3", "envS": "0.5", "envR": "0.8",
                         "lfoRate": "39.5", "lfoVibrato": "0", "lfoTremolo": "0", "lfoFilter": "0",
-                        "delayTime": "0.4", "delayFeedback": "40", "delayMix": "0",
-                        "reverbTime": "3.0", "reverbMix": "0"
+                        "delayTime": "0.4", "delayFeedback": "40", "delayMix": "0", "reverbTime": "3.0", "reverbMix": "0"
                     }
                 }
             };
-            
             try {
                 if (FACTORY_PRESETS_URL) {
                     let fetchUrl = FACTORY_PRESETS_URL;
@@ -1023,44 +1242,31 @@
                             urlObj.hostname = 'dl.dropboxusercontent.com';
                             urlObj.searchParams.delete('dl');
                             fetchUrl = urlObj.toString();
-                        } catch(e) {
-                            fetchUrl = fetchUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com');
-                        }
+                        } catch(e) { fetchUrl = fetchUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com'); }
                     }
-
                     const response = await fetch(fetchUrl);
                     if (response.ok) {
                         const loadedPresets = await response.json();
                         factoryPresets = { ...factoryPresets, ...loadedPresets };
                     }
                 }
-            } catch (error) {
-                console.warn("Merk: Klarte ikke hente presets fra lenken. Bruker kun innebygd lyd.", error);
-            }
+            } catch (error) {}
             updatePresetDropdown();
         }
 
         async function fetchExternalUrl(presetsUrl) {
             if (presetsUrl.includes('dropbox.com')) {
                 try {
-                    let urlObj = new URL(presetsUrl);
-                    urlObj.hostname = 'dl.dropboxusercontent.com';
-                    urlObj.searchParams.delete('dl');
-                    presetsUrl = urlObj.toString();
-                } catch(e) {
-                    presetsUrl = presetsUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com');
-                }
+                    let urlObj = new URL(presetsUrl); urlObj.hostname = 'dl.dropboxusercontent.com'; urlObj.searchParams.delete('dl'); presetsUrl = urlObj.toString();
+                } catch(e) { presetsUrl = presetsUrl.replace('www.dropbox.com', 'dl.dropboxusercontent.com'); }
             }
             const response = await fetch(presetsUrl);
             if (!response.ok) throw new Error(`Serveren svarte med status ${response.status}`);
             const data = await response.json();
             
             if (typeof data === 'object' && data !== null) {
-                if (data.wave && data.sliderValues) {
-                    externalPresets = { "Delt lyd": data };
-                } else {
-                    externalPresets = data;
-                }
+                if (data.wave && data.sliderValues) externalPresets = { "Delt lyd": data };
+                else externalPresets = data;
                 return true;
             }
             throw new Error("Ugyldig JSON-format");
@@ -1070,11 +1276,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             let presetsUrl = urlParams.get('presets');
             if (presetsUrl) {
-                try {
-                    await fetchExternalUrl(presetsUrl);
-                } catch (error) {
-                    showErrorBanner("Klarte ikke å hente inn presets fra URL-en. Sjekk at lenken peker til en gyldig fil.");
-                }
+                try { await fetchExternalUrl(presetsUrl); } catch (error) { showErrorBanner("Klarte ikke å hente inn presets fra URL-en. Sjekk at lenken peker til en gyldig fil."); }
             }
             updatePresetDropdown();
         }
@@ -1082,9 +1284,7 @@
         function getPresetState() {
             const state = { wave: currentWave, sliderValues: {} };
             document.querySelectorAll('input[type="range"]').forEach(inp => {
-                if (inp.id && inp.id !== 'freqSlider') { 
-                    state.sliderValues[inp.id] = inp.value;
-                }
+                if (inp.id && inp.id !== 'freqSlider' && inp.id !== 'globalMasterVol') { state.sliderValues[inp.id] = inp.value; }
             });
             return state;
         }
@@ -1092,12 +1292,9 @@
         function applyPresetState(state) {
             if (!document.body.classList.contains('expert-mode')) {
                 const usesAdv = (
-                    parseFloat(state.sliderValues.lfoVibrato || 0) > 0 ||
-                    parseFloat(state.sliderValues.lfoTremolo || 0) > 0 ||
-                    parseFloat(state.sliderValues.lfoFilter || 0) > 0 ||
-                    parseFloat(state.sliderValues.delayMix || 0) > 0 ||
-                    parseFloat(state.sliderValues.reverbMix || 0) > 0 ||
-                    state.wave === 'manual'
+                    parseFloat(state.sliderValues.lfoVibrato || 0) > 0 || parseFloat(state.sliderValues.lfoTremolo || 0) > 0 ||
+                    parseFloat(state.sliderValues.lfoFilter || 0) > 0 || parseFloat(state.sliderValues.delayMix || 0) > 0 ||
+                    parseFloat(state.sliderValues.reverbMix || 0) > 0 || state.wave === 'manual'
                 );
                 if (usesAdv) setExpertMode(true, true);
             }
@@ -1106,42 +1303,25 @@
             if(waveBtn) waveBtn.click();
             
             for (const [id, value] of Object.entries(state.sliderValues)) {
+                if (id === 'globalMasterVol') continue; 
                 const el = document.getElementById(id);
-                if (el) {
-                    el.value = value;
-                    el.dispatchEvent(new Event('input', { bubbles: true }));
-                }
+                if (el) { el.value = value; el.dispatchEvent(new Event('input', { bubbles: true })); }
             }
         }
 
         document.getElementById('presetSelect').addEventListener('change', (e) => {
-            const val = e.target.value;
-            const delBtn = document.getElementById('deletePresetBtn');
-            if (!val) {
-                delBtn.style.display = 'none';
-                e.target.blur(); 
-                return;
-            }
+            const val = e.target.value; const delBtn = document.getElementById('deletePresetBtn');
+            if (!val) { delBtn.style.display = 'none'; e.target.blur(); return; }
             
             const [type, name] = val.split('|');
-            if (type === 'factory' && factoryPresets[name]) {
-                applyPresetState(factoryPresets[name]);
-                delBtn.style.display = 'none';
-            } else if (type === 'user' && userPresets[name]) {
-                applyPresetState(userPresets[name]);
-                delBtn.style.display = 'inline-block';
-            } else if (type === 'external' && externalPresets[name]) {
-                applyPresetState(externalPresets[name]);
-                delBtn.style.display = 'none';
-            }
+            if (type === 'factory' && factoryPresets[name]) { applyPresetState(factoryPresets[name]); delBtn.style.display = 'none'; } 
+            else if (type === 'user' && userPresets[name]) { applyPresetState(userPresets[name]); delBtn.style.display = 'inline-block'; } 
+            else if (type === 'external' && externalPresets[name]) { applyPresetState(externalPresets[name]); delBtn.style.display = 'none'; }
             e.target.blur(); 
         });
 
         function openSavePresetModal() {
-            if(storageMode === 'none') {
-                alert("For å lagre må du kjøre laben i et miljø som støtter lagring. Bruk 'Del / Importer' for å ta kopi av teksten!");
-                return;
-            }
+            if(storageMode === 'none') { alert("For å lagre må du kjøre laben i et miljø som støtter lagring. Bruk 'Del / Importer' for å ta kopi av teksten!"); return; }
             document.getElementById('presetModalTitle').innerText = storageMode === 'cloud' ? "Lagre Preset i Skyen" : "Lagre Preset Lokalt";
             document.getElementById('presetModalBody').innerHTML = `
                 <p style="margin-top: 0;">Skriv inn et navn på den nye lyden din:</p>
@@ -1176,24 +1356,14 @@
             if (!name || name.trim() === "") return;
             if (storageMode === 'cloud' && (!currentUser || !db)) return;
             
-            const presetName = name.trim();
-            const state = getPresetState();
-            pendingPresetSelection = "user|" + presetName;
+            const presetName = name.trim(); const state = getPresetState(); pendingPresetSelection = "user|" + presetName;
             
             if (storageMode === 'cloud') {
-                try {
-                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName);
-                    await setDoc(presetRef, state);
-                } catch(e) {}
+                try { const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', presetName); await setDoc(presetRef, state); } catch(e) {}
             } else if (storageMode === 'local') {
                 userPresets[presetName] = state;
-                try {
-                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
-                    updatePresetDropdown(pendingPresetSelection);
-                    pendingPresetSelection = null;
-                } catch (e) {
-                    alert("Klarte ikke å lagre i nettleseren.");
-                }
+                try { localStorage.setItem('lydlab_presets', JSON.stringify(userPresets)); updatePresetDropdown(pendingPresetSelection); pendingPresetSelection = null; } 
+                catch (e) { alert("Klarte ikke å lagre i nettleseren."); }
             }
             closePresetModal();
         }
@@ -1201,23 +1371,15 @@
         async function confirmDeletePreset(name) {
             if (storageMode === 'cloud') {
                 if (!currentUser || !db) return;
-                try {
-                    const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name);
-                    await deleteDoc(presetRef);
-                } catch(e) {}
+                try { const presetRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'presets', name); await deleteDoc(presetRef); } catch(e) {}
             } else if (storageMode === 'local') {
                 delete userPresets[name];
-                try {
-                    localStorage.setItem('lydlab_presets', JSON.stringify(userPresets));
-                    updatePresetDropdown();
-                } catch(e) {}
+                try { localStorage.setItem('lydlab_presets', JSON.stringify(userPresets)); updatePresetDropdown(); } catch(e) {}
             }
             closePresetModal();
         }
 
-        if(document.getElementById('savePresetBtn')) {
-            document.getElementById('savePresetBtn').addEventListener('click', openSavePresetModal);
-        }
+        if(document.getElementById('savePresetBtn')) document.getElementById('savePresetBtn').addEventListener('click', openSavePresetModal);
         
         if(document.getElementById('deletePresetBtn')) {
             document.getElementById('deletePresetBtn').addEventListener('click', () => {
@@ -1238,39 +1400,25 @@
 
         function copyPresetToClipboard() {
             const textarea = document.getElementById('shareTextarea');
-            textarea.select();
-            document.execCommand('copy');
+            textarea.select(); document.execCommand('copy');
             const msg = document.getElementById('shareStatusMsg');
-            msg.textContent = "✅ Koden er kopiert til utklippstavlen!";
-            msg.style.color = "#2ecc71";
-            msg.style.display = "block";
+            msg.textContent = "✅ Koden er kopiert til utklippstavlen!"; msg.style.color = "#2ecc71"; msg.style.display = "block";
         }
 
         function applyPastedPreset() {
             const text = document.getElementById('shareTextarea').value;
             const msg = document.getElementById('shareStatusMsg');
             try {
-                const state = JSON.parse(text);
-                const keys = Object.keys(state);
-                let actualState = state;
-                if (keys.length === 1 && state[keys[0]].wave && state[keys[0]].sliderValues) {
-                    actualState = state[keys[0]];
-                }
+                const state = JSON.parse(text); const keys = Object.keys(state); let actualState = state;
+                if (keys.length === 1 && state[keys[0]].wave && state[keys[0]].sliderValues) actualState = state[keys[0]];
                 if (actualState && actualState.wave && actualState.sliderValues) {
                     applyPresetState(actualState);
-                    document.getElementById('presetSelect').value = "";
-                    document.getElementById('deletePresetBtn').style.display = 'none';
-                    msg.textContent = "✅ Lyden ble lastet inn!";
-                    msg.style.color = "#3498db";
-                    msg.style.display = "block";
+                    document.getElementById('presetSelect').value = ""; document.getElementById('deletePresetBtn').style.display = 'none';
+                    msg.textContent = "✅ Lyden ble lastet inn!"; msg.style.color = "#3498db"; msg.style.display = "block";
                     setTimeout(() => { closeShareModal(); }, 1500);
-                } else {
-                    throw new Error("Feil format");
-                }
+                } else { throw new Error("Feil format"); }
             } catch (err) {
-                msg.textContent = "❌ Klarte ikke å lese koden.";
-                msg.style.color = "#e74c3c";
-                msg.style.display = "block";
+                msg.textContent = "❌ Klarte ikke å lese koden."; msg.style.color = "#e74c3c"; msg.style.display = "block";
             }
         }
 
@@ -1281,97 +1429,186 @@
         if(document.getElementById('btnImportFromUrl')) {
             document.getElementById('btnImportFromUrl').addEventListener('click', async () => {
                 const urlInput = document.getElementById('importUrlInput').value.trim();
-                const msg = document.getElementById('shareStatusMsg');
-                const btn = document.getElementById('btnImportFromUrl');
+                const msg = document.getElementById('shareStatusMsg'); const btn = document.getElementById('btnImportFromUrl');
                 if(!urlInput) return;
                 
-                msg.style.display = 'none';
-                btn.textContent = "Henter...";
-                
+                msg.style.display = 'none'; btn.textContent = "Henter...";
                 try {
-                    await fetchExternalUrl(urlInput);
-                    updatePresetDropdown();
-                    msg.textContent = "✅ Lyder lastet inn fra lenken!";
-                    msg.style.color = "#3498db";
-                    msg.style.display = "block";
+                    await fetchExternalUrl(urlInput); updatePresetDropdown();
+                    msg.textContent = "✅ Lyder lastet inn fra lenken!"; msg.style.color = "#3498db"; msg.style.display = "block";
                     document.getElementById('importUrlInput').value = "";
-                    
                     const firstPresetName = Object.keys(externalPresets)[0];
                     if (firstPresetName) {
-                        const val = "external|" + firstPresetName;
-                        document.getElementById('presetSelect').value = val;
+                        document.getElementById('presetSelect').value = "external|" + firstPresetName;
                         document.getElementById('presetSelect').dispatchEvent(new Event('change'));
                     }
                     setTimeout(() => { closeShareModal(); }, 2500);
                 } catch(e) {
-                    msg.textContent = "❌ Klarte ikke å hente filen.";
-                    msg.style.color = "#e74c3c";
-                    msg.style.display = "block";
-                } finally {
-                    btn.textContent = "Hent lyder";
-                }
+                    msg.textContent = "❌ Klarte ikke å hente filen."; msg.style.color = "#e74c3c"; msg.style.display = "block";
+                } finally { btn.textContent = "Hent lyder"; }
             });
         }
 
-        // --- SYNTH KODE ---
-        const MAX_HARMONICS = 30; const MANUAL_HARMONICS_COUNT = 16;
-        let currentWave = 'sawtooth'; let numHarmonics = 30;
-        let fundamentalFreq = 261.63; 
-        
-        let lpFilterCutoff = 20000;
-        let hpFilterCutoff = 40;
-
-        let oscAmount = 1.0;
-        let noiseAmount = 0;
-        let masterVolume = 0.6; // Ny variabel for master volum
-        
-        let pcOctaveShift = 0;
-        let displayMode = 'pc';
-        let isPolyphonic = true;
-        let isSustainPedalDown = false; // SUSTAIN PEDAL STATUS
-
-        let adsr = { a: 0.1, d: 0.3, s: 0.5, r: 0.8 };
-        let lfo = { rate: 5.0, vibrato: 0, tremolo: 0, filterMod: 0 };
-        
-        let delayConfig = { time: 0.4, feedback: 0.4, mix: 0.0 };
-        let reverbConfig = { time: 3.0, mix: 0.0 }; 
-
-        let manualHarmonics = new Array(MANUAL_HARMONICS_COUNT + 1).fill(0); manualHarmonics[1] = 1.0;
-
-        let audioCtx = null, lpFilterNode = null, hpFilterNode = null, masterOutput = null, tremoloGain = null;
-        let lfoOsc = null, lfoPitchGain = null, lfoAmpGain = null, lfoFilterGain = null;
-        let noiseBuffer = null; 
-        let delayNode = null, delayFeedbackGain = null, delayMixGain = null;
-        let convolverNode = null, reverbMixGain = null; 
-
-        let isPlaying = false, isSounding = false, animationFrameId = null;
-        let activeNotes = [];
-        let activeVoices = {};
-
-        const explanations = {
-            sawtooth: "<strong>Sagtann (Sawtooth):</strong> Inneholder <em>alle</em> overtoner i en jevn, synkende rekke. Dette gir en rik, skarp og fyldig klang som ofte brukes for å etterligne strykere, blåsere eller fete synth-leads.",
-            square: "<strong>Firkant (Square):</strong> Inneholder kun <em>oddetalls-overtoner</em> (1, 3, 5, 7...). Dette gir en hul, litt 'treaktig' klang som kan minne om en klarinett, eller musikken fra gamle 8-bit TV-spill (som Nintendo).",
-            triangle: "<strong>Triangel (Triangle):</strong> Har også bare oddetalls-overtoner, men de avtar <em>mye raskere</em> i styrke enn i firkantbølgen. Resultatet er en veldig myk, rund og fløyte-aktig lyd.",
-            sine: "<strong>Sinus (Sine):</strong> Lyden i sin reneste form! Den består kun av selve grunntonen, og har <em>ingen overtoner</em> i det hele tatt. Høres ut som en stemmegaffel eller når du blåser over en tomflaske.",
-            manual: "<strong>Orgel (Additiv Syntese):</strong> Bygg lyden fra bunnen av! Bruk spakene (trekkrieglene) under for å manuelt blande inn akkurat de overtonene du vil ha, akkurat som på et ekte Hammond-orgel."
-        };
-
-        const drawbarsContainer = document.getElementById('drawbarsContainer');
-        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
-            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
-            const slider = document.createElement('input'); 
-            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
-            slider.addEventListener('input', (e) => {
-                manualHarmonics[i] = parseFloat(e.target.value);
-                if (!isSounding) drawVisualsStatic();
-                if (isPlaying) updateAudioWaveform();
-            });
-            const label = document.createElement('div'); label.className = 'drawbar-label';
-            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
-            wrapper.appendChild(slider); wrapper.appendChild(label);
-            drawbarsContainer.appendChild(wrapper);
+        // ==========================================
+        // 5. AUDIO ENGINE (Generering av Lyd)
+        // ==========================================
+        function createReverbBuffer(ctx, duration) {
+            const sampleRate = ctx.sampleRate;
+            const length = sampleRate * duration;
+            const impulse = ctx.createBuffer(2, length, sampleRate);
+            const left = impulse.getChannelData(0);
+            const right = impulse.getChannelData(1);
+            let lastL = 0, lastR = 0;
+            
+            for (let i = 0; i < length; i++) {
+                const decay = Math.pow(1 - i / length, 2.5); 
+                const noiseL = (Math.random() * 2 - 1);
+                const noiseR = (Math.random() * 2 - 1);
+                lastL = noiseL * 0.2 + lastL * 0.8;
+                lastR = noiseR * 0.2 + lastR * 0.8;
+                
+                left[i] = lastL * decay;
+                right[i] = lastR * decay;
+            }
+            return impulse;
         }
 
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                globalVolumeNode = audioCtx.createGain();
+                globalVolumeNode.gain.value = globalVolumeAmount;
+                globalVolumeNode.connect(audioCtx.destination);
+                
+                masterOutput = audioCtx.createGain(); 
+                masterOutput.gain.value = 1.0; 
+                
+                let compressor = audioCtx.createDynamicsCompressor();
+                compressor.threshold.value = -12; 
+                compressor.knee.value = 30;
+                compressor.ratio.value = 12;
+                compressor.attack.value = 0.005;
+                compressor.release.value = 0.1;
+                compressor.connect(globalVolumeNode);
+                
+                masterOutput.connect(compressor);
+                
+                delayNode = audioCtx.createDelay(3.0); delayNode.delayTime.value = delayConfig.time;
+                delayFeedbackGain = audioCtx.createGain(); delayFeedbackGain.gain.value = delayConfig.feedback;
+                delayMixGain = audioCtx.createGain(); delayMixGain.gain.value = delayConfig.mix;
+                convolverNode = audioCtx.createConvolver(); convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time);
+                reverbMixGain = audioCtx.createGain(); reverbMixGain.gain.value = reverbConfig.mix;
+                
+                delayNode.connect(delayFeedbackGain); delayFeedbackGain.connect(delayNode);
+                delayNode.connect(delayMixGain); delayMixGain.connect(masterOutput);
+                convolverNode.connect(reverbMixGain); reverbMixGain.connect(masterOutput);
+                delayMixGain.connect(convolverNode);
+                
+                tremoloGain = audioCtx.createGain(); tremoloGain.gain.value = 1.0; 
+                tremoloGain.connect(masterOutput); tremoloGain.connect(delayNode); tremoloGain.connect(convolverNode);  
+                
+                lpFilterNode = audioCtx.createBiquadFilter(); lpFilterNode.type = 'lowpass'; lpFilterNode.frequency.value = lpFilterCutoff; lpFilterNode.Q.value = 1; 
+                hpFilterNode = audioCtx.createBiquadFilter(); hpFilterNode.type = 'highpass'; hpFilterNode.frequency.value = hpFilterCutoff; hpFilterNode.Q.value = 1;
+
+                hpFilterNode.connect(lpFilterNode); lpFilterNode.connect(tremoloGain); 
+
+                lfoOsc = audioCtx.createOscillator(); lfoOsc.frequency.value = lfo.rate;
+                lfoPitchGain = audioCtx.createGain(); lfoPitchGain.gain.value = lfo.vibrato; lfoOsc.connect(lfoPitchGain);
+                lfoAmpGain = audioCtx.createGain(); lfoAmpGain.gain.value = lfo.tremolo / 2; lfoOsc.connect(lfoAmpGain); lfoAmpGain.connect(tremoloGain.gain);
+                
+                lfoFilterGain = audioCtx.createGain(); lfoFilterGain.gain.value = lfo.filterMod; lfoOsc.connect(lfoFilterGain);
+                lfoFilterGain.connect(lpFilterNode.detune); lfoFilterGain.connect(hpFilterNode.detune);
+                
+                lfoOsc.start();
+
+                const bSize = audioCtx.sampleRate * 2; noiseBuffer = audioCtx.createBuffer(1, bSize, audioCtx.sampleRate);
+                const out = noiseBuffer.getChannelData(0); for (let i = 0; i < bSize; i++) out[i] = Math.random() * 2 - 1;
+            }
+        }
+
+        function updateLFO() {
+            if (!audioCtx) return;
+            if(lfoOsc) lfoOsc.frequency.setTargetAtTime(lfo.rate, audioCtx.currentTime, 0.01);
+            if(lfoPitchGain) lfoPitchGain.gain.setTargetAtTime(lfo.vibrato, audioCtx.currentTime, 0.01);
+            if(tremoloGain) tremoloGain.gain.setTargetAtTime(1.0 - (lfo.tremolo / 2), audioCtx.currentTime, 0.01);
+            if(lfoAmpGain) lfoAmpGain.gain.setTargetAtTime(lfo.tremolo / 2, audioCtx.currentTime, 0.01);
+            if (lfoFilterGain) lfoFilterGain.gain.setTargetAtTime(lfo.filterMod, audioCtx.currentTime, 0.01);
+        }
+
+        function startVoice(freq, voiceId) {
+            initAudio(); 
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if (activeVoices[voiceId]) stopVoice(voiceId, true);
+
+            let osc = audioCtx.createOscillator();
+            const limit = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
+            const r = new Float32Array(limit + 1), i = new Float32Array(limit + 1);
+            for (let n = 1; n <= limit; n++) i[n] = getHarmonicAmplitude(currentWave, n);
+            osc.setPeriodicWave(audioCtx.createPeriodicWave(r, i, { disableNormalization: false }));
+            osc.frequency.value = freq;
+            lfoPitchGain.connect(osc.frequency);
+
+            let oscGain = audioCtx.createGain(); oscGain.gain.value = oscAmount; osc.connect(oscGain);
+
+            let nSource = audioCtx.createBufferSource(); nSource.buffer = noiseBuffer; nSource.loop = true;
+            let nGain = audioCtx.createGain(); nGain.gain.value = noiseAmount * 0.5; nSource.connect(nGain); 
+
+            let vEnvGain = audioCtx.createGain(); vEnvGain.gain.value = 0;
+            oscGain.connect(vEnvGain); nGain.connect(vEnvGain); vEnvGain.connect(hpFilterNode); 
+
+            osc.start(); nSource.start();
+
+            const now = audioCtx.currentTime; 
+            vEnvGain.gain.cancelScheduledValues(now); vEnvGain.gain.setValueAtTime(0, now);
+            vEnvGain.gain.linearRampToValueAtTime(0.5, now + adsr.a); 
+            vEnvGain.gain.exponentialRampToValueAtTime(Math.max(0.5 * adsr.s, 0.0001), now + adsr.a + adsr.d);
+
+            activeVoices[voiceId] = { osc, oscGain, nSource, nGain, vEnvGain, timeout: null };
+            isPlaying = isSounding = true;
+            if (!animationFrameId) drawVisualsDynamic();
+        }
+
+        function stopVoice(voiceId, hardStop = false) {
+            let voice = activeVoices[voiceId];
+            if (!voice || !audioCtx) return;
+            const now = audioCtx.currentTime; 
+            voice.vEnvGain.gain.cancelScheduledValues(now);
+            
+            if (hardStop) {
+                if (voice.timeout) clearTimeout(voice.timeout);
+                voice.vEnvGain.gain.setValueAtTime(0, now);
+                try {
+                    voice.osc.stop(); voice.osc.disconnect();
+                    voice.nSource.stop(); voice.nSource.disconnect();
+                    voice.vEnvGain.disconnect();
+                } catch(e) {}
+                delete activeVoices[voiceId];
+            } else {
+                const currentVal = Math.max(voice.vEnvGain.gain.value, 0.0001);
+                voice.vEnvGain.gain.setValueAtTime(currentVal, now); 
+                voice.vEnvGain.gain.exponentialRampToValueAtTime(0.0001, now + adsr.r);
+                voice.vEnvGain.gain.setValueAtTime(0, now + adsr.r + 0.01);
+                if (voice.timeout) clearTimeout(voice.timeout);
+
+                voice.timeout = setTimeout(() => {
+                    try {
+                        voice.osc.stop(); voice.osc.disconnect();
+                        voice.nSource.stop(); voice.nSource.disconnect();
+                        voice.oscGain.disconnect(); voice.nGain.disconnect(); voice.vEnvGain.disconnect();
+                    } catch(e) {}
+                    delete activeVoices[voiceId];
+                    if (Object.keys(activeVoices).length === 0) {
+                        isSounding = false; drawVisualsStatic(); isPlaying = false;
+                    }
+                }, adsr.r * 1000 + 50);
+            }
+        }
+
+        // ==========================================
+        // 6. PIANO OG TANGENTBORD LOGIKK
+        // ==========================================
         const pianoLayout = [
             { white: { note: 'C3', key: null, freq: 130.81 }, black: { note: 'C#3', key: null, freq: 138.59 } },
             { white: { note: 'D3', key: null, freq: 146.83 }, black: { note: 'D#3', key: null, freq: 155.56 } },
@@ -1416,10 +1653,10 @@
 
             if (group.white.key) keyMap[group.white.key] = { note: group.white.note, freq: group.white.freq };
 
-            whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note, 100); });
+            whiteEl.addEventListener('mousedown', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
             whiteEl.addEventListener('mouseup', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
             whiteEl.addEventListener('mouseleave', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
-            whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note, 100); });
+            whiteEl.addEventListener('touchstart', (e) => { e.preventDefault(); triggerNotePress(group.white.freq, group.white.note); });
             whiteEl.addEventListener('touchend', (e) => { e.preventDefault(); triggerNoteRelease(group.white.note); });
 
             groupEl.appendChild(whiteEl);
@@ -1432,10 +1669,10 @@
 
                 if (group.black.key) keyMap[group.black.key] = { note: group.black.note, freq: group.black.freq };
 
-                blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note, 100); });
+                blackEl.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
                 blackEl.addEventListener('mouseup', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
                 blackEl.addEventListener('mouseleave', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
-                blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note, 100); });
+                blackEl.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); triggerNotePress(group.black.freq, group.black.note); });
                 blackEl.addEventListener('touchend', (e) => { e.preventDefault(); e.stopPropagation(); triggerNoteRelease(group.black.note); });
 
                 groupEl.appendChild(blackEl);
@@ -1475,6 +1712,52 @@
             if (centerCEl) { pianoContainer.scrollTo({ left: centerCEl.parentElement.offsetLeft - 30, behavior: 'smooth' }); }
         }
 
+        function triggerNotePress(freq, noteId) {
+            activeNotes = activeNotes.filter(n => n.id !== noteId);
+            activeNotes.push({ id: noteId, freq: freq });
+            fundamentalFreq = freq;
+            document.getElementById('toolbarFreqVal').textContent = freq.toFixed(1) + " Hz";
+
+            let keyEl = document.querySelector(`[data-note="${noteId}"]`);
+            if (keyEl) keyEl.classList.add('active');
+
+            if (isPolyphonic) {
+                if(activeVoices[noteId]) stopVoice(noteId, true); 
+                startVoice(freq, noteId); 
+            } else {
+                if (activeNotes.length === 1) {
+                    startVoice(freq, 'mono');
+                } else {
+                    let monoVoice = activeVoices['mono'];
+                    if (monoVoice && monoVoice.osc) {
+                        monoVoice.osc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.02);
+                    }
+                }
+            }
+        }
+
+        function triggerNoteRelease(noteId) {
+            activeNotes = activeNotes.filter(n => n.id !== noteId);
+            let keyEl = document.querySelector(`[data-note="${noteId}"]`);
+            if (keyEl) keyEl.classList.remove('active');
+
+            if (isPolyphonic) {
+                stopVoice(noteId);
+            } else {
+                if (activeNotes.length > 0) {
+                    let lastNote = activeNotes[activeNotes.length - 1];
+                    fundamentalFreq = lastNote.freq;
+                    document.getElementById('toolbarFreqVal').textContent = fundamentalFreq.toFixed(1) + " Hz";
+                    let monoVoice = activeVoices['mono'];
+                    if (monoVoice && monoVoice.osc) {
+                        monoVoice.osc.frequency.setTargetAtTime(fundamentalFreq, audioCtx.currentTime, 0.02);
+                    }
+                } else {
+                    stopVoice('mono');
+                }
+            }
+        }
+
         renderPianoLabels();
 
         const polyToggleBtn = document.getElementById('polyToggleBtn');
@@ -1503,6 +1786,8 @@
             pcOctaveShift = Math.min(1, pcOctaveShift + 1); document.getElementById('octaveDisplay').textContent = pcOctaveShift > 0 ? "+" + pcOctaveShift : pcOctaveShift; renderPianoLabels();
         });
 
+        let presetScrollThrottle = false;
+        
         let hasUnlockedAudio = false;
         function unlockAudioContext() {
             if (hasUnlockedAudio) return;
@@ -1524,40 +1809,52 @@
         window.addEventListener('touchstart', unlockAudioContext);
 
         window.addEventListener('keydown', (e) => {
-            if (e.repeat) return;
             const targetTag = e.target.tagName.toLowerCase();
             if (targetTag === 'input' && e.target.type === 'text') return;
             if (targetTag === 'textarea') return;
             
-            if (e.key === 'ArrowLeft') { document.getElementById('octDownBtn').click(); return; }
-            if (e.key === 'ArrowRight') { document.getElementById('octUpBtn').click(); return; }
-            
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault(); 
+                if (e.repeat && presetScrollThrottle) return;
+                
+                presetScrollThrottle = true;
+                setTimeout(() => presetScrollThrottle = false, 150);
+
                 const select = document.getElementById('presetSelect');
-                if (select.options.length <= 0) return; 
-                
-                let idx = select.selectedIndex;
-                if (e.key === 'ArrowUp') {
-                    if (idx > 0) idx--;
-                } else if (e.key === 'ArrowDown') {
-                    if (idx < select.options.length - 1) idx++;
-                    else if (idx === -1) idx = 0; 
-                }
-                
-                if (idx !== select.selectedIndex) {
-                    select.selectedIndex = idx;
-                    select.dispatchEvent(new Event('change'));
+                if (select && select.options.length > 0) {
+                    let newIndex = select.selectedIndex;
+                    if (e.key === 'ArrowDown') {
+                        newIndex = Math.min(newIndex + 1, select.options.length - 1);
+                    } else {
+                        newIndex = Math.max(newIndex - 1, 0);
+                    }
+                    if (newIndex !== select.selectedIndex) {
+                        select.selectedIndex = newIndex;
+                        select.dispatchEvent(new Event('change'));
+                    }
                 }
                 return;
             }
+
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault(); 
+                if (!e.repeat) document.getElementById('octDownBtn').click();
+                return;
+            }
+            if (e.key === 'ArrowRight') {
+                e.preventDefault(); 
+                if (!e.repeat) document.getElementById('octUpBtn').click();
+                return;
+            }
+            
+            if (e.repeat) return;
             
             const key = e.key.toLowerCase();
             if (keyMap[key]) {
                 let targetNote = getShiftedNoteName(keyMap[key].note, pcOctaveShift);
                 let targetFreq = keyMap[key].freq * Math.pow(2, pcOctaveShift);
                 activePcKeys[key] = { note: targetNote, freq: targetFreq };
-                triggerNotePress(targetFreq, targetNote, 100);
+                triggerNotePress(targetFreq, targetNote);
             }
         });
 
@@ -1610,17 +1907,14 @@
         function onMIDIMessage(event) {
             const [command, data1, data2] = event.data;
             const statusNibble = command & 0xf0;
-
             const velocity = data2;
             const isNoteOn = statusNibble === 144 && velocity > 0;
             const isNoteOff = statusNibble === 128 || (statusNibble === 144 && velocity === 0);
-            const isControlChange = statusNibble === 176;
 
             if (isNoteOn) {
                 if (!hasUnlockedAudio || !audioCtx || audioCtx.state === 'suspended') {
                     showErrorBanner("🔇 Lydmotoren sover (sikkerhetsfunksjon i nettleseren). Klikk hvor som helst på siden med musen for å vekke den!");
                 }
-
                 const freq = 440 * Math.pow(2, (data1 - 69) / 12);
                 const noteId = 'M' + data1;
                 activeMidiNotes[data1] = noteId;
@@ -1629,8 +1923,7 @@
                     const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
                     visualNoteStr = noteNames[data1 % 12] + (Math.floor(data1 / 12) - 1);
                 }
-                
-                triggerNotePress(freq, visualNoteStr || noteId, velocity);
+                triggerNotePress(freq, visualNoteStr || noteId);
                 
             } else if (isNoteOff) {
                 const noteId = activeMidiNotes[data1];
@@ -1643,455 +1936,59 @@
                     triggerNoteRelease(visualNoteStr || noteId);
                     delete activeMidiNotes[data1];
                 }
-            } else if (isControlChange && data1 === 64) {
-                isSustainPedalDown = (data2 >= 64);
-                if (!isSustainPedalDown) {
-                    for (let vid in activeVoices) {
-                        if (!activeVoices[vid].isKeyHeld) stopVoice(vid);
-                    }
-                    if (!isPolyphonic && activeVoices['mono'] && !activeVoices['mono'].isKeyHeld) {
-                        if (activeNotes.length === 0) stopVoice('mono');
-                    }
-                }
-            }
+            } 
         }
 
-        function triggerNotePress(freq, noteId, velocity = 100) {
-            activeNotes = activeNotes.filter(n => n.id !== noteId);
-            activeNotes.push({ id: noteId, freq: freq, velocity: velocity });
-            fundamentalFreq = freq;
-            document.getElementById('toolbarFreqVal').textContent = freq.toFixed(1) + " Hz";
-
-            let keyEl = document.querySelector(`[data-note="${noteId}"]`);
-            if (keyEl) keyEl.classList.add('active');
-
-            if (isPolyphonic) {
-                if(activeVoices[noteId]) stopVoice(noteId, true); 
-                startVoice(freq, noteId, velocity); 
-                if (activeVoices[noteId]) activeVoices[noteId].isKeyHeld = true;
-            } else {
-                if (activeNotes.length === 1) {
-                    startVoice(freq, 'mono', velocity);
-                    if (activeVoices['mono']) activeVoices['mono'].isKeyHeld = true;
-                } else {
-                    let monoVoice = activeVoices['mono'];
-                    if (monoVoice && monoVoice.osc) {
-                        monoVoice.osc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.02);
-                        monoVoice.isKeyHeld = true;
-                    }
-                }
-            }
-        }
-
-        function triggerNoteRelease(noteId) {
-            activeNotes = activeNotes.filter(n => n.id !== noteId);
-            let keyEl = document.querySelector(`[data-note="${noteId}"]`);
-            if (keyEl) keyEl.classList.remove('active');
-
-            if (isPolyphonic) {
-                if (activeVoices[noteId]) activeVoices[noteId].isKeyHeld = false;
-                if (!isSustainPedalDown) {
-                    stopVoice(noteId);
-                }
-            } else {
-                if (activeVoices['mono']) activeVoices['mono'].isKeyHeld = false;
-                if (activeNotes.length > 0) {
-                    let lastNote = activeNotes[activeNotes.length - 1];
-                    fundamentalFreq = lastNote.freq;
-                    document.getElementById('toolbarFreqVal').textContent = fundamentalFreq.toFixed(1) + " Hz";
-                    let monoVoice = activeVoices['mono'];
-                    if (monoVoice && monoVoice.osc) {
-                        monoVoice.osc.frequency.setTargetAtTime(fundamentalFreq, audioCtx.currentTime, 0.02);
-                        monoVoice.isKeyHeld = true; 
-                    }
-                } else {
-                    if (!isSustainPedalDown) {
-                        stopVoice('mono');
-                    }
-                }
-            }
-        }
-
-        function getHarmonicAmplitude(type, n) {
-            if (type === 'manual') return n <= MANUAL_HARMONICS_COUNT ? manualHarmonics[n] : 0;
-            if (type === 'sine') return n === 1 ? 1 : 0;
-            if (type === 'sawtooth') return 1 / n;
-            if (type === 'square') return n % 2 !== 0 ? 1 / n : 0;
-            if (type === 'triangle') {
-                if (n % 2 === 0) return 0;
-                return (((n - 1) / 2) % 2 === 0 ? 1 : -1) * (1 / (n * n));
-            }
-            return 0;
-        }
-
-        function getVisualFilterMultiplier(freq, lpCut = lpFilterCutoff, hpCut = hpFilterCutoff) { 
-            const lpMult = freq >= 20000 ? 1 : 1 / Math.sqrt(1 + Math.pow(freq / lpCut, 8));
-            const hpMult = freq <= 40 ? 1 : 1 / Math.sqrt(1 + Math.pow(hpCut / freq, 8));
-            return lpMult * hpMult; 
-        }
-
-        const waveCtx = document.getElementById('waveCanvas').getContext('2d');
-        const spectrumCtx = document.getElementById('spectrumCanvas').getContext('2d');
-        const adsrCtx = document.getElementById('adsrCanvas').getContext('2d');
-
-        function resizeCanvas(canvas, ctx) {
-            const rect = canvas.parentElement.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1;
-            canvas.width = rect.width * dpr; canvas.height = rect.height * dpr; ctx.scale(dpr, dpr);
-            return { width: rect.width, height: rect.height };
-        }
-
-        function drawADSR() {
-            const dim = resizeCanvas(document.getElementById('adsrCanvas'), adsrCtx);
-            adsrCtx.clearRect(0, 0, dim.width, dim.height);
-            const pxPerSec = dim.width / 13;
-            const xA = adsr.a * pxPerSec, xD = xA + (adsr.d * pxPerSec), xS = xD + (2 * pxPerSec), xR = xS + (adsr.r * pxPerSec);
-            const yB = dim.height - 5, yT = 5, yS = yB - (adsr.s * (yB - yT));
-
-            adsrCtx.strokeStyle = '#333'; adsrCtx.lineWidth = 1; adsrCtx.beginPath();
-            adsrCtx.moveTo(0, yT); adsrCtx.lineTo(dim.width, yT); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(dim.width, yB); adsrCtx.stroke();
-
-            function traceEnvelopePath() {
-                adsrCtx.beginPath(); adsrCtx.moveTo(0, yB); adsrCtx.lineTo(xA, yT);
-                if (xD > xA) {
-                    const v0 = 0.5, v1 = Math.max(0.5 * adsr.s, 0.0001);
-                    for (let x = xA; x <= xD; x++) {
-                        let t = (x - xA) / (xD - xA), v_t = v0 * Math.pow(v1/v0, t), y = yB - (v_t / 0.5) * (yB - yT);
-                        adsrCtx.lineTo(x, y);
-                    }
-                }
-                adsrCtx.lineTo(xS, yS);
-                if (xR > xS) {
-                    const v0 = Math.max(0.5 * adsr.s, 0.0001), v1 = 0.0001;
-                    for (let x = xS; x <= xR; x++) {
-                        let t = (x - xS) / (xR - xS), v_t = v0 * Math.pow(v1/v0, t), y = yB - (v_t / 0.5) * (yB - yT);
-                        adsrCtx.lineTo(x, y);
-                    }
-                }
-            }
-
-            traceEnvelopePath(); adsrCtx.lineTo(xR, yB); adsrCtx.lineTo(0, yB);
-            adsrCtx.fillStyle = 'rgba(155, 89, 182, 0.3)'; adsrCtx.fill();
-
-            traceEnvelopePath();
-            adsrCtx.strokeStyle = '#9b59b6'; adsrCtx.lineWidth = 2.5; adsrCtx.lineJoin = 'round'; adsrCtx.stroke();
-        }
-
-        function drawVisualsDynamic() {
-            if (!isSounding && animationFrameId) {
-                cancelAnimationFrame(animationFrameId); animationFrameId = null;
-                drawVisualsStatic(); return;
-            }
-
-            const waveDims = resizeCanvas(document.getElementById('waveCanvas'), waveCtx);
-            const specDims = resizeCanvas(document.getElementById('spectrumCanvas'), spectrumCtx);
-            const limitActive = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
-
-            let curAmp = 1.0, curCyc = 2.0, effLp = lpFilterCutoff, effHp = hpFilterCutoff;
-
-            if (audioCtx) {
-                const lfoVal = Math.sin(audioCtx.currentTime * Math.min(lfo.rate, 20) * Math.PI * 2);
-                curAmp = 1.0 - (lfo.tremolo / 2) + (lfoVal * lfo.tremolo / 2);
-                curCyc = 2 * (Math.max(10, fundamentalFreq + (lfoVal * lfo.vibrato)) / fundamentalFreq);
-                const detuneCents = lfoVal * lfo.filterMod; const freqMult = Math.pow(2, detuneCents / 1200); 
-                effLp = Math.min(22000, Math.max(20, lpFilterCutoff * freqMult));
-                effHp = Math.min(22000, Math.max(20, hpFilterCutoff * freqMult));
-            }
-
-            waveCtx.clearRect(0, 0, waveDims.width, waveDims.height);
-            waveCtx.beginPath(); waveCtx.moveTo(0, waveDims.height / 2); waveCtx.lineTo(waveDims.width, waveDims.height / 2);
-            waveCtx.strokeStyle = '#333'; waveCtx.lineWidth = 1; waveCtx.stroke();
-
-            waveCtx.beginPath(); waveCtx.strokeStyle = currentWave === 'manual' ? '#2ecc71' : '#ff7b00';
-            waveCtx.lineWidth = 2.5; waveCtx.lineJoin = 'round';
-
-            const noiseMult = getVisualFilterMultiplier(Math.min(effLp, Math.max(effHp, 2000)), effLp, effHp);
-
-            let peakY = 0.01;
-            for (let i = 0; i <= 50; i++) {
-                let testPhase = (i / 50) * Math.PI * 2; let val = 0;
-                for (let n = 1; n <= limitActive; n++) {
-                    let a = getHarmonicAmplitude(currentWave, n);
-                    if (a !== 0) val += a * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp) * Math.sin(n * testPhase);
-                }
-                if (Math.abs(val) > peakY) peakY = Math.abs(val);
-            }
-
-            let maxExpectedY = Math.max(0.01, (peakY * oscAmount) + (noiseAmount * noiseMult * 1.5));
-            let dynamicVisualScale = 0.425 / maxExpectedY;
-
-            for (let x = 0; x < waveDims.width; x++) {
-                let phase = (x / waveDims.width) * Math.PI * 2 * curCyc; let yAmp = 0;
-                for (let n = 1; n <= limitActive; n++) {
-                    let a = getHarmonicAmplitude(currentWave, n);
-                    if (a !== 0) yAmp += a * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp) * Math.sin(n * phase);
-                }
-                let jitter = (Math.random() - 0.5) * noiseAmount * noiseMult * 1.5;
-                let y = (waveDims.height / 2) - (((yAmp * oscAmount) + jitter) * waveDims.height * dynamicVisualScale * curAmp);
-                y = Math.max(2, Math.min(waveDims.height - 2, y));
-                x === 0 ? waveCtx.moveTo(x, y) : waveCtx.lineTo(x, y);
-            }
-            waveCtx.stroke();
-
-            spectrumCtx.clearRect(0, 0, specDims.width, specDims.height);
-            const limitMax = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : MAX_HARMONICS;
-            const bw = (specDims.width / limitMax) - 2; const maxH = (specDims.height - 15) * curAmp;
-
-            if (noiseAmount > 0) {
-                for (let i = 0; i < specDims.width; i += 2) {
-                    let testFreqForNoise = (i / specDims.width) * (fundamentalFreq * limitMax);
-                    let nH = Math.random() * noiseAmount * maxH * 0.4 * getVisualFilterMultiplier(testFreqForNoise, effLp, effHp);
-                    spectrumCtx.fillStyle = 'rgba(149, 165, 166, 0.4)'; spectrumCtx.fillRect(i, specDims.height - nH, 2, nH);
-                }
-            }
-
-            for (let n = 1; n <= limitMax; n++) {
-                let bA = Math.abs(getHarmonicAmplitude(currentWave, n)), visualBA = bA * oscAmount, fA = visualBA * getVisualFilterMultiplier(fundamentalFreq * n, effLp, effHp);
-                let x = (n - 1) * (specDims.width / limitMax) + 1, y = specDims.height - (fA * maxH);
-
-                spectrumCtx.fillStyle = currentWave === 'manual' ? (n === 1 ? '#4fc3f7' : '#2ecc71') : (n <= limitActive ? (n === 1 ? '#4fc3f7' : '#ff7b00') : (visualBA > 0 ? '#444444' : '#222222'));
-                if (fA < visualBA && visualBA > 0 && n <= limitActive) spectrumCtx.globalAlpha = Math.max(0.2, fA / visualBA);
-                if (fA > 0) spectrumCtx.fillRect(x, y, bw, fA * maxH);
-                spectrumCtx.globalAlpha = 1.0;
-
-                if (n <= 16 || n % 5 === 0) { spectrumCtx.fillStyle = '#888'; spectrumCtx.font = '9px sans-serif'; spectrumCtx.textAlign = 'center'; spectrumCtx.fillText(n, x + bw / 2, specDims.height - 2); }
-            }
-
-            if (isSounding) animationFrameId = requestAnimationFrame(drawVisualsDynamic);
-        }
-
-        function drawVisualsStatic() {
-            if (!isSounding && !animationFrameId) {
-                isSounding = true; drawVisualsDynamic(); isSounding = false;
-                cancelAnimationFrame(animationFrameId); animationFrameId = null;
-            }
-        }
-
-        function createReverbBuffer(ctx, duration) {
-            const sampleRate = ctx.sampleRate, length = sampleRate * duration, impulse = ctx.createBuffer(2, length, sampleRate);
-            const left = impulse.getChannelData(0), right = impulse.getChannelData(1);
-            let lastL = 0, lastR = 0;
-            for (let i = 0; i < length; i++) {
-                const decay = Math.pow(1 - i / length, 2.5); 
-                const noiseL = (Math.random() * 2 - 1), noiseR = (Math.random() * 2 - 1);
-                lastL = noiseL * 0.2 + lastL * 0.8; lastR = noiseR * 0.2 + lastR * 0.8;
-                left[i] = lastL * decay; right[i] = lastR * decay;
-            }
-            return impulse;
-        }
-
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Bruker masterVolume-variabelen her, slik at den justeres globalt
-                masterOutput = audioCtx.createGain(); 
-                masterOutput.gain.value = masterVolume; 
-                
-                let limiter = audioCtx.createDynamicsCompressor();
-                limiter.threshold.value = -14; 
-                limiter.knee.value = 8; 
-                limiter.ratio.value = 20; 
-                limiter.attack.value = 0.002; 
-                limiter.release.value = 0.1;
-                
-                masterOutput.connect(limiter);
-                limiter.connect(audioCtx.destination);
-                
-                delayNode = audioCtx.createDelay(3.0); delayNode.delayTime.value = delayConfig.time;
-                delayFeedbackGain = audioCtx.createGain(); delayFeedbackGain.gain.value = delayConfig.feedback;
-                delayMixGain = audioCtx.createGain(); delayMixGain.gain.value = delayConfig.mix;
-                convolverNode = audioCtx.createConvolver(); convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time);
-                reverbMixGain = audioCtx.createGain(); reverbMixGain.gain.value = reverbConfig.mix;
-                
-                delayNode.connect(delayFeedbackGain); delayFeedbackGain.connect(delayNode);
-                delayNode.connect(delayMixGain); delayMixGain.connect(masterOutput);
-                convolverNode.connect(reverbMixGain); reverbMixGain.connect(masterOutput);
-                delayMixGain.connect(convolverNode);
-                
-                tremoloGain = audioCtx.createGain(); tremoloGain.gain.value = 1.0; 
-                tremoloGain.connect(masterOutput); tremoloGain.connect(delayNode); tremoloGain.connect(convolverNode);  
-                
-                lpFilterNode = audioCtx.createBiquadFilter(); lpFilterNode.type = 'lowpass'; lpFilterNode.frequency.value = lpFilterCutoff; lpFilterNode.Q.value = 1; 
-                hpFilterNode = audioCtx.createBiquadFilter(); hpFilterNode.type = 'highpass'; hpFilterNode.frequency.value = hpFilterCutoff; hpFilterNode.Q.value = 1;
-
-                hpFilterNode.connect(lpFilterNode); lpFilterNode.connect(tremoloGain); 
-
-                lfoOsc = audioCtx.createOscillator(); lfoOsc.frequency.value = lfo.rate;
-                lfoPitchGain = audioCtx.createGain(); lfoPitchGain.gain.value = lfo.vibrato; lfoOsc.connect(lfoPitchGain);
-                lfoAmpGain = audioCtx.createGain(); lfoAmpGain.gain.value = lfo.tremolo / 2; lfoOsc.connect(lfoAmpGain); lfoAmpGain.connect(tremoloGain.gain);
-                
-                lfoFilterGain = audioCtx.createGain(); lfoFilterGain.gain.value = lfo.filterMod; lfoOsc.connect(lfoFilterGain);
-                lfoFilterGain.connect(lpFilterNode.detune); lfoFilterGain.connect(hpFilterNode.detune);
-                
-                lfoOsc.start();
-
-                const bSize = audioCtx.sampleRate * 2; noiseBuffer = audioCtx.createBuffer(1, bSize, audioCtx.sampleRate);
-                const out = noiseBuffer.getChannelData(0); for (let i = 0; i < bSize; i++) out[i] = Math.random() * 2 - 1;
-            }
-        }
-
-        function updateAudioWaveform() {
-            if (!audioCtx) return;
-            const limit = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
-            const r = new Float32Array(31), i = new Float32Array(31);
-            for (let n = 1; n <= limit; n++) i[n] = getHarmonicAmplitude(currentWave, n);
-            const wave = audioCtx.createPeriodicWave(r, i, { disableNormalization: false });
-            for (let vid in activeVoices) { if (activeVoices[vid].osc) activeVoices[vid].osc.setPeriodicWave(wave); }
-        }
-
-        function updateLFO() {
-            if (!audioCtx) return;
-            lfoOsc.frequency.setTargetAtTime(lfo.rate, audioCtx.currentTime, 0.01);
-            lfoPitchGain.gain.setTargetAtTime(lfo.vibrato, audioCtx.currentTime, 0.01);
-            tremoloGain.gain.setTargetAtTime(1.0 - (lfo.tremolo / 2), audioCtx.currentTime, 0.01);
-            lfoAmpGain.gain.setTargetAtTime(lfo.tremolo / 2, audioCtx.currentTime, 0.01);
-            if (lfoFilterGain) lfoFilterGain.gain.setTargetAtTime(lfo.filterMod, audioCtx.currentTime, 0.01);
-        }
-
-        function startVoice(freq, voiceId, velocity = 100) {
-            initAudio(); 
-            
-            if (activeVoices[voiceId]) stopVoice(voiceId, true);
-
-            let osc = audioCtx.createOscillator();
-            const limit = currentWave === 'manual' ? MANUAL_HARMONICS_COUNT : numHarmonics;
-            const r = new Float32Array(31), i = new Float32Array(31);
-            for (let n = 1; n <= limit; n++) i[n] = getHarmonicAmplitude(currentWave, n);
-            osc.setPeriodicWave(audioCtx.createPeriodicWave(r, i, { disableNormalization: false }));
-            osc.frequency.value = freq;
-            lfoPitchGain.connect(osc.frequency);
-
-            let oscGain = audioCtx.createGain(); oscGain.gain.value = oscAmount; osc.connect(oscGain);
-
-            let nSource = audioCtx.createBufferSource(); nSource.buffer = noiseBuffer; nSource.loop = true;
-            let nGain = audioCtx.createGain(); nGain.gain.value = noiseAmount * 0.5; nSource.connect(nGain); 
-
-            let vEnvGain = audioCtx.createGain(); vEnvGain.gain.value = 0;
-            oscGain.connect(vEnvGain); nGain.connect(vEnvGain); vEnvGain.connect(hpFilterNode); 
-
-            osc.start(); nSource.start();
-
-            const now = audioCtx.currentTime; 
-            
-            const normalizedVelocity = velocity / 127;
-            const velocityCurve = Math.pow(normalizedVelocity, 1.5); 
-            
-            // Grunnvolumet før master settes til 0.5
-            const envPeak = 0.5 * Math.max(0.015, velocityCurve); 
-
-            vEnvGain.gain.cancelScheduledValues(now); vEnvGain.gain.setValueAtTime(0, now);
-            vEnvGain.gain.linearRampToValueAtTime(envPeak, now + adsr.a); 
-            vEnvGain.gain.exponentialRampToValueAtTime(Math.max(envPeak * adsr.s, 0.0001), now + adsr.a + adsr.d);
-
-            activeVoices[voiceId] = { osc, oscGain, nSource, nGain, vEnvGain, timeout: null, isKeyHeld: true };
-            isPlaying = isSounding = true;
-            if (!animationFrameId) drawVisualsDynamic();
-        }
-
-        function stopVoice(voiceId, hardStop = false) {
-            let voice = activeVoices[voiceId];
-            if (!voice || !audioCtx) return;
-            const now = audioCtx.currentTime; 
-            voice.vEnvGain.gain.cancelScheduledValues(now);
-            
-            if (hardStop) {
-                if (voice.timeout) clearTimeout(voice.timeout);
-                voice.vEnvGain.gain.setValueAtTime(0, now);
-                try {
-                    voice.osc.stop(); voice.osc.disconnect();
-                    voice.nSource.stop(); voice.nSource.disconnect();
-                    voice.vEnvGain.disconnect();
-                } catch(e) {}
-                delete activeVoices[voiceId];
-            } else {
-                const currentVal = Math.max(voice.vEnvGain.gain.value, 0.0001);
-                voice.vEnvGain.gain.setValueAtTime(currentVal, now); 
-                voice.vEnvGain.gain.exponentialRampToValueAtTime(0.0001, now + adsr.r);
-                voice.vEnvGain.gain.setValueAtTime(0, now + adsr.r + 0.01);
-                if (voice.timeout) clearTimeout(voice.timeout);
-
-                voice.timeout = setTimeout(() => {
-                    try {
-                        voice.osc.stop(); voice.osc.disconnect();
-                        voice.nSource.stop(); voice.nSource.disconnect();
-                        voice.oscGain.disconnect(); voice.nGain.disconnect(); voice.vEnvGain.disconnect();
-                    } catch(e) {}
-                    delete activeVoices[voiceId];
-                    if (Object.keys(activeVoices).length === 0) {
-                        isSounding = false; drawVisualsStatic(); isPlaying = false;
-                    }
-                }, adsr.r * 1000 + 50);
-            }
-        }
-
+        // ==========================================
+        // 7. EVENT LISTENERS FOR SLIDERS
+        // ==========================================
         document.querySelectorAll('.wave-btn').forEach(btn => btn.addEventListener('click', (e) => {
             if(e.target.dataset.wave === 'manual' && !document.body.classList.contains('expert-mode')) return;
             document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
             currentWave = e.target.dataset.wave; 
-            const infoTextEl = document.getElementById('infoText'); if(infoTextEl) infoTextEl.innerHTML = explanations[currentWave];
-            
+            const infoTextEl = document.getElementById('infoText'); if (infoTextEl && explanations[currentWave]) infoTextEl.innerHTML = explanations[currentWave];
             const autoH = document.getElementById('autoHarmonicsGroup'); const manH = document.getElementById('manualHarmonicsGroup');
             if(autoH) autoH.style.display = currentWave === 'manual' ? 'none' : 'flex';
             if(manH) manH.style.display = currentWave === 'manual' ? 'flex' : 'none';
-            if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform();
+            if (!isSounding) drawVisualsStatic(); if (isPlaying || isSounding) updateAudioWaveform();
         }));
 
-        document.getElementById('harmonicsSlider').addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); document.getElementById('harmonicsVal').textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying) updateAudioWaveform(); });
+        const drawbarsContainerInit = document.getElementById('drawbarsContainer');
+        for (let i = 1; i <= MANUAL_HARMONICS_COUNT; i++) {
+            const wrapper = document.createElement('div'); wrapper.className = 'drawbar-wrapper';
+            const slider = document.createElement('input'); 
+            slider.type = 'range'; slider.id = 'drawbar_' + i; slider.min = '0'; slider.max = '1'; slider.step = '0.01'; slider.value = i === 1 ? '1' : '0';
+            slider.addEventListener('input', (e) => {
+                manualHarmonics[i] = parseFloat(e.target.value);
+                if (!isSounding) drawVisualsStatic();
+                if (isPlaying) updateAudioWaveform();
+            });
+            const label = document.createElement('div'); label.className = 'drawbar-label';
+            label.innerHTML = i === 1 ? '<span style="color:var(--sine-color)">1x</span>' : i + 'x';
+            wrapper.appendChild(slider); wrapper.appendChild(label);
+            drawbarsContainerInit.appendChild(wrapper);
+        }
 
-        document.getElementById('oscMix').addEventListener('input', (e) => {
-            oscAmount = parseFloat(e.target.value) / 100; document.getElementById('oscVolVal').textContent = e.target.value + " %";
-            if (audioCtx) { for (let vid in activeVoices) { activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05); } }
-            if (!isSounding) drawVisualsStatic();
-        });
-        
-        document.getElementById('noiseMix').addEventListener('input', (e) => {
-            noiseAmount = parseFloat(e.target.value) / 100; document.getElementById('noiseVal').textContent = e.target.value + " %";
-            if (audioCtx) { for (let vid in activeVoices) { activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05); } }
-            if (!isSounding) drawVisualsStatic();
-        });
-        
-        // Ny event listener for Master Volum
-        document.getElementById('masterVol').addEventListener('input', (e) => {
-            masterVolume = parseFloat(e.target.value) / 100;
-            document.getElementById('masterVolVal').textContent = e.target.value + " %";
-            if (audioCtx && masterOutput) {
-                masterOutput.gain.setTargetAtTime(masterVolume, audioCtx.currentTime, 0.05);
-            }
-        });
-
-        document.getElementById('cutoff').addEventListener('input', (e) => { 
-            lpFilterCutoff = parseFloat(e.target.value); 
-            document.getElementById('cutoffVal').textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; 
-            if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); 
-            if (!isSounding) drawVisualsStatic(); 
-        });
-
-        document.getElementById('hpCutoff').addEventListener('input', (e) => { 
-            hpFilterCutoff = parseFloat(e.target.value); 
-            document.getElementById('hpCutoffVal').textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; 
-            if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); 
-            if (!isSounding) drawVisualsStatic(); 
-        });
-
+        document.getElementById('harmonicsSlider').addEventListener('input', (e) => { numHarmonics = parseInt(e.target.value); document.getElementById('harmonicsVal').textContent = numHarmonics; if (!isSounding) drawVisualsStatic(); if (isPlaying || isSounding) updateAudioWaveform(); });
+        document.getElementById('oscMix').addEventListener('input', (e) => { oscAmount = parseFloat(e.target.value) / 100; document.getElementById('oscVolVal').textContent = e.target.value + " %"; if (audioCtx) { for (let vid in activeVoices) { if(activeVoices[vid].oscGain) activeVoices[vid].oscGain.gain.setTargetAtTime(oscAmount, audioCtx.currentTime, 0.05); } } if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('noiseMix').addEventListener('input', (e) => { noiseAmount = parseFloat(e.target.value) / 100; document.getElementById('noiseVal').textContent = e.target.value + " %"; if (audioCtx) { for (let vid in activeVoices) { if(activeVoices[vid].nGain) activeVoices[vid].nGain.gain.setTargetAtTime(noiseAmount * 0.5, audioCtx.currentTime, 0.05); } } if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('cutoff').addEventListener('input', (e) => { lpFilterCutoff = parseFloat(e.target.value); document.getElementById('cutoffVal').textContent = lpFilterCutoff >= 1000 ? (lpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(lpFilterCutoff) + " Hz"; if (lpFilterNode && audioCtx) lpFilterNode.frequency.setTargetAtTime(lpFilterCutoff, audioCtx.currentTime, 0.05); if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('hpCutoff').addEventListener('input', (e) => { hpFilterCutoff = parseFloat(e.target.value); document.getElementById('hpCutoffVal').textContent = hpFilterCutoff >= 1000 ? (hpFilterCutoff / 1000).toFixed(1) + " kHz" : Math.round(hpFilterCutoff) + " Hz"; if (hpFilterNode && audioCtx) hpFilterNode.frequency.setTargetAtTime(hpFilterCutoff, audioCtx.currentTime, 0.05); if (!isSounding) drawVisualsStatic(); });
         ['a', 'd', 's', 'r'].forEach(p => document.getElementById('env' + p.toUpperCase()).addEventListener('input', (e) => { adsr[p] = parseFloat(e.target.value); document.getElementById('val' + p.toUpperCase()).textContent = p === 's' ? Math.round(adsr[p] * 100) + ' %' : adsr[p].toFixed(2) + ' s'; drawADSR(); }));
-
-        document.getElementById('lfoRate').addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); document.getElementById('valLfoRate').textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoVibrato').addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; document.getElementById('valLfoVibrato').textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoTremolo').addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; document.getElementById('valLfoTremolo').textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-        document.getElementById('lfoFilter').addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; document.getElementById('valLfoFilter').textContent = e.target.value + " %"; updateLFO(); if (!isSounding) drawVisualsStatic(); });
-
+        document.getElementById('lfoRate').addEventListener('input', (e) => { lfo.rate = 0.1 * Math.pow(2000 / 0.1, parseFloat(e.target.value) / 100); document.getElementById('valLfoRate').textContent = lfo.rate >= 1000 ? (lfo.rate / 1000).toFixed(2) + " kHz" : (lfo.rate >= 10 ? Math.round(lfo.rate) : lfo.rate.toFixed(1)) + " Hz"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('lfoVibrato').addEventListener('input', (e) => { lfo.vibrato = parseFloat(e.target.value) * 5; document.getElementById('valLfoVibrato').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('lfoTremolo').addEventListener('input', (e) => { lfo.tremolo = parseFloat(e.target.value) / 100; document.getElementById('valLfoTremolo').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
+        document.getElementById('lfoFilter').addEventListener('input', (e) => { lfo.filterMod = parseFloat(e.target.value) * 48; document.getElementById('valLfoFilter').textContent = e.target.value + " %"; if(typeof updateLFO === 'function') updateLFO(); if (!isSounding) drawVisualsStatic(); });
         document.getElementById('delayTime').addEventListener('input', (e) => { delayConfig.time = parseFloat(e.target.value); document.getElementById('valDelayTime').textContent = delayConfig.time.toFixed(2) + " s"; if (delayNode && audioCtx) delayNode.delayTime.setTargetAtTime(delayConfig.time, audioCtx.currentTime, 0.01); });
         document.getElementById('delayFeedback').addEventListener('input', (e) => { delayConfig.feedback = parseFloat(e.target.value) / 100; document.getElementById('valDelayFeedback').textContent = e.target.value + " %"; if (delayFeedbackGain && audioCtx) delayFeedbackGain.gain.setTargetAtTime(delayConfig.feedback, audioCtx.currentTime, 0.01); });
         document.getElementById('delayMix').addEventListener('input', (e) => { delayConfig.mix = parseFloat(e.target.value) / 100; document.getElementById('valDelayMix').textContent = e.target.value + " %"; if (delayMixGain && audioCtx) delayMixGain.gain.setTargetAtTime(delayConfig.mix, audioCtx.currentTime, 0.01); });
-        document.getElementById('reverbTime').addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); document.getElementById('valReverbTime').textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx) convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
+        document.getElementById('reverbTime').addEventListener('input', (e) => { reverbConfig.time = parseFloat(e.target.value); document.getElementById('valReverbTime').textContent = reverbConfig.time.toFixed(1) + " s"; if (convolverNode && audioCtx && typeof createReverbBuffer === 'function') convolverNode.buffer = createReverbBuffer(audioCtx, reverbConfig.time); });
         document.getElementById('reverbMix').addEventListener('input', (e) => { reverbConfig.mix = parseFloat(e.target.value) / 100; document.getElementById('valReverbMix').textContent = e.target.value + " %"; if (reverbMixGain && audioCtx) reverbMixGain.gain.setTargetAtTime(reverbConfig.mix, audioCtx.currentTime, 0.01); });
-
+        
         window.addEventListener('resize', () => { drawVisualsStatic(); drawADSR(); });
         
         startApp();
         
-        window.focus(); if (document.activeElement !== document.body) { document.body.focus(); }
-
     </script>
 </body>
 </html>
