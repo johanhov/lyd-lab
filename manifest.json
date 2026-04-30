@@ -2,7 +2,7 @@
   "name": "Lydbølge-Lab",
   "short_name": "Lyd-Lab",
   "description": "En interaktiv lyd-lab for å lære om lydbølger, grunntoner og overtoner.",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#1e293b",
   "theme_color": "#3b82f6",
