@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lyd-lab-v1';
+const CACHE_NAME = 'lyd-lab-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -6,6 +6,8 @@ const urlsToCache = [
   './app.js',
   './manifest.json',
   './icon.svg',
+  './icon-192.png',
+  './icon-512.png',
   './factory_presets.json'
 ];
 
